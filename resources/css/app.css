@@ -201,6 +201,17 @@
         oklch(0.556 0 0);
 }
 
+@keyframes scrollPulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scaleY(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scaleY(1.1);
+    }
+}
+
 @layer base {
     * {
         @apply border-border outline-ring/50;
@@ -215,6 +226,10 @@
 }
 
 @theme inline {
+    --color-brand-gold:
+        #c9a86c;
+    --animate-scroll-pulse:
+        scrollPulse 2s ease-in-out infinite;
     --font-heading:
         var(--font-sans);
     --font-sans:
