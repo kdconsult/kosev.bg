@@ -9,7 +9,7 @@ export interface Product {
     tags: string[];
 }
 
-export const products: Product[] = [
+export const productsData: Product[] = [
     {
         id: 'laser-parts',
         title: 'Лазерно изрязани детайли',

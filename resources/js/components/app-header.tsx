@@ -1,253 +1,387 @@
 import { Link, usePage } from '@inertiajs/react';
-import {  Menu, } from 'lucide-react';
-import AppLogo from '@/components/app-logo';
-import AppLogoIcon from '@/components/app-logo-icon';
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-    NavigationMenu,
-    NavigationMenuItem,
-    NavigationMenuList,
-    navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
-import {
-    Sheet,
-    SheetContent,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from '@/components/ui/sheet';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { UserMenuContent } from '@/components/user-menu-content';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { useInitials } from '@/hooks/use-initials';
-import { cn, toUrl } from '@/lib/utils';
-import { home, services, projects, products, about, certificates , contacts } from '@/routes';
-import type { BreadcrumbItem, NavItem } from '@/types';
+import { cn } from '@/lib/utils';
+import {
+    home,
+    services,
+    projects,
+    products,
+    about,
+    certificates,
+    contacts,
+    dashboard,
+} from '@/routes';
+import type { BreadcrumbItem } from '@/types';
+import { useEffect, useState } from 'react';
+import { LayoutDashboardIcon } from 'lucide-react';
 
 type Props = {
     breadcrumbs?: BreadcrumbItem[];
 };
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Начало',
-        href: home(),
-        // icon: LayoutGrid,
-    },
-    {
-        title: 'Услуги',
-        href: services()
-    },
-    {
-        title: 'Проекти',
-        href: projects()
-    },
-    {
-        title: 'Продукти',
-        href: products()
-    },
-    {
-        title: 'За нас',
-        href: about()
-    },
-    {
-        title: 'Сертификати',
-        href: certificates()
-    },
-    {
-        title: 'Контакти',
-        href: contacts()
-    }
-];
-
-const rightNavItems: NavItem[] = [
-    // {
-    //     title: 'Documentation',
-    //     href: 'https://laravel.com/docs/starter-kits#react',
-    //     icon: BookOpen,
-    // },
-];
-
-const activeItemStyles =
-    'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
+const activeItemStyles = 'active';
 
 export function AppHeader({ breadcrumbs = [] }: Props) {
     const page = usePage();
     const { auth } = page.props;
     const getInitials = useInitials();
-    const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
+    const { whenCurrentUrl } = useCurrentUrl();
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const onScroll = () => setIsScrolled(window.scrollY > 20);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    function toggleMobileMenu() {
+        const menu = document.querySelector('.mobile-nav');
+        menu?.classList.toggle('open');
+    }
 
     return (
         <>
-            <div className="border-b border-sidebar-border/80">
-                <div className="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
-                    {/* Mobile Menu */}
-                    <div className="lg:hidden">
-                        <Sheet>
-                            <SheetTrigger asChild>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="mr-2 h-8.5 w-8.5"
-                                >
-                                    <Menu className="h-5 w-5" />
-                                </Button>
-                            </SheetTrigger>
-                            <SheetContent
-                                side="left"
-                                className="flex h-full w-64 flex-col items-stretch justify-between bg-sidebar"
-                            >
-                                <SheetTitle className="sr-only">
-                                    Navigation menu
-                                </SheetTitle>
-                                <SheetHeader className="flex justify-start text-left">
-                                    <AppLogoIcon className="h-6 w-6 fill-current text-black dark:text-white" />
-                                </SheetHeader>
-                                <div className="flex h-full flex-1 flex-col space-y-4 p-4">
-                                    <div className="flex h-full flex-col justify-between text-sm">
-                                        <div className="flex flex-col space-y-4">
-                                            {mainNavItems.map((item) => (
-                                                <Link
-                                                    key={item.title}
-                                                    href={item.href}
-                                                    className="flex items-center space-x-2 font-medium"
-                                                >
-                                                    {item.icon && (
-                                                        <item.icon className="h-5 w-5" />
-                                                    )}
-                                                    <span>{item.title}</span>
-                                                </Link>
-                                            ))}
-                                        </div>
+            <style>{`
+                header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: var(--color-background);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-                                        <div className="flex flex-col space-y-4">
-                                            {rightNavItems.map((item) => (
-                                                <a
-                                                    key={item.title}
-                                                    href={toUrl(item.href)}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex items-center space-x-2 font-medium"
-                                                >
-                                                    {item.icon && (
-                                                        <item.icon className="h-5 w-5" />
-                                                    )}
-                                                    <span>{item.title}</span>
-                                                </a>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            </SheetContent>
-                        </Sheet>
-                    </div>
+  &.scrolled {
+    background: var(--color-accent);
+    backdrop-filter: blur(10px);
+  }
+}
 
-                    <Link
-                        href={home()}
-                        prefetch
-                        className="flex items-center space-x-2"
-                    >
-                        <AppLogo />
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+
+  @media (min-width: 1024px) {
+    height: 90px;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 4px;
+  background-color: var(--color-gray-900);
+
+  img {
+    height: 50px;
+  }
+}
+
+.logo-text {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--color-gray-900);
+}
+
+.logo-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--color-gray-300);
+}
+
+.logo-tagline {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-gray-500);
+}
+
+.desktop-nav {
+  display: none;
+  align-items: center;
+  gap: 2.5rem;
+
+  @media (min-width: 1024px) {
+    display: flex;
+  }
+
+  a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    transition: color 0.2s ease;
+    position: relative;
+
+    &:hover {
+      color: var(--color-foreground);
+    }
+
+    &.active {
+      color: var(--color-foreground);
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--color-foreground);
+      }
+    }
+  }
+}
+
+.header-cta {
+  display: none;
+  color: var(--color-background);
+
+  &:hover {
+    background-color: var(--color-primary);
+  }
+
+  @media (min-width: 1024px) {
+    display: inline-flex;
+  }
+}
+
+.mobile-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  @media (min-width: 1024px) {
+    display: none;
+  }
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 24px;
+  height: 24px;
+
+  span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--color-gray-900);
+    transition: all 0.3s ease;
+  }
+
+  &.open {
+    span:first-child {
+      transform: translateY(3.75px) rotate(45deg);
+    }
+    span:last-child {
+      transform: translateY(-3.75px) rotate(-45deg);
+    }
+  }
+}
+
+.mobile-nav {
+  display: none;
+  flex-direction: column;
+  padding: 1.5rem;
+  background: var(--color-white);
+  border-top: 1px solid var(--color-gray-100);
+
+  @media (max-width: 1023px) {
+    &.open {
+      display: flex;
+    }
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+
+    a {
+      padding: 1rem 0;
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--color-foreground);
+      border-bottom: 1px solid var(--color-foreground);
+
+      &.active {
+        color: var(--color-primary-foreground);
+      }
+    }
+  }
+
+  .mobile-cta {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+}
+
+            `}</style>
+            <header className={cn({ scrolled: isScrolled })}>
+                <div className="header-content container">
+                    <Link href={home()} className="logo">
+                        <img
+                            src="https://kosev.bg/wp-content/uploads/2019/08/kosev1.png"
+                            alt="Logo"
+                        />
                     </Link>
 
-                    {/* Desktop Navigation */}
-                    <div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
-                        <NavigationMenu className="flex h-full items-stretch">
-                            <NavigationMenuList className="flex h-full items-stretch space-x-2">
-                                {mainNavItems.map((item, index) => (
-                                    <NavigationMenuItem
-                                        key={index}
-                                        className="relative flex h-full items-center"
-                                    >
-                                        <Link
-                                            href={item.href}
-                                            className={cn(
-                                                navigationMenuTriggerStyle(),
-                                                whenCurrentUrl(
-                                                    item.href,
-                                                    activeItemStyles,
-                                                ),
-                                                'h-9 cursor-pointer px-3',
-                                            )}
-                                        >
-                                            {item.icon && (
-                                                <item.icon className="mr-2 h-4 w-4" />
-                                            )}
-                                            {item.title}
-                                        </Link>
-                                        {isCurrentUrl(item.href) && (
-                                            <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
-                                        )}
-                                    </NavigationMenuItem>
-                                ))}
-                            </NavigationMenuList>
-                        </NavigationMenu>
-                    </div>
+                    <nav className="desktop-nav" aria-label="Основна навигация">
+                        <Link
+                            href={home()}
+                            className={whenCurrentUrl(home(), activeItemStyles)}
+                        >
+                            Начало
+                        </Link>
+                        <Link
+                            href={services()}
+                            className={whenCurrentUrl(
+                                services(),
+                                activeItemStyles,
+                            )}
+                        >
+                            Услуги
+                        </Link>
+                        <Link
+                            href={projects()}
+                            className={whenCurrentUrl(
+                                projects(),
+                                activeItemStyles,
+                            )}
+                        >
+                            Проекти
+                        </Link>
+                        <Link
+                            href={products()}
+                            className={whenCurrentUrl(
+                                products(),
+                                activeItemStyles,
+                            )}
+                        >
+                            Продукти
+                        </Link>
+                        <Link
+                            href={about()}
+                            className={whenCurrentUrl(
+                                about(),
+                                activeItemStyles,
+                            )}
+                        >
+                            За нас
+                        </Link>
+                        <Link
+                            href={certificates()}
+                            className={whenCurrentUrl(
+                                certificates(),
+                                activeItemStyles,
+                            )}
+                        >
+                            Сертификати
+                        </Link>
+                    </nav>
 
-                    <div className="ml-auto flex items-center space-x-2">
-                        <div className="relative flex items-center space-x-1">
-                            <div className="ml-1 hidden gap-1 lg:flex">
-                                {rightNavItems.map((item) => (
-                                    <Tooltip key={item.title}>
-                                        <TooltipTrigger>
-                                            <a
-                                                href={toUrl(item.href)}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="group inline-flex h-9 w-9 items-center justify-center rounded-md bg-transparent p-0 text-sm font-medium text-accent-foreground ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
-                                            >
-                                                <span className="sr-only">
-                                                    {item.title}
-                                                </span>
-                                                {item.icon && (
-                                                    <item.icon className="size-5 opacity-80 group-hover:opacity-100" />
-                                                )}
-                                            </a>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>{item.title}</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                ))}
-                            </div>
-                        </div>
-                        {auth.user && <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button
-                                    variant="ghost"
-                                    className="size-10 rounded-full p-1"
-                                >
-                                    <Avatar className="size-8 overflow-hidden rounded-full">
-                                        <AvatarImage
-                                            src={auth.user?.avatar}
-                                            alt={auth.user?.name}
-                                        />
-                                        <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
-                                            {getInitials(auth.user?.name ?? '')}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56" align="end">
-                                {auth.user && (
-                                    <UserMenuContent user={auth.user} />
-                                )}
-                            </DropdownMenuContent>
-                        </DropdownMenu>}
-                    </div>
+                    <Link
+                        href={contacts()}
+                        className="btn btn-primary header-cta"
+                    >
+                        Изпрати запитване
+                    </Link>
+
+                    {auth.user && (
+                        <Link
+                            href={dashboard()}
+                            className="flex items-center gap-1 rounded-4xl bg-accent p-3 text-xs"
+                        >
+                            <LayoutDashboardIcon className="mr-2" size={18} />
+                            {getInitials(auth.user?.name || 'Потребител')}
+                        </Link>
+                    )}
+
+                    <button
+                        className="mobile-menu-btn"
+                        onClick={toggleMobileMenu}
+                        aria-expanded={mobileMenuOpen ? 'true' : 'false'}
+                        aria-label="Отвори меню"
+                    >
+                        <span
+                            className={cn('hamburger', {
+                                open: mobileMenuOpen,
+                            })}
+                        >
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </button>
                 </div>
-            </div>
+
+                <div className={cn('mobile-nav', { open: mobileMenuOpen })}>
+                    <nav aria-label="Мобилна навигация">
+                        <Link
+                            className={whenCurrentUrl(home(), activeItemStyles)}
+                            href={home()}
+                            onClick={() => setMobileMenuOpen(false)}
+                        >
+                            Начало
+                        </Link>
+                        <Link
+                            href={services()}
+                            onClick={() => setMobileMenuOpen(false)}
+                        >
+                            Услуги
+                        </Link>
+                        <Link
+                            href={projects()}
+                            onClick={() => setMobileMenuOpen(false)}
+                        >
+                            Проекти
+                        </Link>
+                        <Link
+                            href={products()}
+                            onClick={() => setMobileMenuOpen(false)}
+                        >
+                            Продукти
+                        </Link>
+                        <Link
+                            href={about()}
+                            onClick={() => setMobileMenuOpen(false)}
+                        >
+                            За нас
+                        </Link>
+                        <Link
+                            href={certificates()}
+                            onClick={() => setMobileMenuOpen(false)}
+                        >
+                            Сертификати
+                        </Link>
+                    </nav>
+                    <Link
+                        href={contacts()}
+                        className="btn btn-primary mobile-cta"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        Изпрати запитване
+                    </Link>
+                </div>
+            </header>
+
             {breadcrumbs.length > 1 && (
                 <div className="flex w-full border-b border-sidebar-border/70">
                     <div className="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl">
