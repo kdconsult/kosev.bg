@@ -6,13 +6,13 @@ import { cn } from '@/lib/utils';
 import {
     home,
     services,
-    projects,
-    products,
     about,
     certificates,
     contacts,
     dashboard,
 } from '@/routes';
+import { index as projectsIndex } from '@/routes/projects';
+import { index as products } from '@/routes/products';
 import type { BreadcrumbItem } from '@/types';
 import { useEffect, useState } from 'react';
 import { LayoutDashboardIcon } from 'lucide-react';
@@ -27,7 +27,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
     const page = usePage();
     const { auth } = page.props;
     const getInitials = useInitials();
-    const { whenCurrentUrl } = useCurrentUrl();
+    const { whenCurrentUrl, isCurrentOrParentUrl } = useCurrentUrl();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -261,20 +261,22 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                             Услуги
                         </Link>
                         <Link
-                            href={projects()}
-                            className={whenCurrentUrl(
-                                projects(),
-                                activeItemStyles,
-                            )}
+                            href={projectsIndex()}
+                            className={
+                                isCurrentOrParentUrl(projectsIndex())
+                                    ? activeItemStyles
+                                    : undefined
+                            }
                         >
                             Проекти
                         </Link>
                         <Link
                             href={products()}
-                            className={whenCurrentUrl(
-                                products(),
-                                activeItemStyles,
-                            )}
+                            className={
+                                isCurrentOrParentUrl(products())
+                                    ? activeItemStyles
+                                    : undefined
+                            }
                         >
                             Продукти
                         </Link>
@@ -348,7 +350,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                             Услуги
                         </Link>
                         <Link
-                            href={projects()}
+                            href={projectsIndex()}
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             Проекти

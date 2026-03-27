@@ -1,8 +1,9 @@
-import { about, contacts, home, projects, services } from '@/routes';
-import { Link } from '@inertiajs/react';
+import { about, contacts, home,  services } from '@/routes';
+import { index } from '@/routes/projects';
+import { Link, usePage } from '@inertiajs/react';
 
 export function AppFooter() {
-    const currentYear = new Date().getFullYear();
+    const { currentYear } = usePage().props;
 
     return (
         <>
@@ -312,7 +313,7 @@ export function AppFooter() {
                                     <Link href={about()}>За нас</Link>
                                 </li>
                                 <li>
-                                    <Link href={projects()}>Проекти</Link>
+                                    <Link href={index()}>Проекти</Link>
                                 </li>
                                 <li>
                                     <Link href={contacts()}>Контакти</Link>

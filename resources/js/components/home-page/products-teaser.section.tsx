@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/react';
 
 import { productsData } from '@/data/products';
-import { products } from '@/routes';
+import { index as products } from '@/routes/products';
 
 const featuredProducts = productsData.slice(0, 3);
 
