@@ -2,14 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\Certificate;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Product>
+ * @extends Factory<Certificate>
  */
-class ProductFactory extends Factory
+class CertificateFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,12 +17,14 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $title = $this->faker->words(3, true);
+        $name = strtoupper($this->faker->word());
 
         return [
-            'category_id' => Category::factory(),
-            'title' => ['bg' => $title, 'en' => $title],
+            'name' => ['bg' => $name, 'en' => $name],
             'description' => ['bg' => $this->faker->sentence(), 'en' => $this->faker->sentence()],
+            'image_path' => $this->faker->imageUrl(440, 550),
+            'pdf_path' => $this->faker->url(),
+            'sort_order' => 0,
         ];
     }
 }
