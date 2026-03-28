@@ -9,7 +9,7 @@ export default function Certificates({ certificates }: { certificates: Certifica
             <style>
                 {`
 .certificates-intro {
-  background: var(--color-gray-50);
+  background: var(--color-muted);
 }
 
 .intro-grid {

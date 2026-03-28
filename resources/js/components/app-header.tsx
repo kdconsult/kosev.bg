@@ -55,7 +55,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &.scrolled {
-    background: var(--color-card);
+    background: var(--color-brand-gold-scrolled);
     backdrop-filter: blur(10px);
     box-shadow: var(--shadow-sm);
   }
@@ -79,7 +79,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
   text-decoration: none;
   border-radius: 8px;
   padding: 4px;
-  background-color: var(--color-primary);
+  background-color: var(--color-neutral-800);
 
   img {
     height: 50px;
@@ -236,7 +236,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
 }
 
             `}</style>
-            <header className={cn({ scrolled: isScrolled })}>
+            <header className={cn({ scrolled: isScrolled})}>
                 <div className="header-content container">
                     <Link href={home()} className="logo">
                         <img
