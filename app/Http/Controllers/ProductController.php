@@ -4,20 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProductResource;
+use App\Models\Category;
 use App\Models\Product;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): Response
     {
-        return Inertia::render('products/index');
+        return Inertia::render('products/index', [
+            'products' => ProductResource::collection(
+                Product::with(['category', 'coverImage', 'tags'])->get()
+            ),
+            'categories' => CategoryResource::collection(
+                Category::forProducts()->get()
+            ),
+        ]);
     }
 
-    /**
+     /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -33,13 +41,12 @@ class ProductController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show($product)
+    public function show(Product $product): Response
     {
         return Inertia::render('products/show', [
-            'product' => $product,
+            'product' => new ProductResource(
+                $product->load(['category', 'images', 'tags', 'specs', 'services'])
+            ),
         ]);
     }
 

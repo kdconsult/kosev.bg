@@ -2,7 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
+use App\Models\Project;
 use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +29,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
+        JsonResource::withoutWrapping();
+
+        Relation::enforceMorphMap([
+            'project' => Project::class,
+            'product' => Product::class,
+        ]);
+
+        Model::preventLazyLoading(! app()->isProduction());
     }
 
     /**
