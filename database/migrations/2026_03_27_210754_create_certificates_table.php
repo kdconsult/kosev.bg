@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table): void {
+        Schema::create('certificates', function (Blueprint $table): void {
             $table->id();
             $table->string('slug')->unique();
-            $table->foreignId('category_id')->constrained('categories');
-            $table->json('title');
+            $table->json('name');
             $table->json('description');
+            $table->string('image_path', 500);
+            $table->string('pdf_path', 500);
+            $table->unsignedSmallInteger('sort_order')->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('certificates');
     }
 };

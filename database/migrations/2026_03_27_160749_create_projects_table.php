@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table): void {
             $table->id();
+            $table->string('slug')->unique();
+            $table->foreignId('category_id')->constrained('categories');
+            $table->json('title');
+            $table->json('description');
+            $table->json('industry');
             $table->timestamps();
         });
     }
