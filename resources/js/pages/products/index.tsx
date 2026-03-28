@@ -21,95 +21,6 @@ export default function ProductList({ products, categories }: { products: Produc
         <>
             <Head title="Продукти" />
             <style>{`
-                    .page-hero {
-      position: relative;
-      padding: 10rem 0 5rem;
-      min-height: 400px;
-      display: flex;
-      align-items: center;
-
-      @media (min-width: 768px) {
-        padding: 12rem 0 6rem;
-      }
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(26, 26, 46, 0.8) 100%);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 700px;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      font-size: 0.875rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--color-accent);
-      margin-bottom: 1rem;
-    }
-
-    h1 {
-      color: var(--color-white);
-      margin-bottom: 1rem;
-      text-wrap: balance;
-    }
-
-    .hero-content p {
-      font-size: 1.25rem;
-      color: var(--color-gray-300);
-      line-height: 1.7;
-    }
-
-    .filter-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 3rem;
-      justify-content: center;
-    }
-
-    .filter-btn {
-      padding: 0.75rem 1.5rem;
-      font-size: 0.9375rem;
-      font-weight: 500;
-      background: var(--color-white);
-      border: 1px solid var(--color-gray-200);
-      border-radius: 100px;
-      color: var(--color-gray-600);
-      cursor: pointer;
-      transition: all 0.2s ease;
-
-      &:hover {
-        border-color: var(--color-gray-300);
-        color: var(--color-gray-900);
-      }
-
-      &.active {
-        background: var(--color-primary);
-        border-color: var(--color-primary);
-        color: var(--color-white);
-      }
-    }
-
     .products-grid {
       display: grid;
       gap: 2rem;
@@ -124,10 +35,10 @@ export default function ProductList({ products, categories }: { products: Produc
     }
 
     .product-card {
-      background: var(--color-white);
+      background: var(--color-card);
       border-radius: var(--radius-xl);
       overflow: hidden;
-      border: 1px solid var(--color-gray-200);
+      border: 1px solid var(--color-border);
       transition: all 0.3s ease;
       text-decoration: none;
       color: inherit;
@@ -142,7 +53,7 @@ export default function ProductList({ products, categories }: { products: Produc
         }
 
         .view-link {
-          color: var(--color-accent);
+          color: var(--color-brand-gold);
         }
       }
     }
@@ -189,7 +100,6 @@ export default function ProductList({ products, categories }: { products: Produc
 
       p {
         font-size: 0.9375rem;
-        color: var(--color-gray-600);
         line-height: 1.6;
         margin-bottom: 1rem;
       }
@@ -202,50 +112,13 @@ export default function ProductList({ products, categories }: { products: Produc
       margin-bottom: 1rem;
     }
 
-    .tag {
-      padding: 0.25rem 0.625rem;
-      background: var(--color-gray-100);
-      border-radius: var(--radius-sm);
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--color-gray-600);
-    }
-
     .view-link {
       font-size: 0.875rem;
       font-weight: 600;
       color: var(--color-primary);
       transition: color 0.2s ease;
     }
-
-    .cta-banner {
-      background: var(--color-steel);
-      padding: 4rem 0;
-
-      .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
-        text-align: center;
-
-        @media (min-width: 768px) {
-          flex-direction: row;
-          justify-content: space-between;
-          text-align: left;
-        }
-      }
-
-      h2 {
-        font-size: 1.75rem;
-        margin-bottom: 0.5rem;
-        color: var(--color-white);
-      }
-
-      p {
-        color: var(--color-gray-400);
-      }
-    }`}</style>
+    `}</style>
 
             <section className="page-hero">
                 <div className="hero-bg">

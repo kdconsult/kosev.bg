@@ -32,8 +32,8 @@ export default function CtaFormSection() {
         <>
             <style>
                 {`
-                .cta-form {
-  background: var(--color-cream);
+.cta-form {
+  background: var(--color-background);
 }
 
 .cta-wrapper {
@@ -55,7 +55,7 @@ export default function CtaFormSection() {
 
   > p {
     font-size: 1.0625rem;
-    color: var(--color-gray-500);
+    color: var(--color-muted-foreground);
     line-height: 1.8;
     margin-bottom: 2.5rem;
   }
@@ -80,9 +80,9 @@ export default function CtaFormSection() {
   width: 48px;
   height: 48px;
   border-radius: var(--radius-md);
-  background: var(--color-white);
+  background: var(--color-card);
   color: var(--color-brand-gold);
-  border: 1px solid var(--color-gray-200);
+  border: 1px solid var(--color-border);
 }
 
 .info-text {
@@ -92,21 +92,21 @@ export default function CtaFormSection() {
 
 .info-label {
   font-size: 0.8125rem;
-  color: var(--color-gray-400);
+  color: var(--color-muted-foreground);
 }
 
 .info-value {
   font-size: 1rem;
   font-weight: 500;
-  color: var(--color-gray-900);
+  color: var(--color-foreground);
 }
 
 .cta-form-card {
-  background: var(--color-white);
+  background: var(--color-card);
   border-radius: var(--radius-lg);
   padding: 2.5rem;
   box-shadow: var(--shadow-lg);
-  border: 1px solid var(--color-gray-100);
+  border: 1px solid var(--color-border);
 
   @media (min-width: 768px) {
     padding: 3rem;
@@ -114,67 +114,8 @@ export default function CtaFormSection() {
 
   h3 {
     font-size: 1.5rem;
-    color: var(--color-gray-900);
+    color: var(--color-foreground);
     margin-bottom: 2rem;
-  }
-}
-
-.form-row {
-  display: grid;
-  gap: 1rem;
-  margin-bottom: 1rem;
-
-  @media (min-width: 640px) {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-
-  label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--color-gray-700);
-  }
-
-  input,
-  textarea {
-    padding: 0.875rem 1rem;
-    border: 1px solid var(--color-gray-200);
-    border-radius: var(--radius-md);
-    font-size: 1rem;
-    font-family: var(--font-sans);
-    color: var(--color-gray-900);
-    background: var(--color-white);
-    transition: all 0.2s ease;
-
-    &::placeholder {
-      color: var(--color-gray-400);
-    }
-
-    &:focus {
-      outline: none;
-      border-color: var(--color-gray-900);
-    }
-  }
-
-  textarea {
-    resize: vertical;
-    min-height: 120px;
-  }
-}
-
-.submit-btn {
-  width: 100%;
-  margin-top: 0.5rem;
-
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
   }
 }
 `}

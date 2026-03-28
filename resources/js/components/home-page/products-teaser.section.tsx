@@ -6,24 +6,8 @@ export default function ProductsTeaserSection({ featuredProducts }: { featuredPr
     return (
         <>
             <style>{`
-        .products-teaser {
-  background: var(--color-gray-50);
-}
-
-.section-header {
-  text-align: center;
-  max-width: 640px;
-  margin: 0 auto 3.5rem;
-
-  h2 {
-    margin-bottom: 1rem;
-  }
-
-  p {
-    font-size: 1.0625rem;
-    color: var(--color-gray-500);
-    line-height: 1.7;
-  }
+.products-teaser {
+  background: var(--color-secondary);
 }
 
 .products-grid {
@@ -41,10 +25,10 @@ export default function ProductsTeaserSection({ featuredProducts }: { featuredPr
 }
 
 .product-card {
-  background: var(--color-white);
+  background: var(--color-card);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  border: 1px solid var(--color-gray-200);
+  border: 1px solid var(--color-border);
   transition: all 0.3s ease;
   text-decoration: none;
   color: inherit;
@@ -106,7 +90,7 @@ export default function ProductsTeaserSection({ featuredProducts }: { featuredPr
 
   p {
     font-size: 0.9375rem;
-    color: var(--color-gray-600);
+    color: var(--color-muted-foreground);
     line-height: 1.6;
     margin-bottom: 1rem;
   }
@@ -115,7 +99,7 @@ export default function ProductsTeaserSection({ featuredProducts }: { featuredPr
 .view-link {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-primary);
   transition: color 0.2s ease;
 }
 

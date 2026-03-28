@@ -63,68 +63,6 @@ export default function Contacts() {
             <Head title="Свържете се с нас" />
             <style>
                 {`
-                    .page-hero {
-  position: relative;
-  padding: 10rem 0 5rem;
-  min-height: 400px;
-  display: flex;
-  align-items: center;
-
-  @media (min-width: 768px) {
-    padding: 12rem 0 6rem;
-  }
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(26, 26, 46, 0.75) 0%,
-    rgba(26, 26, 46, 0.6) 100%
-  );
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
-}
-
-.hero-badge {
-  display: inline-block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-accent);
-  margin-bottom: 1rem;
-}
-
-.hero-content h1 {
-  color: var(--color-white);
-  margin-bottom: 1rem;
-  text-wrap: balance;
-}
-
-.hero-content p {
-  font-size: 1.25rem;
-  color: var(--color-gray-300);
-  line-height: 1.7;
-}
-
 .contact-grid {
   display: grid;
   gap: 3rem;
@@ -143,7 +81,6 @@ export default function Contacts() {
 
 .contact-intro {
   font-size: 1.125rem;
-  color: var(--color-gray-600);
   line-height: 1.7;
   margin-bottom: 2rem;
 }
@@ -162,7 +99,7 @@ export default function Contacts() {
   display: flex;
   gap: 1rem;
   padding: 1.5rem;
-  background: var(--color-gray-50);
+  background: var(--color-secondary);
   border-radius: var(--radius-lg);
 }
 
@@ -174,7 +111,7 @@ export default function Contacts() {
   height: 48px;
   border-radius: var(--radius-md);
   background: var(--color-primary);
-  color: var(--color-white);
+  color: var(--color-primary-foreground);
   flex-shrink: 0;
 }
 
@@ -187,7 +124,6 @@ export default function Contacts() {
 
   p {
     font-size: 0.9375rem;
-    color: var(--color-gray-600);
     line-height: 1.6;
   }
 }
@@ -215,18 +151,18 @@ export default function Contacts() {
 
   span {
     padding: 0.75rem 1.5rem;
-    background: var(--color-white);
+    background: var(--color-background);
     border-radius: var(--radius-md);
     font-weight: 500;
-    color: var(--color-gray-900);
+    color: var(--color-foreground);
   }
 }
 
 .contact-form {
-  background: var(--color-white);
+  background: var(--color-card);
   padding: 2rem;
   border-radius: var(--radius-xl);
-  border: 1px solid var(--color-gray-200);
+  border: 1px solid var(--color-border);
   box-shadow: var(--shadow-lg);
 
   @media (min-width: 768px) {
@@ -240,77 +176,11 @@ export default function Contacts() {
 
 .form-intro {
   font-size: 1rem;
-  color: var(--color-gray-600);
   margin-bottom: 2rem;
 }
 
-.form-row {
-  display: grid;
-  gap: 1rem;
-  margin-bottom: 1rem;
-
-  @media (min-width: 640px) {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-
-  label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--color-gray-700);
-  }
-
-  input,
-  textarea,
-  select {
-    padding: 0.875rem 1rem;
-    border: 1px solid var(--color-gray-300);
-    border-radius: var(--radius-md);
-    font-size: 1rem;
-    font-family: var(--font-sans);
-    color: var(--color-gray-900);
-    background: var(--color-white);
-    transition: all 0.2s ease;
-
-    &::placeholder {
-      color: var(--color-gray-400);
-    }
-
-    &:focus {
-      outline: none;
-      border-color: var(--color-primary);
-      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
-    }
-  }
-
-  textarea {
-    resize: vertical;
-    min-height: 120px;
-  }
-
-  select {
-    cursor: pointer;
-  }
-}
-
-.submit-btn {
-  width: 100%;
-  margin-top: 0.5rem;
-
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-}
-
 .faq-section {
-  background: var(--color-gray-50);
+  background: var(--color-secondary);
 }
 
 .faq-grid {
@@ -324,19 +194,17 @@ export default function Contacts() {
 
 .faq-item {
   padding: 1.5rem;
-  background: var(--color-white);
+  background: var(--color-card);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--color-gray-200);
+  border: 1px solid var(--color-border);
 
   h4 {
     font-size: 1rem;
     margin-bottom: 0.75rem;
-    color: var(--color-gray-900);
   }
 
   p {
     font-size: 0.9375rem;
-    color: var(--color-gray-600);
     line-height: 1.6;
   }
 }

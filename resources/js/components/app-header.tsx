@@ -55,8 +55,9 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &.scrolled {
-    background: var(--color-accent);
+    background: var(--color-card);
     backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-sm);
   }
 }
 
@@ -78,7 +79,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
   text-decoration: none;
   border-radius: 8px;
   padding: 4px;
-  background-color: var(--color-gray-900);
+  background-color: var(--color-primary);
 
   img {
     height: 50px;
@@ -90,13 +91,13 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
   font-size: 1.5rem;
   font-weight: 500;
   letter-spacing: -0.02em;
-  color: var(--color-gray-900);
+  color: var(--color-foreground);
 }
 
 .logo-divider {
   width: 1px;
   height: 20px;
-  background: var(--color-gray-300);
+  background: var(--color-border);
 }
 
 .logo-tagline {
@@ -104,7 +105,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--color-gray-500);
+  color: var(--color-muted-foreground);
 }
 
 .desktop-nav {
@@ -184,7 +185,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
     display: block;
     width: 100%;
     height: 1.5px;
-    background: var(--color-gray-900);
+    background: var(--color-foreground);
     transition: all 0.3s ease;
   }
 
@@ -202,8 +203,8 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
   display: none;
   flex-direction: column;
   padding: 1.5rem;
-  background: var(--color-white);
-  border-top: 1px solid var(--color-gray-100);
+  background: var(--color-card);
+  border-top: 1px solid var(--color-border);
 
   @media (max-width: 1023px) {
     &.open {
@@ -220,7 +221,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
       font-size: 1.125rem;
       font-weight: 500;
       color: var(--color-foreground);
-      border-bottom: 1px solid var(--color-foreground);
+      border-bottom: 1px solid var(--color-border);
 
       &.active {
         color: var(--color-primary-foreground);

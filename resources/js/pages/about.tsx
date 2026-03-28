@@ -88,75 +88,6 @@ export default function AboutUs() {
             <Head title="За нас" />
             <style>
                 {`
-                    .mat-icon {
-  font-size: 2rem;
-  color: var(--color-primary);
-  width: 2rem;
-  height: 2rem;
-}
-
-.page-hero {
-  position: relative;
-  padding: 10rem 0 5rem;
-  min-height: 400px;
-  display: flex;
-  align-items: center;
-
-  @media (min-width: 768px) {
-    padding: 12rem 0 6rem;
-  }
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(26, 26, 46, 0.95) 0%,
-    rgba(26, 26, 46, 0.8) 100%
-  );
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
-}
-
-.hero-badge {
-  display: inline-block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-accent);
-  margin-bottom: 1rem;
-}
-
-h1 {
-  color: var(--color-white);
-  margin-bottom: 1rem;
-  text-wrap: balance;
-}
-
-.hero-content p {
-  font-size: 1.25rem;
-  color: var(--color-gray-300);
-  line-height: 1.7;
-}
-
 .story-grid {
   display: grid;
   gap: 3rem;
@@ -175,7 +106,6 @@ h1 {
 
   p {
     font-size: 1.125rem;
-    color: var(--color-gray-600);
     line-height: 1.8;
     margin-bottom: 1rem;
 
@@ -195,7 +125,7 @@ h1 {
 }
 
 .values {
-  background: var(--color-gray-50);
+  background: var(--color-secondary);
 }
 
 .values-grid {
@@ -212,16 +142,26 @@ h1 {
 }
 
 .value-card {
-  background: var(--color-white);
+  background: var(--color-card);
   padding: 2rem;
   border-radius: var(--radius-lg);
-  border: 1px solid var(--color-gray-200);
+  border: 1px solid var(--color-border);
   text-align: center;
   transition: all 0.3s ease;
 
   &:hover {
     box-shadow: var(--shadow-xl);
     transform: translateY(-4px);
+  }
+
+  h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.9375rem;
+    line-height: 1.6;
   }
 }
 
@@ -233,24 +173,8 @@ h1 {
   height: 56px;
   border-radius: var(--radius-lg);
   background: var(--color-primary);
-  color: var(--color-white);
+  color: var(--color-primary-foreground);
   margin: 0 auto 1rem;
-
-  :host ::ng-deep svg {
-    width: 28px;
-    height: 28px;
-  }
-}
-
-.value-card h3 {
-  font-size: 1.125rem;
-  margin-bottom: 0.5rem;
-}
-
-.value-card p {
-  font-size: 0.9375rem;
-  color: var(--color-gray-500);
-  line-height: 1.6;
 }
 
 .team-grid {
@@ -269,9 +193,20 @@ h1 {
 .team-card {
   text-align: center;
   padding: 2rem;
-  background: var(--color-white);
+  background: var(--color-card);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--color-gray-200);
+  border: 1px solid var(--color-border);
+
+  h4 {
+    font-size: 1.125rem;
+    margin-bottom: 0.25rem;
+  }
+
+  p {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-top: 0.75rem;
+  }
 }
 
 .team-avatar {
@@ -288,26 +223,14 @@ h1 {
   margin: 0 auto 1rem;
 }
 
-.team-card h4 {
-  font-size: 1.125rem;
-  margin-bottom: 0.25rem;
-}
-
 .team-role {
   font-size: 0.875rem;
-  color: var(--color-primary);
+  color: var(--color-brand-gold);
   font-weight: 500;
 }
 
-.team-card p {
-  font-size: 0.875rem;
-  color: var(--color-gray-500);
-  line-height: 1.6;
-  margin-top: 0.75rem;
-}
-
 .facility {
-  background: var(--color-gray-50);
+  background: var(--color-secondary);
 }
 
 .facility-grid {
@@ -328,7 +251,6 @@ h1 {
 
   p {
     font-size: 1.125rem;
-    color: var(--color-gray-600);
     line-height: 1.8;
     margin-bottom: 1.5rem;
   }
@@ -346,11 +268,10 @@ h1 {
     align-items: center;
     gap: 0.75rem;
     font-size: 1rem;
-    color: var(--color-gray-700);
 
     svg {
       flex-shrink: 0;
-      color: var(--color-primary);
+      color: var(--color-brand-gold);
     }
   }
 }
@@ -369,7 +290,7 @@ h1 {
 }
 
 .stats-section {
-  background: var(--color-steel);
+  background: var(--color-iron);
   padding: 4rem 0;
 }
 
@@ -396,40 +317,12 @@ h1 {
 .stat-value {
   font-size: 3rem;
   font-weight: 700;
-  color: var(--color-white);
+  color: var(--color-brand-gold);
 }
 
 .stat-label {
   font-size: 1rem;
   color: var(--color-gray-400);
-}
-
-.cta-banner {
-  background: var(--color-gray-50);
-  padding: 4rem 0;
-
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    text-align: center;
-
-    @media (min-width: 768px) {
-      flex-direction: row;
-      justify-content: space-between;
-      text-align: left;
-    }
-  }
-
-  h2 {
-    font-size: 1.75rem;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    color: var(--color-gray-600);
-  }
 }
 `}
             </style>

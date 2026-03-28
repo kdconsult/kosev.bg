@@ -23,7 +23,7 @@ export default function TestimonialsSection() {
     return (
         <>
             <style>{`.testimonials {
-  background: var(--color-white);
+  background: var(--color-card);
 }
 
 .testimonials-grid {
@@ -39,28 +39,28 @@ export default function TestimonialsSection() {
   display: flex;
   flex-direction: column;
   padding: 2.5rem;
-  background: var(--color-gray-50);
+  background: var(--color-secondary);
   border-radius: var(--radius-lg);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
-    background: var(--color-white);
+    background: var(--color-card);
     box-shadow: var(--shadow-xl);
     transform: translateY(-4px);
   }
 }
 
 .testimonial-quote {
-  color: var(--color-gray-200);
+  color: var(--color-border);
   margin-bottom: 1.5rem;
 }
 
-blockquote {
+.testimonial-card blockquote {
   font-family: var(--font-serif);
   font-size: 1.125rem;
   font-style: italic;
   line-height: 1.7;
-  color: var(--color-gray-700);
+  color: var(--color-foreground);
   flex-grow: 1;
   margin-bottom: 2rem;
 }
@@ -70,7 +70,7 @@ blockquote {
   align-items: center;
   gap: 1rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--color-gray-200);
+  border-top: 1px solid var(--color-border);
 }
 
 .author-avatar {
@@ -80,8 +80,8 @@ blockquote {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--color-gray-900);
-  color: var(--color-white);
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
   font-family: var(--font-serif);
   font-size: 1.25rem;
   font-weight: 500;
@@ -96,12 +96,12 @@ blockquote {
 .author-name {
   font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--color-gray-900);
+  color: var(--color-foreground);
 }
 
 .author-meta {
   font-size: 0.8125rem;
-  color: var(--color-gray-500);
+  color: var(--color-muted-foreground);
 }
 `}</style>
             <section className="section testimonials">

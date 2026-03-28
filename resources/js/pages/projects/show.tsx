@@ -16,83 +16,11 @@ export default function ProjectDetail({ project }: { project: Project }) {
 
             {/* Main content would go here - images, description, specs, etc. */}
             <style>{`
-      .page-hero {
-  position: relative;
-  padding: 10rem 0 5rem;
-  min-height: 400px;
-  display: flex;
-  align-items: flex-end;
-
-  @media (min-width: 768px) {
-    padding: 12rem 0 6rem;
-  }
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(26, 26, 46, 0.7) 100%);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
-}
-
-.back-link {
-  display: inline-block;
-  font-size: 0.875rem;
-  color: var(--color-gray-400);
-  text-decoration: none;
-  margin-bottom: 1rem;
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: var(--color-accent);
-  }
-}
-
-.hero-badge {
-  display: inline-block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-accent);
-  margin-bottom: 0.75rem;
-}
-
-.hero-content h1 {
-  color: var(--color-white);
-  text-wrap: balance;
-}
+/* show pages: hero aligns to bottom, not center */
+.page-hero { align-items: flex-end; }
 
 .project-detail {
   background: var(--color-background);
-}
-
-.detail-grid {
-  display: grid;
-  gap: 4rem;
-  align-items: start;
-
-  @media (min-width: 1024px) {
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-  }
 }
 
 .gallery-main {
@@ -100,38 +28,6 @@ export default function ProjectDetail({ project }: { project: Project }) {
   overflow: hidden;
   aspect-ratio: 4 / 3;
   margin-bottom: 1rem;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.gallery-thumbs {
-  display: flex;
-  gap: 0.75rem;
-}
-
-.thumb {
-  width: 80px;
-  height: 60px;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  border: 2px solid var(--color-gray-200);
-  cursor: pointer;
-  padding: 0;
-  background: none;
-  transition: border-color 0.2s ease;
-  flex-shrink: 0;
-
-  &:hover {
-    border-color: var(--color-gray-400);
-  }
-
-  &.active {
-    border-color: var(--color-accent);
-  }
 
   img {
     width: 100%;
@@ -148,7 +44,6 @@ export default function ProjectDetail({ project }: { project: Project }) {
 
 .project-desc {
   font-size: 1.0625rem;
-  color: var(--color-gray-600);
   line-height: 1.8;
 }
 
@@ -161,7 +56,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
 .meta-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-gray-500);
+  color: var(--color-muted-foreground);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -169,51 +64,20 @@ export default function ProjectDetail({ project }: { project: Project }) {
 .industry-badge {
   display: inline-block;
   padding: 0.375rem 0.875rem;
-  background: var(--color-gray-100);
+  background: var(--color-secondary);
   border-radius: 100px;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--color-gray-700);
+  color: var(--color-secondary-foreground);
 }
 
 .specs-block {
   h3 {
     font-size: 1rem;
     font-weight: 700;
-    color: var(--color-gray-900);
     margin-bottom: 1rem;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--color-gray-200);
-  }
-}
-
-.specs-table {
-  width: 100%;
-  border-collapse: collapse;
-
-  tr {
-    border-bottom: 1px solid var(--color-gray-100);
-
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-
-  td {
-    padding: 0.75rem 0;
-    font-size: 0.9375rem;
-    vertical-align: top;
-  }
-
-  .spec-label {
-    color: var(--color-gray-500);
-    width: 50%;
-    padding-right: 1rem;
-  }
-
-  .spec-value {
-    color: var(--color-gray-900);
-    font-weight: 500;
+    border-bottom: 1px solid var(--color-border);
   }
 }
 
@@ -221,15 +85,6 @@ export default function ProjectDetail({ project }: { project: Project }) {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-}
-
-.tag {
-  padding: 0.25rem 0.625rem;
-  background: var(--color-gray-100);
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--color-gray-600);
 }
 
 .cta-btn {
@@ -244,8 +99,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
     margin-bottom: 2rem;
   }
 }
-
-      }`}</style>
+      `}</style>
             <>
                 <section className="page-hero">
                     <div className="hero-bg">

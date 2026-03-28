@@ -34,7 +34,7 @@ export default function IndustriesSection() {
         <>
             <style>{`
 .industries {
-  background: var(--color-gray-50);
+  background: var(--color-secondary);
 }
 
 .industries-layout {
@@ -61,7 +61,7 @@ export default function IndustriesSection() {
 
   p {
     font-size: 1.0625rem;
-    color: var(--color-gray-500);
+    color: var(--color-muted-foreground);
     line-height: 1.8;
   }
 }
@@ -79,8 +79,8 @@ export default function IndustriesSection() {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--color-white);
-  border: 1px solid var(--color-gray-200);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
@@ -132,15 +132,15 @@ export default function IndustriesSection() {
   margin-bottom: 0.75rem;
 }
 
-h3 {
+.industry-content h3 {
   font-size: 1.25rem;
-  color: var(--color-gray-900);
+  color: var(--color-foreground);
   margin-bottom: 0.5rem;
 }
 
-p {
+.industry-content p {
   font-size: 0.9375rem;
-  color: var(--color-gray-500);
+  color: var(--color-muted-foreground);
   line-height: 1.6;
 }
 

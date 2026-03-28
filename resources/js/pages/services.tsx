@@ -143,85 +143,6 @@ export default function Services() {
         <>
             <Head title="Services" />
             <style>{`
-                :host {
-  .mat-icon,
-  .material-symbols-outlined {
-    font-size: 2.5rem;
-    width: 3.5rem;
-    height: 3.5rem;
-    line-height: 2.5rem;
-  }
-
-  .mat-icon {
-    border-radius: var(--radius-lg);
-    background: var(--color-primary);
-    color: var(--color-white);
-    padding: 0.5rem;
-  }
-}
-
-.page-hero {
-  position: relative;
-  padding: 10rem 0 5rem;
-  min-height: 400px;
-  display: flex;
-  align-items: center;
-
-  @media (min-width: 768px) {
-    padding: 12rem 0 6rem;
-  }
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(26, 26, 46, 0.95) 0%,
-    rgba(26, 26, 46, 0.8) 100%
-  );
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
-}
-
-.hero-badge {
-  display: inline-block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-accent);
-  margin-bottom: 1rem;
-}
-
-h1 {
-  color: var(--color-white);
-  margin-bottom: 1rem;
-  text-wrap: balance;
-}
-
-.hero-content p {
-  font-size: 1.25rem;
-  color: var(--color-gray-300);
-  line-height: 1.7;
-}
-
 .services-list {
   padding-top: 4rem;
 }
@@ -281,18 +202,13 @@ h1 {
     var(--color-primary) 0%,
     var(--color-primary-dark) 100%
   );
-  color: var(--color-white);
+  color: var(--color-primary-foreground);
   margin-bottom: 1.5rem;
-
-  :host ::ng-deep svg {
-    width: 32px;
-    height: 32px;
-  }
 }
 
 .service-description {
   font-size: 1.125rem;
-  color: var(--color-gray-600);
+  color: var(--color-muted-foreground);
   line-height: 1.8;
   margin-bottom: 1.5rem;
 }
@@ -304,7 +220,7 @@ h1 {
   h4 {
     font-size: 0.9375rem;
     font-weight: 600;
-    color: var(--color-gray-900);
+    color: var(--color-foreground);
     margin-bottom: 0.75rem;
   }
 }
@@ -321,15 +237,15 @@ h1 {
     gap: 0.5rem;
     font-size: 0.9375rem;
     padding: 0.5rem 0;
-    border-bottom: 1px solid var(--color-gray-100);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .spec-label {
-    color: var(--color-gray-500);
+    color: var(--color-muted-foreground);
   }
 
   .spec-value {
-    color: var(--color-gray-900);
+    color: var(--color-foreground);
     font-weight: 500;
   }
 }
@@ -350,40 +266,12 @@ h1 {
     align-items: center;
     gap: 0.5rem;
     font-size: 0.9375rem;
-    color: var(--color-gray-700);
+    color: var(--color-foreground);
 
     svg {
       flex-shrink: 0;
       color: var(--color-primary);
     }
-  }
-}
-
-.cta-banner {
-  background: var(--color-gray-50);
-  padding: 4rem 0;
-
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    text-align: center;
-
-    @media (min-width: 768px) {
-      flex-direction: row;
-      justify-content: space-between;
-      text-align: left;
-    }
-  }
-
-  h2 {
-    font-size: 1.75rem;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    color: var(--color-gray-600);
   }
 }
 `}</style>

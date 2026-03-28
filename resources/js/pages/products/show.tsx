@@ -12,125 +12,15 @@ export default function ProductDetail({ product }: { product: Product }) {
         <>
             <Head title="Продукт" />
             <style>{`
-.page-hero {
-  position: relative;
-  padding: 10rem 0 5rem;
-  min-height: 400px;
-  display: flex;
-  align-items: flex-end;
+/* show pages: hero aligns to bottom, not center */
+.page-hero { align-items: flex-end; }
 
-  @media (min-width: 768px) {
-    padding: 12rem 0 6rem;
-  }
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(26, 26, 46, 0.7) 100%);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
-}
-
-.back-link {
-  display: inline-block;
-  font-size: 0.875rem;
-  color: var(--color-gray-400);
-  text-decoration: none;
-  margin-bottom: 1rem;
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: var(--color-accent);
-  }
-}
-
-.hero-badge {
-  display: inline-block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-accent);
-  margin-bottom: 0.75rem;
-}
-
-.hero-content h1 {
-  color: var(--color-white);
-  text-wrap: balance;
-}
-
-// Detail layout
 .product-detail {
-  background: var(--color-white);
+  background: var(--color-background);
 }
-
-.detail-grid {
-  display: grid;
-  gap: 4rem;
-  align-items: start;
-
-  @media (min-width: 1024px) {
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-  }
-}
-
-// Gallery
-
-.gallery-thumbs {
-  display: flex;
-  gap: 0.75rem;
-}
-
-.thumb {
-  width: 80px;
-  height: 60px;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  border: 2px solid var(--color-gray-200);
-  cursor: pointer;
-  padding: 0;
-  background: none;
-  transition: border-color 0.2s ease;
-  flex-shrink: 0;
-
-  &:hover {
-    border-color: var(--color-gray-400);
-  }
-
-  &.active {
-    border-color: var(--color-accent);
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-// Product info
 
 .product-desc {
   font-size: 1.0625rem;
-  color: var(--color-gray-600);
   line-height: 1.8;
 }
 
@@ -139,40 +29,9 @@ export default function ProductDetail({ product }: { product: Product }) {
   h3 {
     font-size: 1rem;
     font-weight: 700;
-    color: var(--color-gray-900);
     margin-bottom: 1rem;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--color-gray-200);
-  }
-}
-
-.specs-table {
-  width: 100%;
-  border-collapse: collapse;
-
-  tr {
-    border-bottom: 1px solid var(--color-gray-100);
-
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-
-  td {
-    padding: 0.75rem 0;
-    font-size: 0.9375rem;
-    vertical-align: top;
-  }
-
-  .spec-label {
-    color: var(--color-gray-500);
-    width: 55%;
-    padding-right: 1rem;
-  }
-
-  .spec-value {
-    color: var(--color-gray-900);
-    font-weight: 500;
+    border-bottom: 1px solid var(--color-border);
   }
 }
 
@@ -185,18 +44,18 @@ export default function ProductDetail({ product }: { product: Product }) {
 .service-badge {
   display: inline-block;
   padding: 0.5rem 1rem;
-  background: var(--color-gray-50);
-  border: 1px solid var(--color-gray-200);
+  background: var(--color-secondary);
+  border: 1px solid var(--color-border);
   border-radius: 100px;
   font-size: 0.875rem;
-  color: var(--color-gray-700);
+  color: var(--color-muted-foreground);
   text-decoration: none;
   transition: all 0.2s ease;
 
   &:hover {
     background: var(--color-primary);
     border-color: var(--color-primary);
-    color: var(--color-white);
+    color: var(--color-primary-foreground);
   }
 }
 
@@ -206,20 +65,10 @@ export default function ProductDetail({ product }: { product: Product }) {
   gap: 0.5rem;
 }
 
-.tag {
-  padding: 0.25rem 0.625rem;
-  background: var(--color-gray-100);
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--color-gray-600);
-}
-
 .cta-btn {
   align-self: flex-start;
 }
 
-// Not found
 .not-found {
   padding: 10rem 0 6rem;
   text-align: center;

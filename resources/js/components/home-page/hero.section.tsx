@@ -41,7 +41,7 @@ export default function HeroSection() {
 }
 
 /* Hero Content */
-.hero-content {
+.home-hero-content {
   position: relative;
   z-index: 1;
   display: flex;
@@ -76,7 +76,7 @@ export default function HeroSection() {
   border: 1px solid rgba(201, 168, 108, 0.3);
 }
 
-h1 {
+.hero-title {
   font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 400;
   line-height: 1.1;
@@ -214,18 +214,6 @@ h1 {
   }
 }
 
-@keyframes scrollPulse {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scaleY(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scaleY(1.1);
-  }
-}
-
 /* Trust Bar */
 .trust-bar {
   position: absolute;
@@ -283,13 +271,13 @@ h1 {
                 </div>
 
                 {/* <!-- Hero Content --> */}
-                <div className="hero-content container">
+                <div className="home-hero-content container">
                     <div className="hero-text">
                         <span className="hero-badge hidden md:block">
                             Над 20 години опит в металообработката
                         </span>
 
-                        <h1>
+                        <h1 className="hero-title">
                             Прецизност в детайла,
                             <br />
                             качество в резултата

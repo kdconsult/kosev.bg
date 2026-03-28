@@ -25,8 +25,8 @@ export default function WhyChooseUsSection() {
     return (
         <>
             <style>{`
-        .why-us {
-  background: var(--color-cream);
+.why-us {
+  background: var(--color-background);
 }
 
 .why-us-grid {
@@ -49,7 +49,7 @@ export default function WhyChooseUsSection() {
 
 .why-us-description {
   font-size: 1.0625rem;
-  color: var(--color-gray-500);
+  color: var(--color-muted-foreground);
   line-height: 1.8;
   margin-bottom: 3rem;
 }
@@ -82,13 +82,13 @@ export default function WhyChooseUsSection() {
     font-family: var(--font-sans);
     font-size: 1rem;
     font-weight: 600;
-    color: var(--color-gray-900);
+    color: var(--color-foreground);
     margin-bottom: 0.25rem;
   }
 
   p {
     font-size: 0.9375rem;
-    color: var(--color-gray-500);
+    color: var(--color-muted-foreground);
     line-height: 1.6;
   }
 }
@@ -123,7 +123,7 @@ export default function WhyChooseUsSection() {
   display: flex;
   flex-direction: column;
   padding: 1.5rem 2rem;
-  background: var(--color-white);
+  background: var(--color-card);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-xl);
 }
@@ -132,17 +132,17 @@ export default function WhyChooseUsSection() {
   font-family: var(--font-serif);
   font-size: 2.5rem;
   font-weight: 400;
-  color: var(--color-gray-900);
+  color: var(--color-foreground);
   line-height: 1;
 }
 
 .badge-text {
   font-size: 0.875rem;
-  color: var(--color-gray-500);
+  color: var(--color-muted-foreground);
   margin-top: 0.25rem;
 }
 
-        `}</style>
+`}</style>
             <section className="section why-us">
                 <div className="container">
                     <div className="why-us-grid">

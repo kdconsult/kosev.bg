@@ -22,8 +22,8 @@ export default function QualitySection() {
         <>
             <style>
                 {`
-                .quality {
-  background: var(--color-white);
+.quality {
+  background: var(--color-card);
 }
 
 .quality-grid {
@@ -67,7 +67,7 @@ export default function QualitySection() {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-xl);
-  border: 4px solid var(--color-white);
+  border: 4px solid var(--color-card);
 
   @media (max-width: 767px) {
     display: none;
@@ -94,7 +94,7 @@ export default function QualitySection() {
 
 .quality-intro {
   font-size: 1.0625rem;
-  color: var(--color-gray-500);
+  color: var(--color-muted-foreground);
   line-height: 1.8;
   margin-bottom: 2.5rem;
 }
@@ -114,9 +114,9 @@ export default function QualitySection() {
   align-items: flex-start;
   gap: 0.875rem;
   padding: 1.25rem;
-  background: var(--color-gray-50);
+  background: var(--color-secondary);
   border-radius: var(--radius-md);
-  border: 1px solid var(--color-gray-100);
+  border: 1px solid var(--color-border);
 }
 
 .cert-icon {
@@ -127,7 +127,7 @@ export default function QualitySection() {
   height: 36px;
   border-radius: var(--radius-sm);
   background: var(--color-brand-gold);
-  color: var(--color-white);
+  color: var(--color-primary-foreground);
   flex-shrink: 0;
 }
 
@@ -140,12 +140,12 @@ export default function QualitySection() {
 .cert-name {
   font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--color-gray-900);
+  color: var(--color-foreground);
 }
 
 .cert-desc {
   font-size: 0.8125rem;
-  color: var(--color-gray-500);
+  color: var(--color-muted-foreground);
 }
 
 .tech-features {
@@ -155,7 +155,7 @@ export default function QualitySection() {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-gray-400);
+    color: var(--color-muted-foreground);
     margin-bottom: 1rem;
   }
 }
@@ -170,9 +170,9 @@ export default function QualitySection() {
   display: inline-flex;
   padding: 0.5rem 1rem;
   font-size: 0.8125rem;
-  color: var(--color-gray-700);
-  background: var(--color-white);
-  border: 1px solid var(--color-gray-200);
+  color: var(--color-foreground);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
   border-radius: 100px;
 }
 

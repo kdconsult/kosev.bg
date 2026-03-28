@@ -58,8 +58,8 @@ export default function CapabilitiesSection() {
     return (
         <>
             <style>{`
-        .capabilities {
-  background: var(--color-white);
+.capabilities {
+  background: var(--color-card);
 }
 
 .capabilities-grid {
@@ -80,8 +80,8 @@ export default function CapabilitiesSection() {
   flex-direction: column;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--color-white);
-  border: 1px solid var(--color-gray-200);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
@@ -95,7 +95,7 @@ export default function CapabilitiesSection() {
 
     .capability-number {
       background: var(--color-brand-gold);
-      color: var(--color-white);
+      color: var(--color-primary-foreground);
     }
 
     .capability-link svg {
@@ -173,7 +173,7 @@ export default function CapabilitiesSection() {
   font-family: var(--font-serif);
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--color-gray-800);
+  color: var(--color-foreground);
   transition: all 0.3s ease;
 }
 
@@ -188,16 +188,16 @@ export default function CapabilitiesSection() {
   flex: 1;
 }
 
-h3 {
+.capability-content h3 {
   font-size: 1.25rem;
-  color: var(--color-gray-900);
+  color: var(--color-foreground);
   margin-bottom: 0.625rem;
   line-height: 1.3;
 }
 
-p {
+.capability-content p {
   font-size: 0.9375rem;
-  color: var(--color-gray-500);
+  color: var(--color-muted-foreground);
   line-height: 1.7;
   margin-bottom: 1.125rem;
 }
@@ -211,7 +211,7 @@ p {
     position: relative;
     padding-left: 1rem;
     font-size: 0.875rem;
-    color: var(--color-gray-600);
+    color: var(--color-muted-foreground);
     margin-bottom: 0.4rem;
 
     &::before {
@@ -233,17 +233,17 @@ p {
   gap: 0.5rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-gray-900);
+  color: var(--color-foreground);
   margin-top: auto;
   padding-top: 1.25rem;
-  border-top: 1px solid var(--color-gray-100);
+  border-top: 1px solid var(--color-border);
 
   svg {
     transition: transform 0.3s ease;
   }
 }
 
-        `}</style>
+`}</style>
             <section className="section capabilities">
                 <div className="container">
                     <div className="section-header">
