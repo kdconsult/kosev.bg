@@ -1,8 +1,8 @@
-import { Head, Link } from '@inertiajs/react';
-import { certificatesData } from '../data/certificates';
 import { contacts } from '@/routes';
+import type { Certificate } from '@/types';
+import { Head, Link } from '@inertiajs/react';
 
-export default function Certificates() {
+export default function Certificates({ certificates }: { certificates: Certificate[] }) {
     return (
         <>
             <Head title="Сертификати" />
@@ -322,11 +322,11 @@ export default function Certificates() {
             <section className="section certificates-list">
                 <div className="container">
                     <div className="certs-grid">
-                        {certificatesData.map((cert, idx) => (
-                            <div className="cert-card" key={idx}>
+                        {certificates.map((cert) => (
+                            <div className="cert-card" key={cert.slug}>
                                 <div className="cert-image">
                                     <img
-                                        src={cert.imagePath}
+                                        src={cert.image_path}
                                         alt={cert.name}
                                         loading="lazy"
                                     />
@@ -335,7 +335,7 @@ export default function Certificates() {
                                     <h3>{cert.name}</h3>
                                     <p>{cert.description}</p>
                                     <Link
-                                        href={cert.pdfPath}
+                                        href={cert.pdf_path}
                                         download
                                         className="btn-download"
                                     >

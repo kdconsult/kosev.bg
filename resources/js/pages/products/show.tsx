@@ -1,15 +1,13 @@
-import { productsData } from '@/data/products';
 import { cn } from '@/lib/utils';
 import { contacts, services } from '@/routes';
 import { index } from '@/routes/products';
+import type { Product } from '@/types';
 import { Head, Link } from '@inertiajs/react';
-import { ChevronLeft } from 'lucide-react';
 import { useState } from 'react';
 
-export default function ProductDetail({ product }: { product: string }) {
-    const [selected] = useState(productsData.find((p) => p.id === product));
+export default function ProductDetail({ product }: { product: Product }) {
     const [activeImageIndex, setActiveImageIndex] = useState(0);
-    const activeImage = selected ? selected.images[activeImageIndex] : '';
+    const activeImage = product.images[activeImageIndex]?.path ?? '';
     return (
         <>
             <Head title="Продукт" />
@@ -232,139 +230,106 @@ export default function ProductDetail({ product }: { product: string }) {
 }
 `}</style>
 
-            {!selected ? (
-                <section className="not-found">
-                    <div className="container">
-                        <h1>Продуктът не е намерен</h1>
-                        <Link href={index()} className="btn btn-primary">
-                            <ChevronLeft
-                                size={18}
-                                style={{ marginRight: '0.5rem' }}
-                            />
-                            Обратно към продуктите
+            <>
+                <section className="page-hero">
+                    <div className="hero-bg">
+                        <img src={product.images[0]?.path} alt={product.title} />
+                        <div className="hero-overlay"></div>
+                    </div>
+                    <div className="hero-content container">
+                        <Link href={index()} className="back-link">
+                            ← Всички продукти
                         </Link>
+                        <span className="hero-badge">{product.category.name}</span>
+                        <h1>{product.title}</h1>
                     </div>
                 </section>
-            ) : (
-                <>
-                    <section className="page-hero">
-                        <div className="hero-bg">
-                            <img
-                                src={selected.images[0]}
-                                alt={selected.title}
-                            />
-                            <div className="hero-overlay"></div>
-                        </div>
-                        <div className="hero-content container">
-                            <Link href={index()} className="back-link">
-                                ← Всички продукти
-                            </Link>
-                            <span className="hero-badge">
-                                {selected.category}
-                            </span>
-                            <h1>{selected.title}</h1>
-                        </div>
-                    </section>
-                    <section className="section product-detail">
-                        <div className="container">
-                            <div className="detail-grid">
-                                <div className="gallery">
-                                    <div className="mb-4 aspect-4/3 overflow-hidden rounded-xl">
-                                        <img
-                                            src={activeImage}
-                                            alt={selected.title}
-                                            className="h-full w-full object-cover"
-                                        />
-                                    </div>
-                                    <div className="flex gap-3">
-                                        {selected.images.map((img, index) => (
-                                            <button
-                                                className={cn(
-                                                    'thumb',
-                                                    activeImageIndex ===
-                                                        index && 'active',
-                                                )}
-                                                key={index}
-                                                onClick={() =>
-                                                    setActiveImageIndex(index)
-                                                }
-                                            >
-                                                <img
-                                                    src={img}
-                                                    alt={
-                                                        selected.title +
-                                                        ' ' +
-                                                        (index + 1)
-                                                    }
-                                                    loading="lazy"
-                                                />
-                                            </button>
-                                        ))}
-                                    </div>
+                <section className="section product-detail">
+                    <div className="container">
+                        <div className="detail-grid">
+                            <div className="gallery">
+                                <div className="mb-4 aspect-4/3 overflow-hidden rounded-xl">
+                                    <img
+                                        src={activeImage}
+                                        alt={product.title}
+                                        className="h-full w-full object-cover"
+                                    />
                                 </div>
-
-                                <div className="flex flex-col gap-8">
-                                    <p className="product-desc">
-                                        {selected.description}
-                                    </p>
-
-                                    <div className="specs-block">
-                                        <h3>Технически характеристики</h3>
-                                        <table className="specs-table">
-                                            <tbody>
-                                                {selected.specs.map(
-                                                    (spec, index) => (
-                                                        <tr key={index}>
-                                                            <td className="spec-label">
-                                                                {spec.label}
-                                                            </td>
-                                                            <td className="spec-value">
-                                                                {spec.value}
-                                                            </td>
-                                                        </tr>
-                                                    ),
-                                                )}
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <div className="services-block">
-                                        <h3>Свързани услуги</h3>
-                                        <div className="services-badges">
-                                            {selected.relatedServices.map(
-                                                (service, index) => (
-                                                    <Link
-                                                        href={services()}
-                                                        className="service-badge"
-                                                        key={index}
-                                                    >
-                                                        {service}
-                                                    </Link>
-                                                ),
+                                <div className="flex gap-3">
+                                    {product.images.map((img, idx) => (
+                                        <button
+                                            className={cn(
+                                                'thumb',
+                                                activeImageIndex === idx && 'active',
                                             )}
-                                        </div>
-                                    </div>
-
-                                    <div className="tags-block">
-                                        {selected.tags.map((tag, index) => (
-                                            <span className="tag" key={index}>
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-
-                                    <Link
-                                        href={contacts()}
-                                        className="btn btn-accent btn-lg cta-btn"
-                                    >
-                                        Изпрати запитване за този продукт
-                                    </Link>
+                                            key={img.id}
+                                            onClick={() => setActiveImageIndex(idx)}
+                                        >
+                                            <img
+                                                src={img.path}
+                                                alt={product.title + ' ' + (idx + 1)}
+                                                loading="lazy"
+                                            />
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
+
+                            <div className="flex flex-col gap-8">
+                                <p className="product-desc">{product.description}</p>
+
+                                <div className="specs-block">
+                                    <h3>Технически характеристики</h3>
+                                    <table className="specs-table">
+                                        <tbody>
+                                            {product.specs.map((spec, idx) => (
+                                                <tr key={idx}>
+                                                    <td className="spec-label">
+                                                        {spec.label}
+                                                    </td>
+                                                    <td className="spec-value">
+                                                        {spec.value}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div className="services-block">
+                                    <h3>Свързани услуги</h3>
+                                    <div className="services-badges">
+                                        {product.services.map((service) => (
+                                            <Link
+                                                href={services()}
+                                                className="service-badge"
+                                                key={service.slug}
+                                            >
+                                                {service.name}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="tags-block">
+                                    {product.tags.map((tag) => (
+                                        <span className="tag" key={tag.slug}>
+                                            {tag.name}
+                                        </span>
+                                    ))}
+                                </div>
+
+                                <Link
+                                    href={contacts()}
+                                    className="btn btn-accent btn-lg cta-btn"
+                                >
+                                    Изпрати запитване за този продукт
+                                </Link>
+                            </div>
                         </div>
-                    </section>
-                </>
-            )}
+                    </div>
+                </section>
+            </>
         </>
     );
 }

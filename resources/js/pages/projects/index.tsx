@@ -1,29 +1,21 @@
 import { Head, Link } from '@inertiajs/react';
 import { contacts } from '@/routes';
-import {index, show} from '@/routes/projects';
-import { projectsData } from '@/data/projects';
+import { index, show } from '@/routes/projects';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import type { Category, Project } from '@/types';
 
-export default function ProjectsList() {
+export default function ProjectsList({ projects, categories }: { projects: Project[]; categories: Category[] }) {
     const [activeFilter, setActiveFilter] = useState('all');
     const filters = [
         { id: 'all', label: 'Всички' },
-        { id: 'automotive', label: 'Автомобилна' },
-        { id: 'machinery', label: 'Машиностроене' },
-        { id: 'construction', label: 'Строителство' },
-        { id: 'furniture', label: 'Мебели' },
-        { id: 'energy', label: 'Енергетика' },
+        ...categories.map((c) => ({ id: c.slug, label: c.name })),
     ];
-
-    const allProjects = projectsData;
 
     const filteredProjects =
         activeFilter === 'all'
-            ? allProjects
-            : allProjects.filter(
-                  (project) => project.category === activeFilter,
-              );
+            ? projects
+            : projects.filter((project) => project.category.slug === activeFilter);
 
     return (
         <>
@@ -299,12 +291,12 @@ export default function ProjectsList() {
                         {filteredProjects.map((project) => (
                             <Link
                                 className="project-card"
-                                href={show(project.id)}
-                                key={project.id}
+                                href={show(project.slug)}
+                                key={project.slug}
                             >
                                 <div className="project-image">
                                     <img
-                                        src={project.image}
+                                        src={project.cover_image?.path}
                                         alt={project.title}
                                         loading="lazy"
                                     />
@@ -319,8 +311,8 @@ export default function ProjectsList() {
                                     <p>{project.description}</p>
                                     <div className="project-tags">
                                         {project.tags.map((tag) => (
-                                            <span className="tag" key={tag}>
-                                                {tag}
+                                            <span className="tag" key={tag.slug}>
+                                                {tag.name}
                                             </span>
                                         ))}
                                     </div>

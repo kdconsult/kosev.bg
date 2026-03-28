@@ -1,14 +1,17 @@
 <?php
 
+use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Features;
 
-Route::inertia('/', 'welcome')->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::inertia('services', 'services')->name('services');
-Route::resource('projects', \App\Http\Controllers\ProjectController::class)->only(['index', 'show']);
-Route::resource('products', \App\Http\Controllers\ProductController::class)->only(['index', 'show']);
+Route::resource('projects', ProjectController::class)->only(['index', 'show']);
+Route::resource('products', ProductController::class)->only(['index', 'show']);
 Route::inertia('about', 'about')->name('about');
-Route::inertia('certificates', 'certificates')->name('certificates');
+Route::get('certificates', [CertificateController::class, 'index'])->name('certificates');
 Route::inertia('contacts', 'contacts')->name('contacts');
 
 Route::middleware(['auth', 'verified'])->group(function () {

@@ -2,26 +2,20 @@ import { Head, Link } from '@inertiajs/react';
 import { index, show } from '@/routes/products';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
-import { productsData } from '@/data/products';
 import { contacts } from '@/routes';
+import type { Category, Product } from '@/types';
 
-export default function ProductList() {
-    const [filters] = useState([
-    { id: 'all', label: 'Всички' },
-    { id: 'Лазерно рязане', label: 'Лазерно рязане' },
-    { id: 'Огъване', label: 'Огъване' },
-    { id: 'Заваряване', label: 'Заваряване' },
-    { id: 'Конструкции', label: 'Конструкции' },
-    { id: 'INOX', label: 'INOX' },
-    { id: 'Повърхностна обработка', label: 'Повърхностна обработка' }
-  ]);
+export default function ProductList({ products, categories }: { products: Product[]; categories: Category[] }) {
     const [activeFilter, setActiveFilter] = useState('all');
-    const [products] = useState(productsData);
+    const filters = [
+        { id: 'all', label: 'Всички' },
+        ...categories.map((c) => ({ id: c.slug, label: c.name })),
+    ];
 
     const filteredProducts =
         activeFilter === 'all'
             ? products
-            : products.filter((p) => p.category === activeFilter);
+            : products.filter((p) => p.category.slug === activeFilter);
 
     return (
         <>
@@ -292,18 +286,18 @@ export default function ProductList() {
                         {filteredProducts.map((product) => (
                             <Link
                                 className="product-card"
-                                href={show(product.id)}
-                                key={product.id}
+                                href={show(product.slug)}
+                                key={product.slug}
                             >
                                 <div className="product-image">
                                     <img
-                                        src={product.images[0]}
+                                        src={product.cover_image?.path}
                                         alt={product.title}
                                         loading="lazy"
                                     />
                                     <div className="product-overlay">
                                         <span className="product-category">
-                                            {product.category}
+                                            {product.category.name}
                                         </span>
                                     </div>
                                 </div>
@@ -312,8 +306,8 @@ export default function ProductList() {
                                     <p>{product.description}</p>
                                     <div className="product-tags">
                                         {product.tags.slice(0, 3).map((tag) => (
-                                            <span className="tag" key={tag}>
-                                                {tag}
+                                            <span className="tag" key={tag.slug}>
+                                                {tag.name}
                                             </span>
                                         ))}
                                     </div>

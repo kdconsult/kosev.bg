@@ -1,21 +1,18 @@
-import { projectsData } from '@/data/projects';
 import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
 import { index as projectsIndex } from '@/routes/projects';
+import type { Project } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { ChevronLeft } from 'lucide-react';
 import { useState } from 'react';
 
-export default function ProjectDetail({ project }: { project: number }) {
-    const [selected] = useState(
-        projectsData.find((p) => p.id === Number(project)),
-    );
+export default function ProjectDetail({ project }: { project: Project }) {
     const [activeImageIndex, setActiveImageIndex] = useState(0);
-    const activeImage = selected ? selected.images[activeImageIndex] : '';
+    const activeImage = project.images[activeImageIndex]?.path ?? '';
 
     return (
         <>
-            <Head title="Проект - Шаси компоненти" />
+            <Head title={project.title} />
 
             {/* Main content would go here - images, description, specs, etc. */}
             <style>{`
@@ -249,128 +246,97 @@ export default function ProjectDetail({ project }: { project: number }) {
 }
 
       }`}</style>
-            {!selected ? (
-                <section className="not-found">
-                    <div className="container">
-                        <h1>Проектът не е намерен</h1>
-                        <Link
-                            href={projectsIndex()}
-                            className="btn btn-primary"
-                        >
-                            <ChevronLeft size={18} />
-                            Обратно към проектите
+            <>
+                <section className="page-hero">
+                    <div className="hero-bg">
+                        <img
+                            src={project.images[0]?.path}
+                            alt={project.title}
+                        />
+                        <div className="hero-overlay"></div>
+                    </div>
+                    <div className="hero-content container">
+                        <Link href={projectsIndex()} className="back-link">
+                            ← Всички проекти
                         </Link>
+                        <span className="hero-badge">{project.industry}</span>
+                        <h1>{project.title}</h1>
                     </div>
                 </section>
-            ) : (
-                <>
-                    <section className="page-hero">
-                        <div className="hero-bg">
-                            <img
-                                src={selected.images[0]}
-                                alt={selected.title}
-                            />
-                            <div className="hero-overlay"></div>
-                        </div>
-                        <div className="hero-content container">
-                            <Link href={projectsIndex()} className="back-link">
-                                ← Всички проекти
-                            </Link>
-                            <span className="hero-badge">
-                                {selected.industry}
-                            </span>
-                            <h1>{selected.title}</h1>
-                        </div>
-                    </section>
-                    <section className="section project-detail">
-                        <div className="container">
-                            <div className="detail-grid">
-                                <div className="gallery">
-                                    <div className="gallery-main">
-                                        <img
-                                            src={activeImage}
-                                            alt={selected.title}
-                                        />
-                                    </div>
-                                    <div className="gallery-thumbs">
-                                        {selected.images.map((img, index) => (
-                                            <button
-                                                className={cn(
-                                                    'thumb',
-                                                    activeImageIndex ===
-                                                        index && 'active',
-                                                )}
-                                                key={index}
-                                                onClick={() =>
-                                                    setActiveImageIndex(index)
-                                                }
-                                            >
-                                                <img
-                                                    src={img}
-                                                    alt={
-                                                        selected.title +
-                                                        ' ' +
-                                                        (index + 1)
-                                                    }
-                                                    loading="lazy"
-                                                />
-                                            </button>
-                                        ))}
-                                    </div>
+                <section className="section project-detail">
+                    <div className="container">
+                        <div className="detail-grid">
+                            <div className="gallery">
+                                <div className="gallery-main">
+                                    <img src={activeImage} alt={project.title} />
                                 </div>
-
-                                <div className="project-info">
-                                    <p className="project-desc">
-                                        {selected.description}
-                                    </p>
-
-                                    <div className="meta-row">
-                                        <span className="meta-label">
-                                            Индустрия
-                                        </span>
-                                        <span className="meta-value industry-badge">
-                                            {selected.industry}
-                                        </span>
-                                    </div>
-
-                                    <div className="specs-block">
-                                        <h3>Технически детайли</h3>
-                                        <table className="specs-table">
-                                            <tbody>
-                                                {selected.specs.map((spec) => (
-                                                    <tr key={spec.label}>
-                                                        <td className="spec-label">
-                                                            {spec.label}
-                                                        </td>
-                                                        <td className="spec-value">
-                                                            {spec.value}
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <div className="tags-block">
-                                        {selected.tags.map((tag) => (
-                                            <span className="tag" key={tag}>
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-
-                                    <Link
-                                        href={contacts()}
-                                        className="btn btn-accent btn-lg cta-btn"
-                                    >
-                                        Изпрати запитване за подобен проект
-                                    </Link>
+                                <div className="gallery-thumbs">
+                                    {project.images.map((img, idx) => (
+                                        <button
+                                            className={cn(
+                                                'thumb',
+                                                activeImageIndex === idx && 'active',
+                                            )}
+                                            key={img.id}
+                                            onClick={() => setActiveImageIndex(idx)}
+                                        >
+                                            <img
+                                                src={img.path}
+                                                alt={project.title + ' ' + (idx + 1)}
+                                                loading="lazy"
+                                            />
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
+
+                            <div className="project-info">
+                                <p className="project-desc">{project.description}</p>
+
+                                <div className="meta-row">
+                                    <span className="meta-label">Индустрия</span>
+                                    <span className="meta-value industry-badge">
+                                        {project.industry}
+                                    </span>
+                                </div>
+
+                                <div className="specs-block">
+                                    <h3>Технически детайли</h3>
+                                    <table className="specs-table">
+                                        <tbody>
+                                            {project.specs.map((spec) => (
+                                                <tr key={spec.label}>
+                                                    <td className="spec-label">
+                                                        {spec.label}
+                                                    </td>
+                                                    <td className="spec-value">
+                                                        {spec.value}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div className="tags-block">
+                                    {project.tags.map((tag) => (
+                                        <span className="tag" key={tag.slug}>
+                                            {tag.name}
+                                        </span>
+                                    ))}
+                                </div>
+
+                                <Link
+                                    href={contacts()}
+                                    className="btn btn-accent btn-lg cta-btn"
+                                >
+                                    Изпрати запитване за подобен проект
+                                </Link>
+                            </div>
                         </div>
-                    </section>
-                </>
-            )}
+                    </div>
+                </section>
+            </>
         </>
     );
 }

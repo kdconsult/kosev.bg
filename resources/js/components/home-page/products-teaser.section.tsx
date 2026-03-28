@@ -1,11 +1,8 @@
+import { index as products, show } from '@/routes/products';
+import type { Product } from '@/types';
 import { Link } from '@inertiajs/react';
 
-import { productsData } from '@/data/products';
-import { index as products } from '@/routes/products';
-
-const featuredProducts = productsData.slice(0, 3);
-
-export default function ProductsTeaserSection() {
+export default function ProductsTeaserSection({ featuredProducts }: { featuredProducts: Product[] }) {
     return (
         <>
             <style>{`
@@ -146,18 +143,18 @@ export default function ProductsTeaserSection() {
                         {featuredProducts.map((product) => (
                             <Link
                                 className="product-card"
-                                href={`/products/${product.id}`}
-                                key={product.id}
+                                href={show(product.slug)}
+                                key={product.slug}
                             >
                                 <div className="product-image">
                                     <img
-                                        src={product.images[0]}
+                                        src={product.cover_image?.path}
                                         alt={product.title}
                                         loading="lazy"
                                     />
                                     <div className="product-overlay">
                                         <span className="product-category">
-                                            {product.category}
+                                            {product.category.name}
                                         </span>
                                     </div>
                                 </div>

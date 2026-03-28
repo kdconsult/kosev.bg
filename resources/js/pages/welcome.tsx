@@ -1,5 +1,3 @@
-import { Head } from '@inertiajs/react';
-
 import CapabilitiesSection from '@/components/home-page/capabilities.section';
 import CtaFormSection from '@/components/home-page/cta-form.section';
 import HeroSection from '@/components/home-page/hero.section';
@@ -8,14 +6,16 @@ import ProductsTeaserSection from '@/components/home-page/products-teaser.sectio
 import QualitySection from '@/components/home-page/quality.section';
 import TestimonialsSection from '@/components/home-page/testimonials.section';
 import WhyChooseUsSection from '@/components/home-page/why-choose-us.section';
+import type { Product } from '@/types';
+import { Head } from '@inertiajs/react';
 
-export default function Welcome() {
+export default function Welcome({ featuredProducts }: { featuredProducts: Product[] }) {
     return (
         <>
-            <Head title="Начало" />                
+            <Head title="Начало" />
             <HeroSection />
             <CapabilitiesSection />
-            <ProductsTeaserSection />
+            <ProductsTeaserSection featuredProducts={featuredProducts} />
             <WhyChooseUsSection />
             <IndustriesSection />
             <QualitySection />
