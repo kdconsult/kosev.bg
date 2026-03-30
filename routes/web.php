@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CertificatesController as AdminCertificateController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
@@ -16,6 +17,7 @@ Route::inertia('contacts', 'contacts')->name('contacts');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
+        Route::resource('certificates', AdminCertificateController::class);
 });
 
 require __DIR__.'/settings.php';
