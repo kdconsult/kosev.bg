@@ -106,6 +106,6 @@ export default function Login({
 }
 
 Login.layout = {
-    title: 'Log in to your account',
+    title: 'Log in',
     description: 'Enter your email and password below to log in',
 };
