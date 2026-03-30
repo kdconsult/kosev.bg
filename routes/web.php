@@ -23,6 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('projects', AdminProjectController::class);
         Route::resource('products', AdminProductController::class);
         Route::resource('certificates', AdminCertificateController::class);
+        Route::post('delete-media', \App\Http\Controllers\Admin\DeleteMediaController::class)->name('delete-media');
     });
 });
 
