@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CertificatesController as AdminCertificateController;
+use App\Http\Controllers\Admin\ProjectsController as AdminProjectController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
@@ -17,6 +18,7 @@ Route::inertia('contacts', 'contacts')->name('contacts');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
+        Route::resource('projects', AdminProjectController::class);
         Route::resource('certificates', AdminCertificateController::class);
 });
 
