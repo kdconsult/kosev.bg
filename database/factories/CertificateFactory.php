@@ -22,8 +22,6 @@ class CertificateFactory extends Factory
         return [
             'name' => ['bg' => $name, 'en' => $name],
             'description' => ['bg' => $this->faker->sentence(), 'en' => $this->faker->sentence()],
-            'image_path' => $this->faker->imageUrl(440, 550),
-            'pdf_path' => $this->faker->url(),
             'sort_order' => 0,
         ];
     }
