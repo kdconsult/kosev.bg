@@ -164,7 +164,7 @@ export default function ProductList({ products, categories }: { products: Produc
                             >
                                 <div className="product-image">
                                     <img
-                                        src={product.cover_image?.originalUrl}
+                                        src={product.cover_image?.thumbUrl}
                                         alt={product.title}
                                         loading="lazy"
                                     />
