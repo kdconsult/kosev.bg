@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Certificate;
 use App\Models\Product;
 use App\Models\Project;
 use Carbon\CarbonImmutable;
@@ -32,9 +33,11 @@ class AppServiceProvider extends ServiceProvider
 
         JsonResource::withoutWrapping();
 
+        // Todo - investigate why we need this and if we can remove it. It seems to be required for the polymorphic media relations, but it's not clear why it doesn't work without it.
         Relation::enforceMorphMap([
             'project' => Project::class,
             'product' => Product::class,
+            'certificate' => Certificate::class,
         ]);
 
         Model::preventLazyLoading(! app()->isProduction());

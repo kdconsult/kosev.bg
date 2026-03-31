@@ -7,12 +7,12 @@ import {
     home,
     services,
     about,
-    certificates,
     contacts,
     dashboard,
 } from '@/routes';
 import { index as projectsIndex } from '@/routes/projects';
 import { index as products } from '@/routes/products';
+import {index as certificates} from '@/routes/certificates';
 import type { BreadcrumbItem } from '@/types';
 import { useEffect, useState } from 'react';
 import { LayoutDashboardIcon } from 'lucide-react';

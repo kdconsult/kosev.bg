@@ -14,7 +14,7 @@ Route::inertia('services', 'services')->name('services');
 Route::resource('projects', ProjectController::class)->only(['index', 'show']);
 Route::resource('products', ProductController::class)->only(['index', 'show']);
 Route::inertia('about', 'about')->name('about');
-Route::get('certificates', [CertificateController::class, 'index'])->name('certificates');
+Route::resource('certificates', CertificateController::class)->only(['index', 'show']);
 Route::inertia('contacts', 'contacts')->name('contacts');
 
 Route::middleware(['auth', 'verified'])->group(function () {
