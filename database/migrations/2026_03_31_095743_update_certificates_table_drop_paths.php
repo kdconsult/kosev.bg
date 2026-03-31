@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('certificates', function (Blueprint $table) {
             $table->boolean('active')->default(true)->after('sort_order');
-            $table->dropColumn(['image_path', 'pdf_path']);            
+            $table->dropColumn(['image_path', 'pdf_path']);
         });
     }
 

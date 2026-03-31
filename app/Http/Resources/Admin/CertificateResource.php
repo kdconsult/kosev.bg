@@ -16,6 +16,7 @@ class CertificateResource extends JsonResource
     {
         $locale = app()->getLocale();
         $media = $this->getFirstMedia('pdfs');
+
         return [
             'id' => $this->id,
             'slug' => $this->slug,

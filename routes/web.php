@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CertificatesController as AdminCertificateController;
+use App\Http\Controllers\Admin\DeleteMediaController;
 use App\Http\Controllers\Admin\ProductsController as AdminProductController;
 use App\Http\Controllers\Admin\ProjectsController as AdminProjectController;
 use App\Http\Controllers\CertificateController;
@@ -23,7 +24,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('projects', AdminProjectController::class);
         Route::resource('products', AdminProductController::class);
         Route::resource('certificates', AdminCertificateController::class);
-        Route::post('delete-media', \App\Http\Controllers\Admin\DeleteMediaController::class)->name('delete-media');
+        Route::post('delete-media', DeleteMediaController::class)->name('delete-media');
     });
 });
 

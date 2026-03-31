@@ -21,6 +21,7 @@ class CertificateController extends Controller
     public function show(Certificate $certificate)
     {
         $media = $certificate->getFirstMedia('pdfs');
+
         return $media;
     }
 }

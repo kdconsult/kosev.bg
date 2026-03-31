@@ -38,7 +38,6 @@ return [
             'report' => false,
         ],
 
-        
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -47,7 +46,7 @@ return [
             'throw' => false,
             'report' => false,
         ],
-            
+
         'media' => [
             'driver' => 'local',
             'root' => storage_path('app/public/media'),
