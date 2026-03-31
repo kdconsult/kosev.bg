@@ -12,7 +12,7 @@ class UpdateCertificateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,26 @@ class UpdateCertificateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'array'],
+            'name.bg' => ['required', 'string'],
+            'description' => ['required', 'array'],
+            'description.bg' => ['required', 'string'],
+            'active' => ['required', 'boolean'],
+            'pdf' => ['nullable', 'file', 'mimes:pdf'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'The name field is required.',
+            'name.bg.required' => 'The name in Bulgarian is required.',
+            'description.required' => 'The description field is required.',
+            'description.bg.required' => 'The description in Bulgarian is required.',
+            'active.required' => 'The active field is required.',
+            'active.boolean' => 'The active field must be true or false.',
+            'pdf.file' => 'The PDF field must be a file.',
+            'pdf.mimes' => 'The PDF field must be a PDF file.',
         ];
     }
 }

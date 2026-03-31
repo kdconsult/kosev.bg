@@ -50,9 +50,10 @@ export interface Product {
 }
 
 export interface Certificate {
+    id: number;
     slug: string;
     name: string;
     description: string;
-    image_path: string;
-    pdf_path: string;
+    imagePath: string;
+    pdfPath: string;
 }
