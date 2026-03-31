@@ -13,14 +13,17 @@ interface TagSuggestion {
 interface Props {
     categories: Category[];
     availableTags: TagSuggestion[];
+    availableServces: TagSuggestion[];
 }
 
-export default function Create({ categories, availableTags }: Props) {
+export default function Create({ categories, availableTags, availableServces }: Props) {
     const { data, setData, post, processing, errors } = useForm({
         title: { bg: '', en: '' },
         description: { bg: '', en: '' },
         category_slug: '',
         tags: [] as string[],
+        services: [] as string[],
+        specs: [] as { label: { bg: string; en: string }; value: { bg: string; en: string } }[],
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -43,6 +46,7 @@ export default function Create({ categories, availableTags }: Props) {
                         processing={processing}
                         categories={categories}
                         availableTags={availableTags}
+                        availableServces={availableServces}
                         onSubmit={handleSubmit}
                         submitLabel="Create Product"
                         cancelHref={index()}

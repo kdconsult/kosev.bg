@@ -24,9 +24,21 @@ class StoreProductRequest extends FormRequest
             'description' => ['required', 'array'],
             'description.bg' => ['required', 'string'],
             'description.en' => ['nullable', 'string'],
+            'coverImage' => ['required', 'image', 'max:2048'],
+            'images' => ['nullable', 'array'],
+            'images.*' => ['image', 'max:2048'],
             'category_slug' => ['required', 'string', 'exists:categories,slug'],
             'tags' => ['nullable', 'array'],
             'tags.*' => ['string', 'max:100'],
+            'services' => ['nullable', 'array'],
+            'services.*' => ['string', 'max:255'],
+            'specs' => ['nullable', 'array'],
+            'specs.*.label' => ['required', 'array'],
+            'specs.*.label.bg' => ['required', 'string', 'max:255'],
+            'specs.*.label.en' => ['nullable', 'string', 'max:255'],
+            'specs.*.value' => ['required', 'array'],
+            'specs.*.value.bg' => ['required', 'string', 'max:255'],
+            'specs.*.value.en' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Resources\Admin\ProductResource as AdminProductResource;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Service;
 use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -41,6 +42,10 @@ class ProductsController extends Controller
                 'slug' => $tag->slug,
                 'name' => $tag->getTranslation('name', 'bg') ?: $tag->getTranslation('name', 'en'),
             ])->values(),
+            'availableServces' => Service::all()->map(fn ($service) => [
+                'slug' => $service->slug,
+                'name' => $service->getTranslation('name', 'bg') ?: $service->getTranslation('name', 'en'),
+            ])->values(),
         ]);
     }
 
@@ -54,11 +59,32 @@ class ProductsController extends Controller
             'description' => $request->validated('description'),
         ]);
 
+        if ($request->has('coverImage') && $request->file('coverImage')->isValid()) {
+            $product->addMediaFromRequest('coverImage')
+                ->toMediaCollection('cover_image', 'media');
+        }
+
+        if ($request->has('images')) {
+            $product->addMultipleMediaFromRequest(['images'])
+                ->each(fn ($fileAdder) => $fileAdder->toMediaCollection('images', 'media'));
+        }
+
         if ($request->has('tags')) {
             $tagIds = collect($request->validated('tags'))->map(fn (string $name) => (Tag::where('name->bg', $name)->first()
                     ?? Tag::create(['name' => ['bg' => $name, 'en' => $name]]))->id);
 
             $product->tags()->sync($tagIds->all());
+        }
+
+        $serviceIds = Service::whereIn('name->bg', $request->validated('services', []) ?? [])->pluck('id');
+        $product->services()->sync($serviceIds->all());
+
+        foreach ($request->validated('specs', []) as $i => $specData) {
+            $product->specs()->create([
+                'label' => $specData['label'],
+                'value' => $specData['value'],
+                'sort_order' => $i,
+            ]);
         }
 
         return redirect()->route('admin.products.index')
@@ -72,9 +98,18 @@ class ProductsController extends Controller
 
     public function edit(Product $product): Response
     {
+        $cover = $product->getFirstMedia('cover_image');
+
         return Inertia::render('admin/products/edit', [
-            'product' => new AdminProductResource($product->load(['category', 'tags'])),
+            'product' => new AdminProductResource($product->load(['category', 'services', 'tags', 'specs'])),
             'categories' => CategoryResource::collection(Category::forProducts()->get()),
+            'coverImageUrl' => $cover?->getUrl() ?? null,
+            'coverImageAlt' => $cover?->getCustomProperty('alt') ?? $cover->name ?? null,
+            'images' => $product->getMedia('images')->map(fn ($media) => ['url' => $media->getUrl('thumb'), 'alt' => $media->getCustomProperty('alt') ?? $product->title, 'id' => $media->id]),
+            'availableServces' => Service::all()->map(fn ($service) => [
+                'slug' => $service->slug,
+                'name' => $service->getTranslation('name', 'bg') ?: $service->getTranslation('name', 'en'),
+            ])->values(),
             'availableTags' => Tag::all()->map(fn ($tag) => [
                 'slug' => $tag->slug,
                 'name' => $tag->getTranslation('name', 'bg') ?: $tag->getTranslation('name', 'en'),
@@ -84,6 +119,16 @@ class ProductsController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
+        if ($request->has('coverImage') && $request->file('coverImage')->isValid()) {
+            $product->addMediaFromRequest('coverImage')
+                ->toMediaCollection('cover_image', 'media');
+        }
+
+        if ($request->has('images')) {
+            $product->addMultipleMediaFromRequest(['images'])
+                ->each(fn ($fileAdder) => $fileAdder->toMediaCollection('images', 'media'));
+        }
+
         $category = Category::where('slug', $request->validated('category_slug'))->firstOrFail();
 
         $product->update([
@@ -97,12 +142,26 @@ class ProductsController extends Controller
 
         $product->tags()->sync($tagIds->all());
 
+        $serviceIds = Service::whereIn('name->bg', $request->validated('services', []) ?? [])->pluck('id');
+        $product->services()->sync($serviceIds->all());
+
+        $product->specs()->delete();
+
+        foreach ($request->validated('specs', []) as $i => $specData) {
+            $product->specs()->create([
+                'label' => $specData['label'],
+                'value' => $specData['value'],
+                'sort_order' => $i,
+            ]);
+        }
+
         return redirect()->route('admin.products.index')
             ->with('success', 'Product updated.');
     }
 
     public function destroy(Product $product): RedirectResponse
     {
+        $product->specs()->delete();
         $product->delete();
 
         return redirect()->route('admin.products.index')

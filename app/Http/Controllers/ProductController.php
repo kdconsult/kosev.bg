@@ -15,7 +15,7 @@ class ProductController extends Controller
     {
         return Inertia::render('products/index', [
             'products' => ProductResource::collection(
-                Product::with(['category', 'coverImage', 'tags'])->get()
+                Product::with(['category', 'tags'])->get()
             ),
             'categories' => CategoryResource::collection(
                 Category::forProducts()->get()
@@ -27,7 +27,7 @@ class ProductController extends Controller
     {
         return Inertia::render('products/show', [
             'product' => new ProductResource(
-                $product->load(['category', 'images', 'tags', 'specs', 'services'])
+                $product->load(['category', 'tags', 'specs', 'services'])
             ),
         ]);
     }

@@ -2,11 +2,19 @@ import { useState } from 'react';
 import { Link } from '@inertiajs/react';
 import type { InertiaLinkProps } from '@inertiajs/react';
 import InputError from '@/components/input-error';
+import { SpecFields, type SpecData } from '@/components/spec-fields';
 import { TagInput } from '@/components/tag-input';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import type { Category } from '@/types/models';
 
@@ -15,6 +23,8 @@ interface ProductFormData {
     description: { bg: string; en: string };
     category_slug: string;
     tags: string[];
+    services: string[];
+    specs: SpecData[];
 }
 
 interface ProductFormErrors {
@@ -39,6 +49,7 @@ interface ProductFormProps {
     processing: boolean;
     categories: Category[];
     availableTags: TagSuggestion[];
+    availableServces: TagSuggestion[];
     slug?: string;
     onSubmit: (e: React.FormEvent) => void;
     submitLabel: string;
@@ -59,6 +70,7 @@ export function ProductForm({
     processing,
     categories,
     availableTags,
+    availableServces,
     slug,
     onSubmit,
     submitLabel,
@@ -67,11 +79,19 @@ export function ProductForm({
     const [activeLocale, setActiveLocale] = useState<Locale>('bg');
 
     return (
-        <form onSubmit={onSubmit} className="space-y-6">
+        <form
+            onSubmit={onSubmit}
+            className="space-y-6"
+            encType="multipart/form-data"
+        >
             {slug && (
                 <div className="grid gap-2">
                     <Label>Slug</Label>
-                    <Input value={slug} readOnly className="text-muted-foreground bg-muted cursor-default" />
+                    <Input
+                        value={slug}
+                        readOnly
+                        className="cursor-default bg-muted text-muted-foreground"
+                    />
                 </div>
             )}
 
@@ -103,7 +123,12 @@ export function ProductForm({
                     <>
                         <Input
                             value={data.title.bg}
-                            onChange={(e) => setData('title', { ...data.title, bg: e.target.value })}
+                            onChange={(e) =>
+                                setData('title', {
+                                    ...data.title,
+                                    bg: e.target.value,
+                                })
+                            }
                             placeholder="Заглавие (БГ)"
                         />
                         <InputError message={errors['title.bg']} />
@@ -113,7 +138,12 @@ export function ProductForm({
                     <>
                         <Input
                             value={data.title.en}
-                            onChange={(e) => setData('title', { ...data.title, en: e.target.value })}
+                            onChange={(e) =>
+                                setData('title', {
+                                    ...data.title,
+                                    en: e.target.value,
+                                })
+                            }
                             placeholder="Title (EN)"
                         />
                         <InputError message={errors['title.en']} />
@@ -129,10 +159,15 @@ export function ProductForm({
                     <>
                         <textarea
                             value={data.description.bg}
-                            onChange={(e) => setData('description', { ...data.description, bg: e.target.value })}
+                            onChange={(e) =>
+                                setData('description', {
+                                    ...data.description,
+                                    bg: e.target.value,
+                                })
+                            }
                             placeholder="Описание (БГ)"
                             rows={5}
-                            className="border-input bg-background placeholder:text-muted-foreground focus-visible:ring-ring w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                            className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
                         />
                         <InputError message={errors['description.bg']} />
                     </>
@@ -141,10 +176,15 @@ export function ProductForm({
                     <>
                         <textarea
                             value={data.description.en}
-                            onChange={(e) => setData('description', { ...data.description, en: e.target.value })}
+                            onChange={(e) =>
+                                setData('description', {
+                                    ...data.description,
+                                    en: e.target.value,
+                                })
+                            }
                             placeholder="Description (EN)"
                             rows={5}
-                            className="border-input bg-background placeholder:text-muted-foreground focus-visible:ring-ring w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                            className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
                         />
                         <InputError message={errors['description.en']} />
                     </>
@@ -152,10 +192,23 @@ export function ProductForm({
             </div>
 
             <div className="grid gap-2">
+                <Label>Specifications</Label>
+                <SpecFields
+                    specs={data.specs}
+                    onChange={(specs) => setData('specs', specs)}
+                    activeLocale={activeLocale}
+                    errors={errors}
+                />
+            </div>
+
+            <div className="grid gap-2">
                 <Label>
                     Category <span className="text-destructive">*</span>
                 </Label>
-                <Select value={data.category_slug} onValueChange={(val) => setData('category_slug', val)}>
+                <Select
+                    value={data.category_slug}
+                    onValueChange={(val) => setData('category_slug', val)}
+                >
                     <SelectTrigger>
                         <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
@@ -179,6 +232,43 @@ export function ProductForm({
                     placeholder="Add tags..."
                 />
                 <InputError message={errors.tags} />
+            </div>
+
+            <div className="grid gap-2">
+                <Label>Services</Label>
+                <TagInput
+                    value={data.services}
+                    onChange={(services) => setData('services', services)}
+                    suggestions={availableServces}
+                    placeholder="Add services..."
+                />
+                <InputError message={errors.services} />
+            </div>            
+
+            <div className="grid gap-2">
+                <Field>
+                    <FieldLabel htmlFor="coverImage">Cover Image</FieldLabel>
+                    <Input onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        setData('coverImage', file || null);
+                    }} type="file" />
+                    <FieldDescription>
+                        Select a cover_image to upload.
+                    </FieldDescription>
+                    <InputError message={errors.coverImage} />
+                </Field>
+
+                <Field>
+                    <FieldLabel htmlFor="images">Images</FieldLabel>
+                    <Input onChange={(e) => {
+                        const file = e.target.files;
+                        setData('images', file || null);
+                    }} type="file" multiple />
+                    <FieldDescription>
+                        Select images to upload.
+                    </FieldDescription>
+                    <InputError message={errors.images} />
+                </Field>
             </div>
 
             <div className="flex items-center gap-3">

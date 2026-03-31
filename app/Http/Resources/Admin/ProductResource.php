@@ -27,6 +27,16 @@ class ProductResource extends JsonResource
                 'slug' => $tag->slug,
                 'name' => $tag->getTranslation('name', 'bg') ?: $tag->getTranslation('name', 'en'),
             ])->values()->all()),
+            'services' => $this->whenLoaded('services', fn () => $this->services->map(fn ($service) => [
+                'slug' => $service->slug,
+                'name' => $service->getTranslation('name', 'bg') ?: $service->getTranslation('name', 'en'),
+            ])->values()->all()),
+            'specs' => $this->whenLoaded('specs', fn () => $this->specs->map(fn ($spec) => [
+                'id' => $spec->id,
+                'label' => $spec->getTranslations('label'),
+                'value' => $spec->getTranslations('value'),
+                'sort_order' => $spec->sort_order,
+            ])->values()->all()),
         ];
     }
 }

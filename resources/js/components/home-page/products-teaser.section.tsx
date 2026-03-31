@@ -1,8 +1,13 @@
 import { index as products, show } from '@/routes/products';
 import type { Product } from '@/types';
 import { Link } from '@inertiajs/react';
+import { ChevronRight } from 'lucide-react';
 
-export default function ProductsTeaserSection({ featuredProducts }: { featuredProducts: Product[] }) {
+export default function ProductsTeaserSection({
+    featuredProducts,
+}: {
+    featuredProducts: Product[];
+}) {
     return (
         <>
             <style>{`
@@ -32,7 +37,8 @@ export default function ProductsTeaserSection({ featuredProducts }: { featuredPr
   transition: all 0.3s ease;
   text-decoration: none;
   color: inherit;
-  display: block;
+  display: flex;
+  flex-direction: column;
 
   &:hover {
     box-shadow: var(--shadow-xl);
@@ -82,6 +88,9 @@ export default function ProductsTeaserSection({ featuredProducts }: { featuredPr
 
 .product-content {
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 
   h3 {
     font-size: 1.125rem;
@@ -93,6 +102,7 @@ export default function ProductsTeaserSection({ featuredProducts }: { featuredPr
     color: var(--color-muted-foreground);
     line-height: 1.6;
     margin-bottom: 1rem;
+    flex: 1;
   }
 }
 
@@ -132,7 +142,7 @@ export default function ProductsTeaserSection({ featuredProducts }: { featuredPr
                             >
                                 <div className="product-image">
                                     <img
-                                        src={product.cover_image?.path}
+                                        src={product.cover_image?.thumbUrl}
                                         alt={product.title}
                                         loading="lazy"
                                     />
@@ -146,7 +156,8 @@ export default function ProductsTeaserSection({ featuredProducts }: { featuredPr
                                     <h3>{product.title}</h3>
                                     <p>{product.description}</p>
                                     <span className="view-link">
-                                        Виж детайли →
+                                        Виж детайли
+                                        <ChevronRight className="inline-block h-4 w-4" />
                                     </span>
                                 </div>
                             </Link>

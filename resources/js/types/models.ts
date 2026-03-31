@@ -42,8 +42,8 @@ export interface Product {
     title: string;
     description: string;
     category: Category;
-    cover_image: Image | null;
-    images: Image[];
+    cover_image: { id: number; thumbUrl: string; originalUrl: string } | null;
+    images: { id: number; thumbUrl: string; originalUrl: string }[];
     tags: Tag[];
     specs: Spec[];
     services: Service[];

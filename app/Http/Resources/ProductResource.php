@@ -18,12 +18,11 @@ class ProductResource extends JsonResource
 
         return [
             'slug' => $this->slug,
-            // same
             'title' => $this->getTranslation('title', $locale, false) ?: $this->getTranslation('title', 'bg'),
             'description' => $this->getTranslation('description', $locale, false) ?: $this->getTranslation('description', 'bg'),
             'category' => new CategoryResource($this->whenLoaded('category')),
-            'cover_image' => new ImageResource($this->whenLoaded('coverImage')),
-            'images' => ImageResource::collection($this->whenLoaded('images')),
+            'cover_image' => $this->coverImage() ? ['id' => $this->coverImage()->id, 'thumbUrl' => $this->coverImage()->getUrl('thumb'), 'originalUrl' => $this->coverImage()->getUrl()] : ['id' => null, 'thumbUrl' => 'https://placehold.co/600x400', 'originalUrl' => null],
+            'images' => $this->images() ? $this->images()->map(fn ($image) => ['id' => $image->id, 'thumbUrl' => $image->getUrl('thumb'), 'originalUrl' => $image->getUrl()]) : null,
             'tags' => TagResource::collection($this->whenLoaded('tags')),
             'specs' => SpecResource::collection($this->whenLoaded('specs')),
             'services' => ServiceResource::collection($this->whenLoaded('services')),

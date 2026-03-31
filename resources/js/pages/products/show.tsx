@@ -6,8 +6,11 @@ import { Head, Link } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function ProductDetail({ product }: { product: Product }) {
-    const [activeImageIndex, setActiveImageIndex] = useState(0);
-    const activeImage = product.images[activeImageIndex]?.path ?? '';
+    const [activeImageIndex, setActiveImageIndex] = useState(-1);
+    const activeImage =
+        activeImageIndex === -1
+            ? product.cover_image?.originalUrl
+            : product.images[activeImageIndex]?.originalUrl;
     return (
         <>
             <Head title="Продукт" />
@@ -82,14 +85,19 @@ export default function ProductDetail({ product }: { product: Product }) {
             <>
                 <section className="page-hero">
                     <div className="hero-bg">
-                        <img src={product.images[0]?.path} alt={product.title} />
+                        <img
+                            src={product.cover_image?.originalUrl}
+                            alt={product.title}
+                        />
                         <div className="hero-overlay"></div>
                     </div>
                     <div className="hero-content container">
                         <Link href={index()} className="back-link">
                             ← Всички продукти
                         </Link>
-                        <span className="hero-badge">{product.category.name}</span>
+                        <span className="hero-badge">
+                            {product.category.name}
+                        </span>
                         <h1>{product.title}</h1>
                     </div>
                 </section>
@@ -97,26 +105,49 @@ export default function ProductDetail({ product }: { product: Product }) {
                     <div className="container">
                         <div className="detail-grid">
                             <div className="gallery">
-                                <div className="mb-4 aspect-4/3 overflow-hidden rounded-xl">
+                                <div className="mb-4 overflow-hidden rounded-xl">
                                     <img
                                         src={activeImage}
                                         alt={product.title}
-                                        className="h-full w-full object-cover"
+                                        className="aspect-4/3 h-full w-full object-cover"
                                     />
                                 </div>
                                 <div className="flex gap-3">
+                                    <button
+                                        className={cn(
+                                            'thumb',
+                                            activeImageIndex === -1 && 'active',
+                                        )}
+                                        onClick={() => setActiveImageIndex(-1)}
+                                    >
+                                        <img
+                                            src={
+                                                product.cover_image?.thumbUrl ||
+                                                'https://placehold.co/400x300'
+                                            }
+                                            alt={product.title + ' cover'}
+                                            loading="lazy"
+                                        />
+                                    </button>
                                     {product.images.map((img, idx) => (
                                         <button
                                             className={cn(
                                                 'thumb',
-                                                activeImageIndex === idx && 'active',
+                                                activeImageIndex === idx &&
+                                                    'active',
                                             )}
-                                            key={img.id}
-                                            onClick={() => setActiveImageIndex(idx)}
+                                            key={idx}
+                                            onClick={() =>
+                                                setActiveImageIndex(idx)
+                                            }
                                         >
                                             <img
-                                                src={img.path}
-                                                alt={product.title + ' ' + (idx + 1)}
+                                                src={img.thumbUrl}
+                                                alt={
+                                                    product.title +
+                                                    ' ' +
+                                                    (idx + 1)
+                                                }
                                                 loading="lazy"
                                             />
                                         </button>
@@ -125,7 +156,9 @@ export default function ProductDetail({ product }: { product: Product }) {
                             </div>
 
                             <div className="flex flex-col gap-8">
-                                <p className="product-desc">{product.description}</p>
+                                <p className="product-desc">
+                                    {product.description}
+                                </p>
 
                                 <div className="specs-block">
                                     <h3>Технически характеристики</h3>

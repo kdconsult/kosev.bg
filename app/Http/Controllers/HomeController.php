@@ -13,7 +13,7 @@ class HomeController extends Controller
     {
         return Inertia::render('welcome', [
             'featuredProducts' => ProductResource::collection(
-                Product::with(['category', 'coverImage'])->take(3)->get()
+                Product::with(['category'])->take(3)->get()
             ),
         ]);
     }
