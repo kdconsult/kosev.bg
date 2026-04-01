@@ -19,9 +19,10 @@ class CertificateResource extends JsonResource
         $media = $this->getFirstMedia('pdfs');
 
         return [
+            'id' => $this->id,
             'slug' => $this->slug,
-            'name' => $this->getTranslation('name', $locale, false) ?: $this->getTranslation('name', 'bg'),
-            'description' => $this->getTranslation('description', $locale, false) ?: $this->getTranslation('description', 'bg'),
+            'name' => $this->getTranslation('name', $locale) ?? $this->getTranslation('name', config('app.fallback_locale')),
+            'description' => $this->getTranslation('description', $locale) ?? $this->getTranslation('description', config('app.fallback_locale')),
             'imagePath' => $media ? $media->getUrl('thumb') : 'https://placehold.co/600x400',
             'pdfPath' => $media ? $media->getUrl() : 'https://placehold.co/600x400',
         ];

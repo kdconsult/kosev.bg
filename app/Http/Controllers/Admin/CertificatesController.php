@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
-use App\Http\Resources\Admin\CertificateResource;
+use App\Http\Resources\CertificateResource;
 use App\Models\Certificate;
 use Inertia\Inertia;
 
