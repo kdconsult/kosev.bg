@@ -25,44 +25,53 @@ export default function CertificatesIndex({
 
             <div className="flex h-full flex-1 flex-col gap-6 p-6">
                 <div className="flex items-center justify-between">
-                    <Heading title="Certificates" description="Manage your certificate catalogue." />
-                    <Button variant='default' size='default' asChild>
-                        <Link href={create()} >
+                    <Heading
+                        title="Certificates"
+                        description="Manage your certificate catalogue."
+                    />
+                    <Button variant="default" size="default" asChild>
+                        <Link href={create()}>
                             <Plus className="mr-2 h-4 w-4" />
                             Add Certificate
                         </Link>
                     </Button>
                 </div>
-        
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
-                {certificates.map((certificate) => (
-                    <Card
-                        className="relative mx-auto w-full max-w-sm pt-0"
-                        key={certificate.id}
-                    >
-                        <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
-                        <img
-                            src={certificate.imagePath}
-                            alt={certificate.name}
-                            className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale"
-                        />
-                        <CardHeader className="flex-1">
-                            <CardAction>
-                                <Badge variant="secondary">Featured</Badge>
-                            </CardAction>
-                            <CardTitle>{certificate.name}</CardTitle>
-                            <CardDescription>
-                                {certificate.description}
-                            </CardDescription>
-                        </CardHeader>
-                        <CardFooter>
-                            <Button variant='secondary' className="w-full" asChild>
-                                <Link href={edit(certificate.slug)}>Edit</Link>
-                            </Button>
-                        </CardFooter>
-                    </Card>
-                ))}
-            </div>
+
+                <div className="grid grid-cols-1 gap-2 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
+                    {certificates.map((certificate) => (
+                        <Card
+                            className="relative mx-auto w-full max-w-sm pt-0"
+                            key={certificate.id}
+                        >
+                            <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
+                            <img
+                                src={certificate.imagePath}
+                                alt={certificate.name}
+                                className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale"
+                            />
+                            <CardHeader className="flex-1">
+                                <CardAction>
+                                    <Badge variant="secondary">Featured</Badge>
+                                </CardAction>
+                                <CardTitle>{certificate.name}</CardTitle>
+                                <CardDescription>
+                                    {certificate.description}
+                                </CardDescription>
+                            </CardHeader>
+                            <CardFooter>
+                                <Button
+                                    variant="secondary"
+                                    className="w-full"
+                                    asChild
+                                >
+                                    <Link href={edit(certificate.slug)}>
+                                        Edit
+                                    </Link>
+                                </Button>
+                            </CardFooter>
+                        </Card>
+                    ))}
+                </div>
             </div>
         </>
     );

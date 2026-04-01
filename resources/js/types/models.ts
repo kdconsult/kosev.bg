@@ -5,9 +5,9 @@ export interface Category {
 
 export interface Image {
     id: number;
-    path: string;
-    alt: string | null;
-    is_cover: boolean;
+    thumbUrl: string;
+    originalUrl: string;
+    alt?: string | null;
 }
 
 export interface Tag {
@@ -42,8 +42,8 @@ export interface Product {
     title: string;
     description: string;
     category: Category;
-    cover_image: { id: number; thumbUrl: string; originalUrl: string } | null;
-    images: { id: number; thumbUrl: string; originalUrl: string }[];
+    cover_image: Image | null;
+    images: Image[];
     tags: Tag[];
     specs: Spec[];
     services: Service[];

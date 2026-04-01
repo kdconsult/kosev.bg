@@ -39,35 +39,6 @@ export function AppFooter() {
   }
 }
 
-.logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  text-decoration: none;
-}
-
-.logo-text {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--color-white);
-}
-
-.logo-divider {
-  width: 1px;
-  height: 18px;
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.logo-tagline {
-  font-size: 0.6875rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-gray-400);
-}
-
 .footer-description {
   margin-top: 1.25rem;
   font-size: 0.9375rem;
@@ -206,7 +177,7 @@ export function AppFooter() {
                 <div className="container mx-auto">
                     <div className="footer-grid">
                         <div className="footer-brand">
-                            <Link href={home()} className="logo">
+                            <Link href={home()} className="flex gap-4 items-center bg-muted rounded w-fit px-4">
                                 <span className="logo-text">KOSEV</span>
                                 <span className="logo-divider"></span>
                                 <span className="logo-tagline">

@@ -7,8 +7,11 @@ import { ChevronLeft } from 'lucide-react';
 import { useState } from 'react';
 
 export default function ProjectDetail({ project }: { project: Project }) {
-    const [activeImageIndex, setActiveImageIndex] = useState(0);
-    const activeImage = project.images[activeImageIndex]?.path ?? '';
+    const [activeImageIndex, setActiveImageIndex] = useState(-1);
+    const activeImage =
+        activeImageIndex === -1
+            ? project.cover_image?.originalUrl
+            : project.images[activeImageIndex]?.originalUrl;
 
     return (
         <>
@@ -104,14 +107,15 @@ export default function ProjectDetail({ project }: { project: Project }) {
                 <section className="page-hero">
                     <div className="hero-bg">
                         <img
-                            src={project.images[0]?.path}
+                            src={project.cover_image?.originalUrl}
                             alt={project.title}
                         />
                         <div className="hero-overlay"></div>
                     </div>
                     <div className="hero-content container">
                         <Link href={projectsIndex()} className="back-link">
-                            ← Всички проекти
+                            <ChevronLeft className="mr-2 h-4 w-4" />
+                            Всички проекти
                         </Link>
                         <span className="hero-badge">{project.industry}</span>
                         <h1>{project.title}</h1>
@@ -135,7 +139,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
                                             onClick={() => setActiveImageIndex(idx)}
                                         >
                                             <img
-                                                src={img.path}
+                                                src={img.thumbUrl}
                                                 alt={project.title + ' ' + (idx + 1)}
                                                 loading="lazy"
                                             />

@@ -42,7 +42,8 @@ export default function ProductList({ products, categories }: { products: Produc
       transition: all 0.3s ease;
       text-decoration: none;
       color: inherit;
-      display: block;
+      display: flex;
+      flex-direction: column;
 
       &:hover {
         box-shadow: var(--shadow-xl);
@@ -92,6 +93,9 @@ export default function ProductList({ products, categories }: { products: Produc
 
     .product-content {
       padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
 
       h3 {
         font-size: 1.125rem;
@@ -117,6 +121,7 @@ export default function ProductList({ products, categories }: { products: Produc
       font-weight: 600;
       color: var(--color-primary);
       transition: color 0.2s ease;
+      margin-top: auto;
     }
     `}</style>
 

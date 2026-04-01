@@ -43,7 +43,8 @@ export default function ProjectsList({ projects, categories }: { projects: Proje
       transition: all 0.3s ease;
       text-decoration: none;
       color: inherit;
-      display: block;
+      display: flex;
+      flex-direction: column;
 
       &:hover {
         box-shadow: var(--shadow-xl);
@@ -93,6 +94,9 @@ export default function ProjectsList({ projects, categories }: { projects: Proje
 
     .project-content {
       padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
 
       h3 {
         font-size: 1.125rem;
@@ -118,6 +122,7 @@ export default function ProjectsList({ projects, categories }: { projects: Proje
       font-weight: 600;
       color: var(--color-primary);
       transition: color 0.2s ease;
+      margin-top: auto;
     }
     `}
             </style>
@@ -165,7 +170,7 @@ export default function ProjectsList({ projects, categories }: { projects: Proje
                             >
                                 <div className="project-image">
                                     <img
-                                        src={project.cover_image?.path}
+                                        src={project.cover_image?.thumbUrl}
                                         alt={project.title}
                                         loading="lazy"
                                     />
