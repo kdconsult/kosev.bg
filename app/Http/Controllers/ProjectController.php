@@ -18,7 +18,7 @@ class ProjectController extends Controller
     {
         return Inertia::render('projects/index', [
             'projects' => ProjectResource::collection(
-                Project::with(['category', 'coverImage', 'tags'])->get()
+                Project::with(['category', 'tags'])->get()
             ),
             'categories' => CategoryResource::collection(
                 Category::forProjects()->get()
@@ -33,7 +33,7 @@ class ProjectController extends Controller
     {
         return Inertia::render('projects/show', [
             'project' => new ProjectResource(
-                $project->load(['category', 'images', 'tags', 'specs'])
+                $project->load(['category', 'tags', 'specs'])
             ),
         ]);
     }

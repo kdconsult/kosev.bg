@@ -18,13 +18,12 @@ class ProjectResource extends JsonResource
 
         return [
             'slug' => $this->slug,
-            // same
-            'title' => $this->getTranslation('title', $locale, false) ?: $this->getTranslation('title', 'bg'),
-            'description' => $this->getTranslation('description', $locale, false) ?: $this->getTranslation('description', 'bg'),
-            'industry' => $this->getTranslation('industry', $locale, false) ?: $this->getTranslation('industry', 'bg'),
+            'title' => $this->getTranslation('title', $locale, false) ?: $this->getTranslation('title', config('app.fallback_locale')),
+            'description' => $this->getTranslation('description', $locale, false) ?: $this->getTranslation('description', config('app.fallback_locale')),
+            'industry' => $this->getTranslation('industry', $locale, false) ?: $this->getTranslation('industry', config('app.fallback_locale')),
             'category' => new CategoryResource($this->whenLoaded('category')),
-            'cover_image' => new ImageResource($this->whenLoaded('coverImage')),
-            'images' => ImageResource::collection($this->whenLoaded('images')),
+            'cover_image' => $this->coverImage() ? ['id' => $this->coverImage()->id, 'thumbUrl' => $this->coverImage()->getUrl('thumb'), 'originalUrl' => $this->coverImage()->getUrl()] : ['id' => null, 'thumbUrl' => 'https://placehold.co/600x400', 'originalUrl' => 'https://placehold.co/600x400'],
+            'images' => $this->images() ? $this->images()->map(fn ($image) => ['id' => $image->id, 'thumbUrl' => $image->getUrl('thumb'), 'originalUrl' => $image->getUrl()]) : null,
             'tags' => TagResource::collection($this->whenLoaded('tags')),
             'specs' => SpecResource::collection($this->whenLoaded('specs')),
         ];

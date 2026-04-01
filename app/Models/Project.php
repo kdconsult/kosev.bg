@@ -8,14 +8,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
 
-class Project extends Model
+class Project extends Model implements HasMedia
 {
     /** @use HasFactory<ProjectFactory> */
-    use HasFactory, HasSlug, HasTranslations;
+    use HasFactory, HasSlug, HasTranslations, InteractsWithMedia;
 
     public array $translatable = ['title', 'description', 'industry'];
 
@@ -27,19 +29,31 @@ class Project extends Model
         'industry',
     ];
 
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('cover_image')
+            ->singleFile();
+
+        $this
+            ->addMediaConversion('thumb')
+            ->fit(Fit::Contain, 300, 300)
+            ->nonQueued();
+    }
+
+    public function coverImage()
+    {
+        return $this->getFirstMedia('cover_image');
+    }
+
+    public function images()
+    {
+        return $this->getMedia('images');
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
-    }
-
-    public function images(): MorphMany
-    {
-        return $this->morphMany(Image::class, 'imageable')->orderBy('sort_order');
-    }
-
-    public function coverImage(): MorphOne
-    {
-        return $this->morphOne(Image::class, 'imageable')->where('is_cover', true);
     }
 
     public function tags(): MorphToMany

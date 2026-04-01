@@ -5,16 +5,35 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProjectResource;
+use App\Http\Resources\Admin\ProjectResource as AdminProjectResource;
+use App\Http\Resources\TagResource;
+use App\Models\Category;
 use App\Models\Project;
+use App\Models\Tag;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProjectsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $perPage = min(max(5, (int) $request->input('per_page', 15)), 100);
+
+        return Inertia::render('admin/projects/index', [
+            'projects' => ProjectResource::collection(
+                Project::with(['category', 'tags'])
+                    ->when($request->search, fn ($q) => $q->where('title->bg', 'like', '%'.$request->search.'%'))
+                    ->latest()
+                    ->paginate($perPage)
+                    ->withQueryString()
+            ),
+            'filters' => $request->only(['search', 'per_page']),
+        ]);
     }
 
     /**
@@ -22,7 +41,10 @@ class ProjectsController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('admin/projects/create', [
+            'categories' => CategoryResource::collection(Category::where('type', 'project')->get()),
+            'tags' => TagResource::collection(Tag::where('type', 'project')->get()),
+        ]);
     }
 
     /**
@@ -30,7 +52,19 @@ class ProjectsController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        //
+        $project = Project::create($request->validated());
+
+        if ($request->hasFile('coverImage')) {
+            $project->addMediaFromRequest('coverImage')->toMediaCollection('cover_image');
+        }
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $project->addMedia($image)->toMediaCollection('images');
+            }
+        }
+
+        return redirect()->route('admin.projects.index')->with('success', 'Project created successfully.');
     }
 
     /**
@@ -46,7 +80,12 @@ class ProjectsController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return Inertia::render('admin/projects/edit', [
+            'project' => new AdminProjectResource($project->load(['category', 'tags', 'specs'])),
+            'categories' => CategoryResource::collection(Category::where('type', 'project')->get()),
+            'tags' => TagResource::collection(Tag::where('type', 'project')->get()),
+            'images' => $project->getMedia('images')->map(fn ($image) => ['id' => $image->id, 'thumbUrl' => $image->getUrl('thumb'), 'originalUrl' => $image->getUrl()]),
+        ]);
     }
 
     /**
@@ -54,7 +93,20 @@ class ProjectsController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        $project->update($request->validated());
+
+        if ($request->hasFile('coverImage')) {
+            $project->clearMediaCollection('cover_image');
+            $project->addMediaFromRequest('coverImage')->toMediaCollection('cover_image');
+        }
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $project->addMedia($image)->toMediaCollection('images');
+            }
+        }
+
+        return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully.');
     }
 
     /**
@@ -62,6 +114,8 @@ class ProjectsController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
+
+        return redirect()->route('admin.projects.index')->with('success', 'Project deleted successfully.');
     }
 }
