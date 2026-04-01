@@ -34,7 +34,7 @@ export default function CertificatesIndex({
                     </Button>
                 </div>
         
-            <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
                 {certificates.map((certificate) => (
                     <Card
                         className="relative mx-auto w-full max-w-sm pt-0"

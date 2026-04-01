@@ -1,4 +1,4 @@
-import { certificates } from '@/routes';
+import { index as certificates } from '@/routes/certificates/index';
 import { Link } from '@inertiajs/react';
 
 const certifications = [

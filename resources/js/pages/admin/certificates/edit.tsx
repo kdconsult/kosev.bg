@@ -1,10 +1,9 @@
 import Heading from '@/components/heading';
-import { Head, router, useForm } from '@inertiajs/react';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
 import CertificateForm from './_form';
-import { MouseEventHandler, SubmitEvent } from 'react';
+import { SubmitEvent } from 'react';
 import CertificatesController from '@/actions/App/Http/Controllers/Admin/CertificatesController';
 import { index } from '@/routes/admin/certificates';
-import { Button } from '@/components/ui/button';
 
 interface Certificate {
     id: number;
@@ -23,6 +22,7 @@ export default function CertificateEdit({
     locales: string[];
     imagePath: string;
 }) {
+    const { locale } = usePage().props as { locale: 'bg' | 'en' };
     const { data, setData, put, processing, errors } = useForm({
         name: { bg: certificate.name.bg, en: certificate.name.en },
         description: {
@@ -48,7 +48,7 @@ export default function CertificateEdit({
 
     const onDelete = () => {
         console.log('deleting');
-        
+
         if (
             !confirm(
                 'Are you sure you want to delete this certificate? This action cannot be undone.',
@@ -67,13 +67,14 @@ export default function CertificateEdit({
             },
         });
     };
+
     return (
         <>
-            <Head title={`Edit Certificate - ${certificate.name}`} />
+            <Head title={`Edit Certificate - ${certificate.name[locale]}`} />
 
             <div className="flex h-full flex-1 flex-col gap-6 p-6">
                 <Heading
-                    title={`Edit Certificate - ${certificate.name}`}
+                    title={`Edit Certificate - ${certificate.name[locale]}`}
                     description="Update the details of your certificate"
                 />
 
@@ -88,17 +89,14 @@ export default function CertificateEdit({
                             submitLabel="Update Certificate"
                             cancelHref={index()}
                             locales={locales}
+                            onDelete={onDelete}
                         />
-                        <Button variant="destructive" onClick={onDelete} className="w-full">
-                            Delete Certificate
-                        </Button>
                     </div>
                     <div className="w-full max-w-xs">
                         <img
                             src={imagePath}
                             alt={certificate.name.bg}
                             className="rounded-md"
-                            onClick={onDelete}
                         />
                     </div>
                 </div>

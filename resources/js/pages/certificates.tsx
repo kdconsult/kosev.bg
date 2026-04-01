@@ -4,7 +4,11 @@ import type { Certificate } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { DownloadIcon } from 'lucide-react';
 
-export default function Certificates({ certificates }: { certificates: Certificate[] }) {
+export default function Certificates({
+    certificates,
+}: {
+    certificates: Certificate[];
+}) {
     return (
         <>
             <Head title="Сертификати" />
@@ -237,10 +241,12 @@ export default function Certificates({ certificates }: { certificates: Certifica
                                     <h3>{cert.name}</h3>
                                     <p>{cert.description}</p>
                                     <a
-                                        href={CertificatesController.show.url(cert.slug)}
+                                        href={CertificatesController.show.url(
+                                            cert.slug,
+                                        )}
                                         className="btn-download"
                                     >
-                                        <DownloadIcon className="h-4 w-4" />                                        
+                                        <DownloadIcon className="h-4 w-4" />
                                         Изтегли PDF
                                     </a>
                                 </div>
@@ -250,18 +256,25 @@ export default function Certificates({ certificates }: { certificates: Certifica
                 </div>
             </section>
 
-            <section className="py-16 cta-banner">
-                <div className="container flex flex-col md:flex-row items-center justify-between">
-                    <div className="cta-content">
-                        <h2 className="text-2xl">Нужна ви е документация за доставки?</h2>
+            <section className="cta-banner py-16">
+                <div className="container flex flex-col items-center justify-between md:flex-row">
+                    <div className="cta-content flex-1">
+                        <h2 className="text-2xl">
+                            Нужна ви е документация за доставки?
+                        </h2>
                         <p>
                             Свържете се с нас и ще ви предоставим пълния
                             комплект сертификати.
                         </p>
                     </div>
-                    <Link href={contacts()} className="btn btn-accent btn-lg">
-                        Свържете се с нас
-                    </Link>
+                    <div>
+                        <Link
+                            href={contacts()}
+                            className="btn btn-accent btn-lg w-full"
+                        >
+                            Свържете се с нас
+                        </Link>
+                    </div>
                 </div>
             </section>
         </>

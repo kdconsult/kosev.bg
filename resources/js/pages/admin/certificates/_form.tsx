@@ -14,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 import { RouteDefinition } from '@/wayfinder';
 import { Link } from '@inertiajs/react';
-import { SubmitEventHandler } from 'react';
+import { MouseEventHandler, SubmitEventHandler } from 'react';
 
 export default function CertificateForm({
     data,
@@ -25,6 +25,7 @@ export default function CertificateForm({
     submitLabel,
     cancelHref,
     locales,
+    onDelete,
 }: {
     data: any;
     setData: (field: string, value: any) => void;
@@ -34,6 +35,7 @@ export default function CertificateForm({
     submitLabel: string;
     cancelHref: RouteDefinition<'get'>;
     locales: string[];
+    onDelete?: MouseEventHandler<HTMLButtonElement>;
 }) {
     return (
         <div className="flex flex-col gap-6">
@@ -157,17 +159,24 @@ export default function CertificateForm({
                         </FieldDescription>
                         {errors.pdf && <FieldError>{errors.pdf}</FieldError>}
                     </Field>
-                    <div className="flex items-center gap-4">
-                        <Button
-                            variant="default"
-                            type="submit"
-                            disabled={processing}
-                        >
-                            {submitLabel}
+                    <div className="flex items-center justify-between">
+                        <Button variant="destructive" onClick={onDelete} >
+                            Delete Certificate
                         </Button>
+                        <div className='grid grid-cols-2 gap-4'>
+
                         <Button variant="outline" asChild>
                             <Link href={cancelHref}>Cancel</Link>
                         </Button>
+                        <Button
+                            variant='default'
+                            type="submit"
+                            disabled={processing}
+                            className='bg-green-400/30 hover:bg-green-400/40 text-green-600 dark:hover:text-green-600'
+                        >
+                            {submitLabel}
+                        </Button>
+                        </div>
                     </div>
                 </form>
             </div>

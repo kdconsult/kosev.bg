@@ -7,6 +7,7 @@ declare module '@inertiajs/core' {
             auth: Auth;
             currentYear: number;
             sidebarOpen: boolean;
+            locale: string;
             [key: string]: unknown;
         };
     }
