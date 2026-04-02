@@ -259,11 +259,11 @@ export default function HeroSection() {
                         muted={true}
                         loop
                         playsInline
-                        poster="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=2000&q=80"
+                        poster="/storage/images/hero-poster.jpg"
                         className="hero-video"
                     >
                         <source
-                            src="https://herhovatuckrcuhmimem.supabase.co/storage/v1/object/public/blog-media/0721_web_no_audio.mp4"
+                            src="/storage/videos/hero-video.mp4"
                             type="video/mp4"
                         />
                     </video>

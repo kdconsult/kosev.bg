@@ -11,22 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('images', function (Blueprint $table): void {
+        Schema::dropIfExists('images');
+    }
+
+    public function down(): void
+    {
+        Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->morphs('imageable');
             $table->string('path', 500);
             $table->json('alt')->nullable();
-            $table->unsignedSmallInteger('sort_order')->default(0);
+            $table->smallInteger('sort_order')->unsigned()->default(0);
             $table->boolean('is_cover')->default(false);
             $table->timestamps();
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('images');
     }
 };

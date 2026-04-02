@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Category;
-use App\Models\Image;
 use App\Models\Product;
 use App\Models\Service;
 use App\Models\Tag;
@@ -12,11 +11,6 @@ uses(RefreshDatabase::class);
 test('products index returns 200 with products and categories props', function () {
     $category = Category::factory()->create(['type' => 'product']);
     $product = Product::factory()->create(['category_id' => $category->id]);
-    Image::factory()->create([
-        'imageable_type' => 'product',
-        'imageable_id' => $product->id,
-        'is_cover' => true,
-    ]);
 
     $response = $this->get(route('products.index'));
 

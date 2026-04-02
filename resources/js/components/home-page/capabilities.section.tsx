@@ -6,7 +6,7 @@ const capabilities = [
         title: 'Лазерно рязане',
         description:
             'Високопрецизно лазерно рязане на метални листове с модерно CNC оборудване за максимална точност.',
-        image: 'https://images.unsplash.com/photo-1565043666747-69f6646db940?auto=format&fit=crop&w=800&q=80',
+        image: 'https://kosev.bg/wp-content/uploads/2019/09/lazer-cutting-400x300.jpg',
         features: [
             'Дебелина до 25mm стомана',
             'Прецизност ±0.1mm',
@@ -17,7 +17,7 @@ const capabilities = [
         title: 'Огъване на метал',
         description:
             'Прецизно огъване на метални листове с CNC абкант преси за сложни форми.',
-        image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=800&q=80',
+        image: 'https://kosev.bg/wp-content/uploads/2019/09/1471259471.jpg',
         features: ['Дължина до 4000mm', 'Сила до 320 тона', 'Сложни профили'],
     },
     {
@@ -35,7 +35,7 @@ const capabilities = [
         title: 'Монтаж',
         description:
             'Сглобяване на метални конструкции и завършени изделия по спецификация.',
-        image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80',
+        image: 'https://kosev.bg/wp-content/uploads/2019/09/1432706260-1024x579.jpg',
         features: ['Механичен монтаж', 'Нитове и болтове', 'Готови изделия'],
     },
     {

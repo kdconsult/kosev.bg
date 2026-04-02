@@ -149,12 +149,9 @@ class ProductSeeder extends Seeder
                 'description' => $data['description'],
             ]);
 
-            foreach ($data['images'] as $i => $path) {
-                $product->images()->create([
-                    'path' => $path,
-                    'sort_order' => $i,
-                    'is_cover' => $i === 0,
-                ]);
+            foreach ($data['images'] as $i => $url) {
+                $collection = $i === 0 ? 'cover_image' : 'images';
+                $product->addMediaFromUrl($url)->toMediaCollection($collection);
             }
 
             foreach ($data['specs'] as $i => $spec) {

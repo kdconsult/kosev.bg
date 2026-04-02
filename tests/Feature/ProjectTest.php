@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Category;
-use App\Models\Image;
 use App\Models\Project;
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,11 +10,6 @@ uses(RefreshDatabase::class);
 test('projects index returns 200 with projects and categories props', function () {
     $category = Category::factory()->create(['type' => 'project']);
     $project = Project::factory()->create(['category_id' => $category->id]);
-    Image::factory()->create([
-        'imageable_type' => 'project',
-        'imageable_id' => $project->id,
-        'is_cover' => true,
-    ]);
 
     $response = $this->get(route('projects.index'));
 

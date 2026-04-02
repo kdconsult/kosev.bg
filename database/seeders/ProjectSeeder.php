@@ -188,7 +188,7 @@ class ProjectSeeder extends Seeder
         $categories = Category::forProjects()->get()->keyBy('slug');
         $tags = Tag::all()->keyBy(fn ($t) => $t->getTranslation('name', 'bg'));
 
-        foreach ($projects as $index => $data) {
+        foreach ($projects as $data) {
             $category = $categories[$data['category']];
 
             $project = Project::create([
@@ -199,12 +199,9 @@ class ProjectSeeder extends Seeder
                 'industry' => $data['industry'],
             ]);
 
-            foreach ($data['images'] as $i => $path) {
-                $project->images()->create([
-                    'path' => $path,
-                    'sort_order' => $i,
-                    'is_cover' => $i === 0,
-                ]);
+            foreach ($data['images'] as $i => $url) {
+                $collection = $i === 0 ? 'cover_image' : 'images';
+                $project->addMediaFromUrl($url)->toMediaCollection($collection);
             }
 
             foreach ($data['specs'] as $i => $spec) {
