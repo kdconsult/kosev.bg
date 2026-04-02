@@ -1,4 +1,5 @@
-import { services } from '@/routes';
+import { index as servicesIndex } from '@/routes/services';
+import { Service } from '@/types/models';
 import { Link } from '@inertiajs/react';
 
 const capabilities = [
@@ -54,12 +55,12 @@ const capabilities = [
     },
 ];
 
-export default function CapabilitiesSection() {
+export default function CapabilitiesSection({services}: {services: Service[]}) {
     return (
         <>
             <style>{`
 .capabilities {
-  background: var(--color-card);
+  background: var(--color-background);
 }
 
 .capabilities-grid {
@@ -165,7 +166,7 @@ export default function CapabilitiesSection() {
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--color-accent);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -261,12 +262,12 @@ export default function CapabilitiesSection() {
                     </div>
 
                     <div className="capabilities-grid">
-                        {capabilities.map((capability, index) => (
-                            <div className="capability-card" key={index}>
+                        {services.map((capability, index) => (
+                            <div className="capability-card" key={capability.id}>
                                 <div className="capability-image">
                                     <img
-                                        src={capability.image}
-                                        alt={capability.title}
+                                        src={capability.cover_image?.originalUrl}
+                                        alt={capability.name}
                                         loading="lazy"
                                     />
                                     <div className="capability-number">
@@ -275,18 +276,16 @@ export default function CapabilitiesSection() {
                                 </div>
                                 <div className="capability-body">
                                     <div className="capability-content">
-                                        <h3>{capability.title}</h3>
-                                        <p>{capability.description}</p>
+                                        <h3>{capability.name}</h3>
+                                        <p>{capability.description?.slice(0, 100)}...</p>
                                         <ul className="capability-features">
-                                            {capability.features.map(
-                                                (feature, idx) => (
-                                                    <li key={idx}>{feature}</li>
-                                                ),
-                                            )}
+                                            {capability.specs?.map((spec, idx) => (
+                                                <li key={idx}>{spec.label}: {spec.value}</li>
+                                            ))}
                                         </ul>
                                     </div>
                                     <Link
-                                        href={services()}
+                                        href={servicesIndex()}
                                         className="capability-link"
                                     >
                                         <span>Научи повече</span>

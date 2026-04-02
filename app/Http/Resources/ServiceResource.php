@@ -17,9 +17,13 @@ class ServiceResource extends JsonResource
         $locale = app()->getLocale();
 
         return [
+            'id' => $this->id,
             'slug' => $this->slug,
-            // is this really needed? laravel/translatable handles this automatically.
-            'name' => $this->getTranslation('name', $locale, false) ?: $this->getTranslation('name', 'bg'),
+            'name' => $this->name,
+            'description' => $this->description,
+            'cover_image' => ['originalUrl' => $this->coverImage()?->getUrl() ?? 'https://placehold.co/800x600'],
+            'tags' => TagResource::collection($this->whenLoaded('tags')),
+            'specs' => SpecResource::collection($this->whenLoaded('specs'))
         ];
     }
 }

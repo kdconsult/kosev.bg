@@ -5,13 +5,13 @@ import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
 import {
     home,
-    services,
     about,
     contacts,
     dashboard,
 } from '@/routes';
 import { index as projectsIndex } from '@/routes/projects';
 import { index as products } from '@/routes/products';
+import { index as services } from '@/routes/services';
 import {index as certificates} from '@/routes/certificates';
 import type { BreadcrumbItem } from '@/types';
 import { useEffect, useState } from 'react';

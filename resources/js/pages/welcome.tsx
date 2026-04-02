@@ -6,15 +6,15 @@ import ProductsTeaserSection from '@/components/home-page/products-teaser.sectio
 import QualitySection from '@/components/home-page/quality.section';
 import TestimonialsSection from '@/components/home-page/testimonials.section';
 import WhyChooseUsSection from '@/components/home-page/why-choose-us.section';
-import type { Product } from '@/types';
+import type { Product, Service } from '@/types';
 import { Head } from '@inertiajs/react';
 
-export default function Welcome({ featuredProducts }: { featuredProducts: Product[] }) {
+export default function Welcome({ featuredProducts, services }: { featuredProducts: Product[], services: Service[] }) {
     return (
         <>
             <Head title="Начало" />
             <HeroSection />
-            <CapabilitiesSection />
+            <CapabilitiesSection services={services} />
             <ProductsTeaserSection featuredProducts={featuredProducts} />
             <WhyChooseUsSection />
             <IndustriesSection />

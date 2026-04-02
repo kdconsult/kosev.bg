@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Award, BookOpen, FolderGit2, LayoutGrid, Package, Wrench } from 'lucide-react';
+import { Award, BookOpen, Cog, FolderGit2, LayoutGrid, Package, Wrench } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -16,6 +16,7 @@ import {
 import { dashboard } from '@/routes';
 import { index as productsIndex } from '@/routes/admin/products';
 import { index as projectsIndex } from '@/routes/admin/projects';
+import { index as servicesIndex } from '@/routes/admin/services';
 import { index as certificatesIndex } from '@/routes/admin/certificates';
 import type { NavItem } from '@/types';
 
@@ -34,6 +35,11 @@ const mainNavItems: NavItem[] = [
         title: 'Projects',
         href: projectsIndex(),
         icon: Wrench,
+    },
+    {
+        title: 'Services',
+        href: servicesIndex(),
+        icon: Cog,
     },
     {
         title: 'Certificates',

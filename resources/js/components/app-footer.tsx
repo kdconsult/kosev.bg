@@ -1,4 +1,5 @@
-import { about, contacts, home,  services } from '@/routes';
+import { about, contacts, home } from '@/routes';
+import { index as services } from '@/routes/services';
 import { index } from '@/routes/projects';
 import { Link, usePage } from '@inertiajs/react';
 
@@ -177,7 +178,10 @@ export function AppFooter() {
                 <div className="container mx-auto">
                     <div className="footer-grid">
                         <div className="footer-brand">
-                            <Link href={home()} className="flex gap-4 items-center bg-muted rounded w-fit px-4">
+                            <Link
+                                href={home()}
+                                className="flex w-fit items-center gap-4 rounded bg-muted px-4"
+                            >
                                 <span className="logo-text">KOSEV</span>
                                 <span className="logo-divider"></span>
                                 <span className="logo-tagline">

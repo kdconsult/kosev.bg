@@ -47,8 +47,6 @@ export default function CertificateEdit({
     };
 
     const onDelete = () => {
-        console.log('deleting');
-
         if (
             !confirm(
                 'Are you sure you want to delete this certificate? This action cannot be undone.',

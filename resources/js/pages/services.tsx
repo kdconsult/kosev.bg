@@ -1,144 +1,10 @@
 import { Head, Link } from '@inertiajs/react';
-import { contacts, services } from '@/routes';
+import { contacts } from '@/routes';
+import { index as services } from '@/routes/services';
 import { cn } from '@/lib/utils';
-import {
-    Cpu,
-    GitBranch,
-    Zap,
-    Wrench,
-    Paintbrush,
-    LucideIcon,
-} from 'lucide-react';
+import { Service } from '@/types';
 
-const iconMap: Record<string, LucideIcon> = {
-    precision_manufacturing: Cpu,
-    polyline: GitBranch,
-    electric_bolt: Zap,
-    handyman: Wrench,
-    format_paint: Paintbrush,
-};
-
-export default function Services() {
-    const services = [
-        {
-            id: 'laser-cutting',
-            title: 'Лазерно рязане',
-            description:
-                'Високопрецизно лазерно рязане на метални листове с модерно CNC оборудване. Нашите fiber лазери осигуряват изключителна точност и бързина при обработката на различни метални материали.',
-            image: 'https://kosev.bg/wp-content/uploads/2019/09/lazer-cutting-400x300.jpg',
-            icon: 'precision_manufacturing',
-            specs: [
-                { label: 'Максимална дебелина стомана', value: 'до 25mm' },
-                {
-                    label: 'Максимална дебелина неръждаема стомана',
-                    value: 'до 15mm',
-                },
-                { label: 'Максимална дебелина алуминий', value: 'до 15mm' },
-                { label: 'Работна площ', value: '4000 x 2000mm' },
-                { label: 'Прецизност', value: '±0.2mm' },
-            ],
-            benefits: [
-                'Бърза обработка',
-                'Минимален отпадък',
-                'Чисти ръбове',
-                'Сложни контури',
-                'Повторяемост',
-                'Гъвкавост на материалите',
-            ],
-        },
-        {
-            id: 'bending',
-            title: 'Огъване на метал',
-            description:
-                'Прецизно огъване на метални листове с CNC абкант преси. Можем да създаваме сложни профили и форми с висока точност и повторяемост.',
-            image: 'https://kosev.bg/wp-content/uploads/2019/09/1471259471.jpg',
-            icon: 'polyline',
-            specs: [
-                { label: 'Максимална дължина', value: 'до 4000mm' },
-                { label: 'Сила на натиск', value: 'до 320 тона' },
-                { label: 'Максимална дебелина', value: 'до 16mm' },
-                { label: 'Брой оси', value: '6 оси' },
-                { label: 'Точност на ъгъла', value: '±0.5°' },
-            ],
-            benefits: [
-                'Сложни профили',
-                'Висока повторяемост',
-                'Бърза настройка',
-                'Многообразие от инструменти',
-                'CNC управление',
-                'Автоматична корекция',
-            ],
-        },
-        {
-            id: 'welding',
-            title: 'Заваряване',
-            description:
-                'Професионално заваряване с MIG/MAG, TIG и електродъгово оборудване. Нашите сертифицирани заварчици гарантират здрави и качествени заварки.',
-            image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=800&q=80',
-            icon: 'electric_bolt',
-            specs: [
-                { label: 'MIG/MAG заваряване', value: 'до 500A' },
-                { label: 'TIG заваряване', value: 'AC/DC' },
-                { label: 'Роботизирано заваряване', value: 'Да' },
-                { label: 'Материали', value: 'Стомана, неръжд., алуминий' },
-                { label: 'Сертификация', value: 'EN ISO 3834-2' },
-            ],
-            benefits: [
-                'Сертифицирани заварчици',
-                'Роботизирани процеси',
-                'Визуален контрол',
-                'NDT тестване',
-                'Различни материали',
-                'Конструктивно заваряване',
-            ],
-        },
-        {
-            id: 'assembly',
-            title: 'Монтаж и сглобяване',
-            description:
-                'Сглобяване на метални конструкции и завършени изделия по спецификация. Предлагаме цялостни решения от отделни компоненти до готови продукти.',
-            image: 'https://kosev.bg/wp-content/uploads/2019/09/1432706260-1024x579.jpg',
-            icon: 'handyman',
-            specs: [
-                { label: 'Тип монтаж', value: 'Механичен и заварен' },
-                { label: 'Нитове', value: 'Всички типове' },
-                { label: 'Резби', value: 'M3 до M30' },
-                { label: 'Тестване', value: 'Функционално и визуално' },
-                { label: 'Опаковка', value: 'По спецификация' },
-            ],
-            benefits: [
-                'Комплексни решения',
-                'Готови продукти',
-                'Контрол на качеството',
-                'Гъвкава производственост',
-                'Персонализирана опаковка',
-                'JIT доставки',
-            ],
-        },
-        {
-            id: 'surface-treatment',
-            title: 'Повърхностна обработка',
-            description:
-                'Финишна обработка включително шлифоване, полиране, почистване и подготовка за боядисване. Осигуряваме перфектна повърхност за всяко приложение.',
-            image: 'https://images.unsplash.com/photo-1567361808960-dec9cb578182?auto=format&fit=crop&w=800&q=80',
-            icon: 'format_paint',
-            specs: [
-                { label: 'Шлифоване', value: 'Грубост Ra 0.8-6.3' },
-                { label: 'Полиране', value: 'Огледално и матово' },
-                { label: 'Почистване', value: 'Обезмасляване, киселинно' },
-                { label: 'Пясъкоструене', value: 'SA 2.5 / SA 3' },
-                { label: 'Грундиране', value: 'По спецификация' },
-            ],
-            benefits: [
-                'Естетичен вид',
-                'Защита от корозия',
-                'Подготовка за боя',
-                'Различни степени на грапавост',
-                'Почистване и обезмасляване',
-                'Пасивиране на неръждаема стомана',
-            ],
-        },
-    ];
+export default function Services({services}: {services: Service[]}) {    
     return (
         <>
             <Head title="Services" />
@@ -298,6 +164,7 @@ export default function Services() {
                 <div className="container">
                     {services.map((service, i) => (
                         <div
+                            id={service.slug}
                             className={cn('service-block', {
                                 reverse: i % 2 !== 0,
                             })}
@@ -305,20 +172,14 @@ export default function Services() {
                         >
                             <div className="service-image">
                                 <img
-                                    src={service.image}
-                                    alt={service.title}
+                                    src={service.cover_image?.originalUrl}
+                                    alt={service.name}
                                     loading="lazy"
                                 />
                             </div>
                             <div className="service-content">
-                                <div className="flex items-baseline gap-4">
-                                    {(() => {
-                                        const Icon = iconMap[service.icon];
-                                        return Icon ? (
-                                            <Icon className="h-10 w-10 min-w-10" />
-                                        ) : null;
-                                    })()}
-                                    <h2>{service.title}</h2>
+                                <div className="flex items-baseline gap-4">                                    
+                                    <h2>{service.name}</h2>
                                 </div>
                                 <p className="service-description">
                                     {service.description}
@@ -327,7 +188,7 @@ export default function Services() {
                                 <div className="service-specs">
                                     <h4>Технически възможности</h4>
                                     <ul className="specs-list">
-                                        {service.specs.map((spec) => (
+                                        {service.specs?.map((spec) => (
                                             <li key={spec.label}>
                                                 <span className="spec-label">
                                                     {spec.label}:
@@ -343,8 +204,8 @@ export default function Services() {
                                 <div className="service-benefits">
                                     <h4>Предимства</h4>
                                     <ul className="benefits-list">
-                                        {service.benefits.map((benefit) => (
-                                            <li key={benefit}>
+                                        {service.tags?.map((tag, idx) => (
+                                            <li key={idx}>
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     width="18"
@@ -358,7 +219,7 @@ export default function Services() {
                                                 >
                                                     <path d="M20 6 9 17l-5-5" />
                                                 </svg>
-                                                {benefit}
+                                                {tag.name}
                                             </li>
                                         ))}
                                     </ul>

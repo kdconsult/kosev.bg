@@ -1,9 +1,10 @@
 import { cn } from '@/lib/utils';
-import { contacts, services } from '@/routes';
+import { contacts,  } from '@/routes';
 import { index } from '@/routes/products';
 import type { Product } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { useState } from 'react';
+import ServicesController from '@/actions/App/Http/Controllers/ServicesController';
 
 export default function ProductDetail({ product }: { product: Product }) {
     const [activeImageIndex, setActiveImageIndex] = useState(-1);
@@ -182,13 +183,13 @@ export default function ProductDetail({ product }: { product: Product }) {
                                     <h3>Свързани услуги</h3>
                                     <div className="services-badges">
                                         {product.services.map((service) => (
-                                            <Link
-                                                href={services()}
+                                            <a
+                                                href={ServicesController.index.url() + '#' + service.slug}
                                                 className="service-badge"
                                                 key={service.slug}
                                             >
                                                 {service.name}
-                                            </Link>
+                                            </a>
                                         ))}
                                     </div>
                                 </div>

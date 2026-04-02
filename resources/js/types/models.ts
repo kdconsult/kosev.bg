@@ -57,3 +57,15 @@ export interface Certificate {
     imagePath: string;
     pdfPath: string;
 }
+
+export interface Service {
+    id: number;
+    slug: string;
+    name: string;
+    description: string;
+    cover_image: Image | null;
+    products: Product[];
+    tags: Tag[];
+    specs: Spec[];
+    is_active: boolean;
+}
