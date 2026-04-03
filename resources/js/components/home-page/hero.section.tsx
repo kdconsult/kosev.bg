@@ -1,7 +1,7 @@
+import { Link } from '@inertiajs/react';
+import { ChevronRight } from 'lucide-react';
 import { contacts } from '@/routes';
 import { index as services } from '@/routes/services';
-import { Link } from '@inertiajs/react';
-import { ChevronRight, Clock, Globe, ShieldCheck } from 'lucide-react';
 
 export default function HeroSection() {
     return (

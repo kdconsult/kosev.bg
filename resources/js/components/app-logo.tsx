@@ -1,8 +1,9 @@
-import AppLogoIcon from '@/components/app-logo-icon';
 import { usePage } from '@inertiajs/react';
+import AppLogoIcon from '@/components/app-logo-icon';
 
 export default function AppLogo() {
     const appName = usePage().props.name || 'Laravel';
+
     return (
         <>
             <div className="flex aspect-square size-12 items-center justify-center rounded-lg bg-card p-1" >

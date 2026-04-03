@@ -1,7 +1,6 @@
 import { Head } from '@inertiajs/react';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
-import { contacts } from '@/routes';
 import { useState } from 'react';
+import { contacts } from '@/routes';
 
 export default function Contacts() {
     const [formData, setFormData] = useState({
@@ -58,6 +57,7 @@ export default function Contacts() {
             });
         }, 1500);
     };
+
     return (
         <>
             <Head title="Свържете се с нас" />

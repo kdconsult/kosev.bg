@@ -1,3 +1,5 @@
+import { Link } from '@inertiajs/react';
+import type { MouseEventHandler, SubmitEventHandler } from 'react';
 import { Button } from '@/components/ui/button';
 import {
     Field,
@@ -12,9 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { RouteDefinition } from '@/wayfinder';
-import { Link } from '@inertiajs/react';
-import { MouseEventHandler, SubmitEventHandler } from 'react';
+import type { RouteDefinition } from '@/wayfinder';
 
 export default function CertificateForm({
     data,

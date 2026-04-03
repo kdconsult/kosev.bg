@@ -1,10 +1,10 @@
+import { Head, Link } from '@inertiajs/react';
+import { useState } from 'react';
+import ServicesController from '@/actions/App/Http/Controllers/ServicesController';
 import { cn } from '@/lib/utils';
 import { contacts,  } from '@/routes';
 import { index } from '@/routes/products';
 import type { Product } from '@/types';
-import { Head, Link } from '@inertiajs/react';
-import { useState } from 'react';
-import ServicesController from '@/actions/App/Http/Controllers/ServicesController';
 
 export default function ProductDetail({ product }: { product: Product }) {
     const [activeImageIndex, setActiveImageIndex] = useState(-1);
@@ -12,6 +12,7 @@ export default function ProductDetail({ product }: { product: Product }) {
         activeImageIndex === -1
             ? product.cover_image?.originalUrl
             : product.images[activeImageIndex]?.originalUrl;
+
     return (
         <>
             <Head title="Продукт" />

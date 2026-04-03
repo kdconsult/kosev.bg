@@ -1,9 +1,9 @@
-import Heading from '@/components/heading';
 import { Head, router, useForm, usePage } from '@inertiajs/react';
-import CertificateForm from './_form';
-import { SubmitEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import CertificatesController from '@/actions/App/Http/Controllers/Admin/CertificatesController';
+import Heading from '@/components/heading';
 import { index } from '@/routes/admin/certificates';
+import CertificateForm from './_form';
 
 interface Certificate {
     id: number;

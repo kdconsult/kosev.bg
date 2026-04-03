@@ -1,7 +1,7 @@
-import { index as products, show } from '@/routes/products';
-import type { Product } from '@/types';
 import { Link } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
+import { index as products, show } from '@/routes/products';
+import type { Product } from '@/types';
 
 export default function ProductsTeaserSection({
     featuredProducts,

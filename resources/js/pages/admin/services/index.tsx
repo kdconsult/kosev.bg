@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import { Pencil, Plus, Search, Trash2 } from 'lucide-react';
+import { useRef, useState } from 'react';
 import ServicesController from '@/actions/App/Http/Controllers/Admin/ServicesController';
 import Heading from '@/components/heading';
 import { Button } from '@/components/ui/button';
@@ -15,8 +15,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { index, create } from '@/routes/admin/services';
 import { dashboard } from '@/routes';
+import { index, create } from '@/routes/admin/services';
 
 interface AdminService {
     slug: string;
@@ -68,6 +68,7 @@ export default function Index({ services, filters }: Props) {
         if (!url) {
             return;
         }
+
         router.get(url, {}, { preserveScroll: true, preserveState: true });
     };
 
@@ -92,6 +93,7 @@ export default function Index({ services, filters }: Props) {
         if (!pendingDelete) {
             return;
         }
+
         setIsDeleting(true);
         router.delete(ServicesController.destroy.url(pendingDelete), {
             onFinish: () => {

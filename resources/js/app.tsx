@@ -1,10 +1,10 @@
 import { createInertiaApp } from '@inertiajs/react';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';
+import BaseLayout from '@/layouts/app/app-header-layout';
 import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import SettingsLayout from '@/layouts/settings/layout';
-import BaseLayout from '@/layouts/app/app-header-layout';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

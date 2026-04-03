@@ -1,9 +1,9 @@
-import Heading from '@/components/heading';
 import { Head, useForm } from '@inertiajs/react';
-import CertificateForm from './_form';
-import { index } from '@/routes/admin/certificates';
+import type { SubmitEvent } from 'react';
 import CertificatesController from '@/actions/App/Http/Controllers/Admin/CertificatesController';
-import { SubmitEvent } from 'react';
+import Heading from '@/components/heading';
+import { index } from '@/routes/admin/certificates';
+import CertificateForm from './_form';
 
 export default function CertificatesIndex({ locales }: { locales: string[] }) {
     const { data, setData, post, processing, errors } = useForm({

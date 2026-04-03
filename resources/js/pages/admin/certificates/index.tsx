@@ -1,3 +1,5 @@
+import { Head, Link } from '@inertiajs/react';
+import { Plus } from 'lucide-react';
 import Heading from '@/components/heading';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -10,9 +12,7 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { create, edit } from '@/routes/admin/certificates';
-import { Certificate } from '@/types';
-import { Head, Link } from '@inertiajs/react';
-import { Plus } from 'lucide-react';
+import type { Certificate } from '@/types';
 
 export default function CertificatesIndex({
     certificates,

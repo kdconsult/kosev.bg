@@ -1,8 +1,8 @@
+import { Head, Link } from '@inertiajs/react';
+import { DownloadIcon } from 'lucide-react';
 import CertificatesController from '@/actions/App/Http/Controllers/CertificateController';
 import { contacts } from '@/routes';
 import type { Certificate } from '@/types';
-import { Head, Link } from '@inertiajs/react';
-import { DownloadIcon } from 'lucide-react';
 
 export default function Certificates({
     certificates,

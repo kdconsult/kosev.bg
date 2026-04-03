@@ -1,7 +1,7 @@
-import { about, contacts, home } from '@/routes';
-import { index as services } from '@/routes/services';
-import { index } from '@/routes/projects';
 import { Link, usePage } from '@inertiajs/react';
+import { about, contacts, home } from '@/routes';
+import { index } from '@/routes/projects';
+import { index as services } from '@/routes/services';
 
 export function AppFooter() {
     const { currentYear } = usePage().props;

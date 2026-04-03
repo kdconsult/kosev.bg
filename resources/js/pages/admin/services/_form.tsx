@@ -1,11 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { useState } from 'react';
-import InputError from '@/components/input-error';
+import { SpecFields } from '@/components/spec-fields';
+import { TagInput } from '@/components/tag-input';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RouteDefinition } from '@/wayfinder';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
     Field,
     FieldDescription,
@@ -15,10 +12,11 @@ import {
     FieldLegend,
     FieldSet,
 } from '@/components/ui/field';
-import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
-import { TagInput } from '@/components/tag-input';
-import { SpecFields } from '@/components/spec-fields';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Textarea } from '@/components/ui/textarea';
+import type { RouteDefinition } from '@/wayfinder';
 
 const LOCALES = [
     { key: 'bg', label: 'BG' },
@@ -52,7 +50,6 @@ interface Props {
     setData: (key: string, value: unknown) => void;
     errors: ServiceFormErrors;
     processing: boolean;
-    slug?: string;
     onSubmit: (e: React.FormEvent) => void;
     submitLabel: string;
     cancelHref: RouteDefinition<'get'>;
@@ -68,7 +65,6 @@ export function ServiceForm({
     setData,
     errors,
     processing,
-    slug,
     onSubmit,
     submitLabel,
     cancelHref,

@@ -1,13 +1,13 @@
 import { Head, useForm, useHttp } from '@inertiajs/react';
+import { X } from 'lucide-react';
+import { useState } from 'react';
+import ProjectsController from '@/actions/App/Http/Controllers/Admin/ProjectsController';
 import Heading from '@/components/heading';
+import { Button } from '@/components/ui/button';
+import { deleteMedia } from '@/routes/admin';
 import { index } from '@/routes/admin/products';
 import type { Category } from '@/types/models';
 import { ProjectForm } from './_form';
-import { Button } from '@/components/ui/button';
-import { X } from 'lucide-react';
-import { deleteMedia } from '@/routes/admin';
-import { useState } from 'react';
-import ProjectsController from '@/actions/App/Http/Controllers/Admin/ProjectsController';
 
 interface TagSuggestion {
     slug: string;
@@ -31,7 +31,6 @@ interface Props {
     coverImageAlt?: string;
     images: { url: string; alt: string, id: number }[];
     availableTags: TagSuggestion[];
-    availableServces: TagSuggestion[];
 }
 
 export default function Edit({
@@ -41,7 +40,6 @@ export default function Edit({
     coverImageAlt,
     images,
     availableTags,
-    availableServces,
 }: Props) {
     const {post}= useHttp();
 
@@ -98,7 +96,6 @@ export default function Edit({
                             processing={processing}
                             categories={categories}
                             availableTags={availableTags}
-                            availableServces={availableServces}
                             slug={project.slug}
                             onSubmit={handleSubmit}
                             submitLabel="Save Changes"

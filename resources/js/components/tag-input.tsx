@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
@@ -28,9 +28,11 @@ export function TagInput({ value, onChange, suggestions = [], placeholder = 'Add
 
     const addTag = (name: string) => {
         const trimmed = name.trim();
+
         if (trimmed && !value.includes(trimmed)) {
             onChange([...value, trimmed]);
         }
+
         setInputValue('');
         setShowDropdown(false);
     };
@@ -57,6 +59,7 @@ export function TagInput({ value, onChange, suggestions = [], placeholder = 'Add
             }
         };
         document.addEventListener('mousedown', handleClickOutside);
+
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 

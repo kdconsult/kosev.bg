@@ -1,8 +1,8 @@
 import { Head, Link } from '@inertiajs/react';
-import { index, show } from '@/routes/products';
-import { cn } from '@/lib/utils';
 import { useState } from 'react';
+import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
+import { index, show } from '@/routes/products';
 import type { Category, Product } from '@/types';
 
 export default function ProductList({ products, categories }: { products: Product[]; categories: Category[] }) {

@@ -1,13 +1,13 @@
 import { Head, useForm, useHttp } from '@inertiajs/react';
+import { X } from 'lucide-react';
+import { useState } from 'react';
 import ProductsController from '@/actions/App/Http/Controllers/Admin/ProductsController';
 import Heading from '@/components/heading';
+import { Button } from '@/components/ui/button';
+import { deleteMedia } from '@/routes/admin';
 import { index } from '@/routes/admin/products';
 import type { Category } from '@/types/models';
 import { ProductForm } from './_form';
-import { Button } from '@/components/ui/button';
-import { X } from 'lucide-react';
-import { deleteMedia } from '@/routes/admin';
-import { useState } from 'react';
 
 interface TagSuggestion {
     slug: string;

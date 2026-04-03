@@ -1,59 +1,6 @@
-import { index as servicesIndex } from '@/routes/services';
-import { Service } from '@/types/models';
 import { Link } from '@inertiajs/react';
-
-const capabilities = [
-    {
-        title: 'Лазерно рязане',
-        description:
-            'Високопрецизно лазерно рязане на метални листове с модерно CNC оборудване за максимална точност.',
-        image: 'https://kosev.bg/wp-content/uploads/2019/09/lazer-cutting-400x300.jpg',
-        features: [
-            'Дебелина до 25mm стомана',
-            'Прецизност ±0.1mm',
-            'Бърза обработка',
-        ],
-    },
-    {
-        title: 'Огъване на метал',
-        description:
-            'Прецизно огъване на метални листове с CNC абкант преси за сложни форми.',
-        image: 'https://kosev.bg/wp-content/uploads/2019/09/1471259471.jpg',
-        features: ['Дължина до 4000mm', 'Сила до 320 тона', 'Сложни профили'],
-    },
-    {
-        title: 'Заваряване',
-        description:
-            'Професионално заваряване с MIG/MAG, TIG и електродъгово оборудване.',
-        image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=800&q=80',
-        features: [
-            'MIG/MAG заваряване',
-            'TIG заваряване',
-            'Сертифицирани заварчици',
-        ],
-    },
-    {
-        title: 'Монтаж',
-        description:
-            'Сглобяване на метални конструкции и завършени изделия по спецификация.',
-        image: 'https://kosev.bg/wp-content/uploads/2019/09/1432706260-1024x579.jpg',
-        features: ['Механичен монтаж', 'Нитове и болтове', 'Готови изделия'],
-    },
-    {
-        title: 'Повърхностна обработка',
-        description:
-            'Финишна обработка включително шлифоване, полиране и подготовка за боядисване.',
-        image: 'https://images.unsplash.com/photo-1567361808960-dec9cb578182?auto=format&fit=crop&w=800&q=80',
-        features: ['Шлифоване', 'Полиране', 'Обезмасляване'],
-    },
-    {
-        title: 'CNC обработка',
-        description:
-            'Прецизна механична обработка на детайли с модерни CNC машини.',
-        image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebb6122?auto=format&fit=crop&w=800&q=80',
-        features: ['Фрезоване', 'Струговане', 'Пробиване'],
-    },
-];
+import { index as servicesIndex } from '@/routes/services';
+import type { Service } from '@/types/models';
 
 export default function CapabilitiesSection({services}: {services: Service[]}) {
     return (

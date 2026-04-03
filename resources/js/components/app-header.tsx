@@ -1,4 +1,6 @@
 import { Link, usePage } from '@inertiajs/react';
+import { LayoutDashboardIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { useInitials } from '@/hooks/use-initials';
@@ -9,13 +11,11 @@ import {
     contacts,
     dashboard,
 } from '@/routes';
-import { index as projectsIndex } from '@/routes/projects';
-import { index as products } from '@/routes/products';
-import { index as services } from '@/routes/services';
 import {index as certificates} from '@/routes/certificates';
+import { index as products } from '@/routes/products';
+import { index as projectsIndex } from '@/routes/projects';
+import { index as services } from '@/routes/services';
 import type { BreadcrumbItem } from '@/types';
-import { useEffect, useState } from 'react';
-import { LayoutDashboardIcon } from 'lucide-react';
 
 type Props = {
     breadcrumbs?: BreadcrumbItem[];
@@ -34,6 +34,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
     useEffect(() => {
         const onScroll = () => setIsScrolled(window.scrollY > 20);
         window.addEventListener('scroll', onScroll, { passive: true });
+
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 

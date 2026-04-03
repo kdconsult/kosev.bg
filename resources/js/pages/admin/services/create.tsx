@@ -7,6 +7,11 @@ import { ServiceForm } from './_form';
 export default function Create() {
     const { data, setData, post, processing, errors } = useForm({
         name: { bg: '', en: '' },
+        description: { bg: '', en: '' },
+        is_active: false,
+        products: [],
+        tags: [],
+        specs: [],
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -30,6 +35,8 @@ export default function Create() {
                         onSubmit={handleSubmit}
                         submitLabel="Create Service"
                         cancelHref={index()}
+                        availableProducts={[]}
+                        availableTags={[]}
                     />
                 </div>
             </div>

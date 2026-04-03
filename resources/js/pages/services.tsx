@@ -1,8 +1,8 @@
 import { Head, Link } from '@inertiajs/react';
+import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
 import { index as services } from '@/routes/services';
-import { cn } from '@/lib/utils';
-import { Service } from '@/types';
+import type { Service } from '@/types';
 
 export default function Services({services}: {services: Service[]}) {    
     return (

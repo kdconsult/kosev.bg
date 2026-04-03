@@ -1,13 +1,14 @@
-import { useState } from 'react';
 import { Link } from '@inertiajs/react';
 import type { InertiaLinkProps } from '@inertiajs/react';
+import { useState } from 'react';
 import InputError from '@/components/input-error';
-import { SpecFields, type SpecData } from '@/components/spec-fields';
+import { SpecFields  } from '@/components/spec-fields';
+import type {SpecData} from '@/components/spec-fields';
 import { TagInput } from '@/components/tag-input';
 import { Button } from '@/components/ui/button';
+import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
 import {
     Select,
     SelectContent,
@@ -48,7 +49,6 @@ interface ProjectFormProps {
     processing: boolean;
     categories: Category[];
     availableTags: TagSuggestion[];
-    availableServces: TagSuggestion[];
     slug?: string;
     onSubmit: (e: React.FormEvent) => void;
     submitLabel: string;
@@ -69,7 +69,6 @@ export function ProjectForm({
     processing,
     categories,
     availableTags,
-    availableServces,
     slug,
     onSubmit,
     submitLabel,

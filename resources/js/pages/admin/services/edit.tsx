@@ -91,7 +91,6 @@ export default function Edit({
                             setData={setData}
                             errors={errors}
                             processing={processing}
-                            slug={service.slug}
                             onSubmit={handleSubmit}
                             onDelete={onDelete}
                             submitLabel="Save Changes"

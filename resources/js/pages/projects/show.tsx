@@ -1,10 +1,10 @@
+import { Head, Link } from '@inertiajs/react';
+import { ChevronLeft } from 'lucide-react';
+import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
 import { index as projectsIndex } from '@/routes/projects';
 import type { Project } from '@/types';
-import { Head, Link } from '@inertiajs/react';
-import { ChevronLeft } from 'lucide-react';
-import { useState } from 'react';
 
 export default function ProjectDetail({ project }: { project: Project }) {
     const [activeImageIndex, setActiveImageIndex] = useState(-1);

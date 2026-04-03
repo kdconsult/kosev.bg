@@ -1,5 +1,5 @@
-import { index as certificates } from '@/routes/certificates/index';
 import { Link } from '@inertiajs/react';
+import { index as certificates } from '@/routes/certificates/index';
 
 const certifications = [
     { name: 'ISO 9001:2015', description: 'Управление на качеството' },

@@ -1,8 +1,8 @@
 import { Head, Link } from '@inertiajs/react';
-import { contacts } from '@/routes';
-import { index, show } from '@/routes/projects';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { contacts } from '@/routes';
+import { index, show } from '@/routes/projects';
 import type { Category, Project } from '@/types';
 
 export default function ProjectsList({ projects, categories }: { projects: Project[]; categories: Category[] }) {

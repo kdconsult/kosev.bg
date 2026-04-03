@@ -1,3 +1,6 @@
+import { Head, Link, router } from '@inertiajs/react';
+import { Pencil, Plus, Search, Trash2 } from 'lucide-react';
+import { useRef, useState } from 'react';
 import ProjectsController from '@/actions/App/Http/Controllers/Admin/ProjectsController';
 import Heading from '@/components/heading';
 import { Badge } from '@/components/ui/badge';
@@ -27,9 +30,6 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { index, create } from '@/routes/admin/projects';
-import { Head, Link, router } from '@inertiajs/react';
-import { Pencil, Plus, Search, Trash2 } from 'lucide-react';
-import { useRef, useState } from 'react';
 
 interface Tag {
     slug: string;
@@ -92,6 +92,7 @@ export default function ProjectsIndex({ projects, filters }: Props) {
         if (!url) {
             return;
         }
+
         router.get(url, {}, { preserveScroll: true, preserveState: true });
     };
 
@@ -122,6 +123,7 @@ export default function ProjectsIndex({ projects, filters }: Props) {
         if (!pendingDelete) {
             return;
         }
+
         setIsDeleting(true);
         router.delete(ProjectsController.destroy.url(pendingDelete), {
             onFinish: () => {

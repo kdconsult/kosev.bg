@@ -13,10 +13,9 @@ interface TagSuggestion {
 interface Props {
     categories: Category[];
     availableTags: TagSuggestion[];
-    availableServces: TagSuggestion[];
 }
 
-export default function Create({ categories, availableTags, availableServces }: Props) {
+export default function Create({ categories, availableTags }: Props) {
     const { data, setData, post, processing, errors } = useForm({
         title: { bg: '', en: '' },
         description: { bg: '', en: '' },
@@ -46,7 +45,6 @@ export default function Create({ categories, availableTags, availableServces }: 
                         processing={processing}
                         categories={categories}
                         availableTags={availableTags}
-                        availableServces={availableServces}
                         onSubmit={handleSubmit}
                         submitLabel="Create Project"
                         cancelHref={index()}

@@ -1,12 +1,13 @@
 import { Head, Link } from '@inertiajs/react';
-import { about, contacts } from '@/routes';
+import type {
+    LucideIcon} from 'lucide-react';
 import {
     CheckCircleIcon,
     HandshakeIcon,
-    LucideIcon,
     Rotate3DIcon,
     UserCircleIcon,
 } from 'lucide-react';
+import { about, contacts } from '@/routes';
 
 export default function AboutUs() {
     const values = [
@@ -83,6 +84,7 @@ export default function AboutUs() {
         { value: '50+', label: 'Европейски партньори' },
         { value: '500+', label: 'Проекта годишно' },
     ];
+
     return (
         <>
             <Head title="За нас" />
@@ -395,6 +397,7 @@ export default function AboutUs() {
                             <div className="value-card" key={idx}>
                                 {(() => {
                                     const Icon = iconMap[value.icon];
+
                                     return Icon ? (
                                         <Icon className="h-10 w-10 min-w-10" />
                                     ) : null;
