@@ -1,9 +1,9 @@
 import { Head, useForm, useHttp } from '@inertiajs/react';
-import { X } from 'lucide-react';
 import { useState } from 'react';
 import ProjectsController from '@/actions/App/Http/Controllers/Admin/ProjectsController';
 import Heading from '@/components/heading';
 import { Button } from '@/components/ui/button';
+import { Card, CardFooter } from '@/components/ui/card';
 import { deleteMedia } from '@/routes/admin';
 import { index } from '@/routes/admin/products';
 import type { Category } from '@/types/models';
@@ -14,14 +14,17 @@ interface TagSuggestion {
     name: string;
 }
 
-interface AdminProject   {
+interface AdminProject {
     slug: string;
     title: { bg: string; en: string };
     description: { bg: string; en: string };
     category_slug: string | null;
     tags: TagSuggestion[];
     services: TagSuggestion[];
-    specs: { label: { bg: string; en: string }; value: { bg: string; en: string } }[];
+    specs: {
+        label: { bg: string; en: string };
+        value: { bg: string; en: string };
+    }[];
 }
 
 interface Props {
@@ -29,7 +32,11 @@ interface Props {
     categories: Category[];
     coverImageUrl?: string;
     coverImageAlt?: string;
-    images: { url: string; alt: string, id: number }[];
+    images: {
+        thumbUrl: string;
+        alt: string;
+        id: number;
+    }[];
     availableTags: TagSuggestion[];
 }
 
@@ -41,7 +48,7 @@ export default function Edit({
     images,
     availableTags,
 }: Props) {
-    const {post}= useHttp();
+    const { post } = useHttp();
 
     const [imagesState, setImages] = useState(images);
 
@@ -57,7 +64,7 @@ export default function Edit({
             label: { bg: s.label.bg ?? '', en: s.label.en ?? '' },
             value: { bg: s.value.bg ?? '', en: s.value.en ?? '' },
         })),
-    });    
+    });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -70,12 +77,12 @@ export default function Edit({
         }
 
         const media = images[index];
-        post(deleteMedia.url({ "query": { media_id: media.id } }), {
+        post(deleteMedia.url({ query: { media_id: media.id } }), {
             onSuccess: () => {
                 setImages(images.filter((im) => im.id !== media.id));
             },
         });
-    }
+    };
 
     return (
         <>
@@ -103,33 +110,49 @@ export default function Edit({
                         />
                     </div>
                     <div className="grid gap-4">
-                        <h2 className="mb-2 text-lg font-semibold">Cover Image</h2>                        
+                        <h2 className="mb-2 text-lg font-semibold">
+                            Cover Image
+                        </h2>
                         <img
-                            src={coverImageUrl || 'https://placehold.co/800x600'}
+                            src={
+                                coverImageUrl || 'https://placehold.co/800x600'
+                            }
                             alt={coverImageAlt || 'Cover Image'}
                             className="h-auto max-w-full rounded-xl"
                         />
 
                         {imagesState.length > 0 && (
                             <div>
-                                <h2 className="mb-2 text-lg font-semibold">
+                                <h3 className="mb-2 text-lg font-semibold">
                                     Additional Images
-                                </h2>
+                                </h3>
                                 <div className="flex flex-wrap gap-2">
                                     {imagesState.map((image, index) => (
-                                        <div key={index} className="relative">
-                                            <Button type='button' variant='destructive' size='icon' className='absolute right-1 top-1' onClick={() => removeImage(index)}>
-                                                <X className="h-4 w-4" />
-                                            </Button>
+                                        <Card
+                                            className="relative w-full max-w-42 pt-0"
+                                            size="sm"
+                                            key={image.id}
+                                        >
                                             <img
-                                                src={image.url}
+                                                src={image.thumbUrl}
                                                 alt={
                                                     image.alt ||
                                                     `Image ${index + 1}`
                                                 }
-                                                className="h-auto w-36 rounded-xl"
+                                                className="relative z-20 aspect-video w-full object-cover"
                                             />
-                                        </div>
+                                            <CardFooter>
+                                                <Button
+                                                    className="w-full"
+                                                    variant="destructive"
+                                                    onClick={() =>
+                                                        removeImage(index)
+                                                    }
+                                                >
+                                                    Remove Image
+                                                </Button>
+                                            </CardFooter>
+                                        </Card>
                                     ))}
                                 </div>
                             </div>

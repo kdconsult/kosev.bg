@@ -80,11 +80,15 @@ class ProjectsController extends Controller
      */
     public function edit(Project $project)
     {
+        $coverImage = $project->coverImage();
+
         return Inertia::render('admin/projects/edit', [
             'project' => new AdminProjectResource($project->load(['category', 'tags', 'specs'])),
             'categories' => CategoryResource::collection(Category::where('type', 'project')->get()),
             'tags' => TagResource::collection(Tag::where('type', 'project')->get()),
-            'images' => $project->getMedia('images')->map(fn ($image) => ['id' => $image->id, 'thumbUrl' => $image->getUrl('thumb'), 'originalUrl' => $image->getUrl()]),
+            'coverImageUrl' => $coverImage?->getUrl(),
+            'coverImageAlt' => $coverImage?->getCustomProperty('alt'),
+            'images' => $project->images()->map(fn ($image) => ['id' => $image->id, 'thumbUrl' => $image->getUrl('thumb')]),
         ]);
     }
 
