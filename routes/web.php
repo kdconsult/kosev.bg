@@ -5,11 +5,11 @@ use App\Http\Controllers\Admin\DeleteMediaController;
 use App\Http\Controllers\Admin\ProductsController as AdminProductController;
 use App\Http\Controllers\Admin\ProjectsController as AdminProjectController;
 use App\Http\Controllers\Admin\ServicesController as AdminServiceController;
-use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');

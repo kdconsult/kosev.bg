@@ -23,7 +23,7 @@ class ServiceResource extends JsonResource
             'description' => $this->description,
             'cover_image' => ['originalUrl' => $this->coverImage()?->getUrl() ?? 'https://placehold.co/800x600'],
             'tags' => TagResource::collection($this->whenLoaded('tags')),
-            'specs' => SpecResource::collection($this->whenLoaded('specs'))
+            'specs' => SpecResource::collection($this->whenLoaded('specs')),
         ];
     }
 }

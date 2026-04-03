@@ -45,13 +45,13 @@ class ServicesController extends Controller
             ->with('success', 'Service created.');
     }
 
-    public function show(Service $service)
+    public function show(Service $service): RedirectResponse
     {
-        //
+        return redirect()->route('services.show', $service);
     }
 
     public function edit(Service $service): Response
-    {    
+    {
         $media = $service->coverImage();
 
         return Inertia::render('admin/services/edit', [
@@ -69,7 +69,7 @@ class ServicesController extends Controller
     }
 
     public function update(UpdateServiceRequest $request, Service $service): RedirectResponse
-    {       
+    {
         $service->update($request->validated());
 
         if ($request->has('cover_image') && $request->file('cover_image')->isValid()) {

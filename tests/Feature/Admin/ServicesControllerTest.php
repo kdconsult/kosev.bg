@@ -77,7 +77,7 @@ it('creates a service and redirects to index', function () {
 
     $service = Service::where('name->bg', 'Ново заваряване')->first();
     expect($service)->not->toBeNull();
-    expect($service->slug)->toBe('novo-zavaryavane');
+    expect($service->slug)->toBe('novo-zavariavane');
 });
 
 it('validates name.bg is required on store', function () {
@@ -93,7 +93,7 @@ it('redirects admin show to public services page', function () {
 
     $this->actingAs($this->user)
         ->get("/admin/services/{$service->slug}")
-        ->assertRedirect(route('services'));
+        ->assertRedirect(route('services.show', $service->slug));
 });
 
 // --- Edit ---
