@@ -1,9 +1,9 @@
 import { Head, useForm, useHttp } from '@inertiajs/react';
-import { X } from 'lucide-react';
 import { useState } from 'react';
 import ProductsController from '@/actions/App/Http/Controllers/Admin/ProductsController';
 import Heading from '@/components/heading';
 import { Button } from '@/components/ui/button';
+import { Card, CardFooter } from '@/components/ui/card';
 import { deleteMedia } from '@/routes/admin';
 import { index } from '@/routes/admin/products';
 import type { Category } from '@/types/models';
@@ -116,24 +116,36 @@ export default function Edit({
 
                         {imagesState.length > 0 && (
                             <div>
-                                <h2 className="mb-2 text-lg font-semibold">
+                                <h3 className="mb-2 text-lg font-semibold">
                                     Additional Images
-                                </h2>
+                                </h3>
                                 <div className="flex flex-wrap gap-2">
                                     {imagesState.map((image, index) => (
-                                        <div key={index} className="relative">
-                                            <Button type='button' variant='destructive' size='icon' className='absolute right-1 top-1' onClick={() => removeImage(index)}>
-                                                <X className="h-4 w-4" />
-                                            </Button>
+                                        <Card
+                                            className="relative w-full max-w-42 pt-0"
+                                            size="sm"
+                                            key={image.id}
+                                        >
                                             <img
                                                 src={image.url}
                                                 alt={
                                                     image.alt ||
                                                     `Image ${index + 1}`
                                                 }
-                                                className="h-auto w-36 rounded-xl"
+                                                className="relative z-20 aspect-video w-full object-cover"
                                             />
-                                        </div>
+                                            <CardFooter>
+                                                <Button
+                                                    className="w-full"
+                                                    variant="destructive"
+                                                    onClick={() =>
+                                                        removeImage(index)
+                                                    }
+                                                >
+                                                    Remove Image
+                                                </Button>
+                                            </CardFooter>
+                                        </Card>
                                     ))}
                                 </div>
                             </div>
