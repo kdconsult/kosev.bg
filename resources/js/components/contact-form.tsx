@@ -15,6 +15,7 @@ import {
 } from './ui/field';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const initialFormData = {
     email: '',
@@ -22,20 +23,35 @@ const initialFormData = {
     company: '',
     phone: '',
     message: '',
+    'g-recaptcha-response': '',
 };
 
 export default function ContactForm() {
-    const { data, setData, post, processing, errors } = useForm(initialFormData);
+    const { data, setData, post, processing, errors, isDirty, hasErrors } = useForm(initialFormData);
+
+    const { executeRecaptcha } = useGoogleReCaptcha();
 
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-    function submit(e: SubmitEvent<HTMLFormElement>) {
+    async function submit(e: SubmitEvent<HTMLFormElement>) {
+        if (!executeRecaptcha) {
+            console.error('reCAPTCHA not yet available');
+            return;
+        }
+
         e.preventDefault();
+        const token = await executeRecaptcha('contact_form');        
+
+        if (!token) {
+            console.error('reCAPTCHA token not available');
+            return;
+        }
+
+        data['g-recaptcha-response'] = token;
+
         post(MailController.__invoke.url(), {
             preserveScroll: true,
             onSuccess: (msg: { flash: { success?: string } }) => {
-                console.log('Message sent successfully:', msg);
-
                 setData(initialFormData);   
 
                 setSuccessMessage(msg.flash['success'] || 'Вашето съобщение беше изпратено успешно! Ще се свържем с вас скоро.');   
@@ -191,7 +207,12 @@ export default function ContactForm() {
                                 </Field>
                             </FieldGroup>
                         </FieldSet>
-                        <Field orientation="horizontal" className="justify-end">
+                        <Field orientation="horizontal" className="grid gap-4">
+                            {errors['g-recaptcha-response'] && (
+                                <FieldError>
+                                    {errors['g-recaptcha-response']}
+                                </FieldError>
+                            )}
                             {processing ? (
                                 <span className="w-full animate-pulse rounded bg-primary/20 p-6 text-center text-sm text-primary">
                                     Изпращане...
@@ -200,6 +221,7 @@ export default function ContactForm() {
                                 <Button
                                     type="submit"
                                     className="w-full bg-accent p-6 lg:p-8"
+                                    disabled={processing || !isDirty || hasErrors}
                                 >
                                     Изпрати
                                     <ArrowRight className="ml-2" />

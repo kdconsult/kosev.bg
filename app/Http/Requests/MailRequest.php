@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Recaptcha;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,6 +24,7 @@ class MailRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'g-recaptcha-response' => ['required', 'string', new Recaptcha],
             'name' => ['required', 'string', 'max:255', 'min:2'],
             'email' => ['required', 'email', 'max:255'],
             'company' => ['nullable', 'string', 'max:255'],
@@ -34,6 +36,8 @@ class MailRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'g-recaptcha-response.required' => 'The reCAPTCHA response is required.',
+            'g-recaptcha-response.string' => 'The reCAPTCHA response must be a string.',
             'name.required' => 'The name field is required.',
             'name.string' => 'The name must be a string.',
             'name.max' => 'The name must not exceed 255 characters.',
