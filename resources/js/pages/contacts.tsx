@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
+import { ClockIcon, MailIcon, MapPin, PhoneIcon } from 'lucide-react';
 import ContactForm from '@/components/contact-form';
 import { contacts } from '@/routes';
-import { ClockIcon, MailIcon, MapPin, PhoneIcon } from 'lucide-react';
 
 export default function Contacts() {
     const faqs = [

@@ -2,6 +2,7 @@ import { useForm } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useState  } from 'react';
 import type {SubmitEvent} from 'react';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import MailController from '@/actions/App/Http/Controllers/MailController';
 import { Button } from './ui/button';
 import {
@@ -15,7 +16,6 @@ import {
 } from './ui/field';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const initialFormData = {
     email: '',
@@ -27,7 +27,7 @@ const initialFormData = {
 };
 
 export default function ContactForm() {
-    const { data, setData, post, processing, errors, isDirty, hasErrors } = useForm(initialFormData);
+    const { data, setData, transform, post, processing, errors, isDirty, hasErrors } = useForm(initialFormData);
 
     const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -36,6 +36,7 @@ export default function ContactForm() {
     async function submit(e: SubmitEvent<HTMLFormElement>) {
         if (!executeRecaptcha) {
             console.error('reCAPTCHA not yet available');
+
             return;
         }
 
@@ -44,20 +45,27 @@ export default function ContactForm() {
 
         if (!token) {
             console.error('reCAPTCHA token not available');
+
             return;
         }
 
-        data['g-recaptcha-response'] = token;
+        transform((currentData) => ({
+            ...currentData,
+            'g-recaptcha-response': token,
+        }));
 
         post(MailController.__invoke.url(), {
             preserveScroll: true,
             onSuccess: (msg: { flash: { success?: string } }) => {
-                setData(initialFormData);   
+                setData(initialFormData);
 
-                setSuccessMessage(msg.flash['success'] || 'Вашето съобщение беше изпратено успешно! Ще се свържем с вас скоро.');   
+                setSuccessMessage(msg.flash['success'] || 'Вашето съобщение беше изпратено успешно! Ще се свържем с вас скоро.');
             },
             onError: (error) => {
                 console.error('Error submitting form:', error);
+            },
+            onFinish: () => {
+                transform((currentData) => currentData);
             },
         });
     }
