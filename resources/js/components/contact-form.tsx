@@ -220,7 +220,7 @@ export default function ContactForm() {
                             ) : (
                                 <Button
                                     type="submit"
-                                    className="w-full bg-accent p-6 lg:p-8"
+                                    className="w-full cursor-pointer bg-accent p-6 lg:p-8"
                                     disabled={processing || !isDirty || hasErrors}
                                 >
                                     Изпрати

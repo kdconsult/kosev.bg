@@ -4,12 +4,13 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ContactMessage extends Mailable
+class MessageReceived extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -27,7 +28,10 @@ class ContactMessage extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact Message',
+            subject: 'Message Received',
+            replyTo: [
+                new Address(config('mail.contact_address')),
+            ],
         );
     }
 
@@ -37,7 +41,7 @@ class ContactMessage extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.contact-form.message',
+            markdown: 'mail.contact-form.message-received',
         );
     }
 

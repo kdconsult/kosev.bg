@@ -116,5 +116,6 @@ return [
     ],
 
     'contact_address' => env('MAIL_CONTACT_ADDRESS', 'contact@example.com'),
+    'contact_cc_address' => env('MAIL_CONTACT_CC_ADDRESS', 'info@example.com'),
 
 ];

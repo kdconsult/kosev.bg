@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MailRequest;
 use App\Mail\ContactMessage;
+use App\Mail\MessageReceived;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
@@ -18,7 +19,8 @@ class MailController extends Controller
         $validated = $request->validated();
 
         // Send email logic here, e.g. using Laravel's Mail facade
-        Mail::to(config('mail.contact_address'))->send(new ContactMessage($validated));
+        Mail::to(config('mail.contact_address'))->cc(config('mail.contact_cc_address'))->send(new ContactMessage($validated));
+        Mail::to($validated['email'])->send(new MessageReceived($validated));
 
         Inertia::flash('success', 'Your message has been sent successfully!');
 
