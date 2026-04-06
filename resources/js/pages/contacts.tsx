@@ -1,17 +1,9 @@
 import { Head } from '@inertiajs/react';
-import { useState } from 'react';
+import { ClockIcon, MailIcon, MapPin, PhoneIcon } from 'lucide-react';
+import ContactForm from '@/components/contact-form';
 import { contacts } from '@/routes';
 
 export default function Contacts() {
-    const [formData, setFormData] = useState({
-        name: '',
-        company: '',
-        email: '',
-        phone: '',
-        country: '',
-        message: '',
-    });
-
     const faqs = [
         {
             question: 'Какви са сроковете за изпълнение?',
@@ -38,25 +30,6 @@ export default function Contacts() {
             answer: 'Да, приемаме всички стандартни CAD формати: STEP, IGES, DXF, DWG, PDF, както и SolidWorks и AutoCAD файлове.',
         },
     ];
-
-    const [isSubmitting, setIsSubmitting] = useState(false);
-
-    const onSubmit = () => {
-        setIsSubmitting(true);
-
-        setTimeout(() => {
-            setIsSubmitting(false);
-            alert('Благodarим ви за запитването! Ще се свържем с вас скоро.');
-            setFormData({
-                name: '',
-                company: '',
-                email: '',
-                phone: '',
-                country: '',
-                message: '',
-            });
-        }, 1500);
-    };
 
     return (
         <>
@@ -158,27 +131,6 @@ export default function Contacts() {
   }
 }
 
-.contact-form {
-  background: var(--color-card);
-  padding: 2rem;
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-lg);
-
-  @media (min-width: 768px) {
-    padding: 2.5rem;
-  }
-
-  h2 {
-    margin-bottom: 0.5rem;
-  }
-}
-
-.form-intro {
-  font-size: 1rem;
-  margin-bottom: 2rem;
-}
-
 .faq-section {
   background: var(--color-secondary);
 }
@@ -240,21 +192,8 @@ export default function Contacts() {
 
                             <div className="info-cards">
                                 <div className="info-card">
-                                    <div className="info-icon">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                                            <circle cx="12" cy="10" r="3" />
-                                        </svg>
+                                    <div className="info-icon">                                        
+                                        <MapPin width={24} />
                                     </div>
                                     <div className="info-content">
                                         <h4>Адрес</h4>
@@ -269,19 +208,7 @@ export default function Contacts() {
 
                                 <div className="info-card">
                                     <div className="info-icon">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                                        </svg>
+                                        <PhoneIcon size={24} />
                                     </div>
                                     <div className="info-content">
                                         <h4>Телефон</h4>
@@ -294,27 +221,8 @@ export default function Contacts() {
                                 </div>
 
                                 <div className="info-card">
-                                    <div className="info-icon">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <rect
-                                                width="20"
-                                                height="16"
-                                                x="2"
-                                                y="4"
-                                                rx="2"
-                                            />
-                                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                                        </svg>
+                                    <div className="info-icon">                                        
+                                        <MailIcon size={24} />
                                     </div>
                                     <div className="info-content">
                                         <h4>Имейл</h4>
@@ -327,21 +235,8 @@ export default function Contacts() {
                                 </div>
 
                                 <div className="info-card">
-                                    <div className="info-icon">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="24"
-                                            height="24"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <circle cx="12" cy="12" r="10" />
-                                            <polyline points="12 6 12 12 16 14" />
-                                        </svg>
+                                    <div className="info-icon">                                        
+                                        <ClockIcon size={24} />
                                     </div>
                                     <div className="info-content">
                                         <h4>Работно време</h4>
@@ -365,160 +260,8 @@ export default function Contacts() {
                             </div>
                         </div>
 
-                        <div className="contact-form-wrapper">
-                            <form onSubmit={onSubmit} className="contact-form">
-                                <h2>Изпратете запитване</h2>
-                                <p className="form-intro">
-                                    Попълнете формата и нашият екип ще се свърже
-                                    с вас в рамките на 24 часа.
-                                </p>
-
-                                <div className="form-row">
-                                    <div className="form-group">
-                                        <label htmlFor="name">Име *</label>
-                                        <input
-                                            type="text"
-                                            id="name"
-                                            value={formData.name}
-                                            onChange={(e) =>
-                                                setFormData({
-                                                    ...formData,
-                                                    name: e.target.value,
-                                                })
-                                            }
-                                            name="name"
-                                            placeholder="Вашето име"
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="company">Фирма</label>
-                                        <input
-                                            type="text"
-                                            id="company"
-                                            value={formData.company}
-                                            onChange={(e) =>
-                                                setFormData({
-                                                    ...formData,
-                                                    company: e.target.value,
-                                                })
-                                            }
-                                            name="company"
-                                            placeholder="Име на фирмата"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="form-row">
-                                    <div className="form-group">
-                                        <label htmlFor="email">Имейл *</label>
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            value={formData.email}
-                                            onChange={(e) =>
-                                                setFormData({
-                                                    ...formData,
-                                                    email: e.target.value,
-                                                })
-                                            }
-                                            name="email"
-                                            placeholder="email&#64;company.com"
-                                            required
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="phone">Телефон</label>
-                                        <input
-                                            type="tel"
-                                            id="phone"
-                                            value={formData.phone}
-                                            onChange={(e) =>
-                                                setFormData({
-                                                    ...formData,
-                                                    phone: e.target.value,
-                                                })
-                                            }
-                                            name="phone"
-                                            placeholder="+359 88 123 4567"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="country">Държава</label>
-                                    <select
-                                        id="country"
-                                        value={formData.country}
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...formData,
-                                                country: e.target.value,
-                                            })
-                                        }
-                                        name="country"
-                                    >
-                                        <option value="">
-                                            Изберете държава
-                                        </option>
-                                        <option value="BG">България</option>
-                                        <option value="DE">Германия</option>
-                                        <option value="AT">Австрия</option>
-                                        <option value="FR">Франция</option>
-                                        <option value="IT">Италия</option>
-                                        <option value="NL">Холандия</option>
-                                        <option value="other">Друга</option>
-                                    </select>
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="message">
-                                        Съобщение / Запитване *
-                                    </label>
-                                    <textarea
-                                        id="message"
-                                        value={formData.message}
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...formData,
-                                                message: e.target.value,
-                                            })
-                                        }
-                                        name="message"
-                                        rows={5}
-                                        placeholder="Опишете вашия проект или запитване..."
-                                        required
-                                    ></textarea>
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    className="btn btn-accent btn-lg submit-btn"
-                                    disabled={isSubmitting}
-                                >
-                                    {isSubmitting ? (
-                                        <span>Изпращане...</span>
-                                    ) : (
-                                        <>
-                                            <span>Изпрати запитване</span>
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="20"
-                                                height="20"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            >
-                                                <path d="M5 12h14" />
-                                                <path d="m12 5 7 7-7 7" />
-                                            </svg>
-                                        </>
-                                    )}
-                                </button>
-                            </form>
+                        <div className="my-auto">
+                            <ContactForm />
                         </div>
                     </div>
                 </div>
