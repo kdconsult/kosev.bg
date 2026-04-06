@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
-import { index as servicesIndex } from '@/routes/services';
+import { show } from '@/routes/services';
 import type { Service } from '@/types/models';
+import { ArrowRight } from 'lucide-react';
 
 export default function CapabilitiesSection({services}: {services: Service[]}) {
     return (
@@ -232,24 +233,11 @@ export default function CapabilitiesSection({services}: {services: Service[]}) {
                                         </ul>
                                     </div>
                                     <Link
-                                        href={servicesIndex()}
+                                        href={show(capability.slug)}
                                         className="capability-link"
                                     >
                                         <span>Научи повече</span>
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <path d="M5 12h14" />
-                                            <path d="m12 5 7 7-7 7" />
-                                        </svg>
+                                        <ArrowRight className="h-4 w-4" size={16} />
                                     </Link>
                                 </div>
                             </div>
