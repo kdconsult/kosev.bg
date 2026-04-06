@@ -1,21 +1,72 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
-import ServicesController from '@/actions/App/Http/Controllers/ServicesController';
+import { JsonLd } from '@/components/json-ld';
+import { SeoHead } from '@/components/seo-head';
 import { cn } from '@/lib/utils';
-import { contacts,  } from '@/routes';
+import { contacts } from '@/routes';
 import { index } from '@/routes/products';
+import { show as showService } from '@/routes/services';
 import type { Product } from '@/types';
 
 export default function ProductDetail({ product }: { product: Product }) {
+    const { appUrl } = usePage().props as { appUrl: string };
     const [activeImageIndex, setActiveImageIndex] = useState(-1);
     const activeImage =
         activeImageIndex === -1
             ? product.cover_image?.originalUrl
             : product.images[activeImageIndex]?.originalUrl;
+    const description =
+        product.description.length > 160
+            ? `${product.description.slice(0, 157)}...`
+            : product.description;
+
+    const productData = {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: product.title,
+        description,
+        image: product.cover_image?.originalUrl,
+        category: product.category.name,
+        brand: {
+            '@type': 'Brand',
+            name: 'KOSEV',
+        },
+    };
+
+    const breadcrumbData = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Начало', item: appUrl },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Продукти',
+                item: `${appUrl}/products`,
+            },
+            {
+                '@type': 'ListItem',
+                position: 3,
+                name: product.title,
+                item: `${appUrl}/products/${product.slug}`,
+            },
+        ],
+    };
 
     return (
         <>
-            <Head title="Продукт" />
+            <SeoHead
+                title={product.title}
+                description={description}
+                ogImage={product.cover_image?.originalUrl}
+                type="product"
+            >
+                <JsonLd headKey="product-jsonld" data={productData} />
+                <JsonLd
+                    headKey="product-breadcrumb-jsonld"
+                    data={breadcrumbData}
+                />
+            </SeoHead>
             <style>{`
 /* show pages: hero aligns to bottom, not center */
 .page-hero { align-items: flex-end; }
@@ -184,13 +235,13 @@ export default function ProductDetail({ product }: { product: Product }) {
                                     <h3>Свързани услуги</h3>
                                     <div className="services-badges">
                                         {product.services.map((service) => (
-                                            <a
-                                                href={ServicesController.index.url() + '#' + service.slug}
+                                            <Link
+                                                href={showService(service.slug)}
                                                 className="service-badge"
                                                 key={service.slug}
                                             >
                                                 {service.name}
-                                            </a>
+                                            </Link>
                                         ))}
                                     </div>
                                 </div>

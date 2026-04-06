@@ -1,13 +1,42 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
+import { JsonLd } from '@/components/json-ld';
+import { SeoHead } from '@/components/seo-head';
 import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
-import { index as services } from '@/routes/services';
+import { index as servicesIndex, show as showService } from '@/routes/services';
 import type { Service } from '@/types';
 
-export default function Services({services}: {services: Service[]}) {    
+export default function Services({ services }: { services: Service[] }) {
+    const { appUrl, seo } = usePage().props as {
+        appUrl: string;
+        seo: { services: { title: string; description: string } };
+    };
+
+    const breadcrumbData = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Начало', item: appUrl },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: seo.services.title,
+                item: `${appUrl}/services`,
+            },
+        ],
+    };
+
     return (
         <>
-            <Head title="Services" />
+            <SeoHead
+                title={seo.services.title}
+                description={seo.services.description}
+            >
+                <JsonLd
+                    headKey="services-breadcrumb-jsonld"
+                    data={breadcrumbData}
+                />
+            </SeoHead>
             <style>{`
 .services-list {
   padding-top: 4rem;
@@ -178,7 +207,7 @@ export default function Services({services}: {services: Service[]}) {
                                 />
                             </div>
                             <div className="service-content">
-                                <div className="flex items-baseline gap-4">                                    
+                                <div className="flex items-baseline gap-4">
                                     <h2>{service.name}</h2>
                                 </div>
                                 <p className="service-description">
@@ -225,26 +254,34 @@ export default function Services({services}: {services: Service[]}) {
                                     </ul>
                                 </div>
 
-                                <Link
-                                    href={contacts()}
-                                    className="btn btn-primary"
-                                >
-                                    Изпрати запитване
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="18"
-                                        height="18"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
+                                <div className="flex flex-wrap gap-3">
+                                    <Link
+                                        href={showService(service.slug)}
+                                        className="btn btn-secondary"
                                     >
-                                        <path d="M5 12h14" />
-                                        <path d="m12 5 7 7-7 7" />
-                                    </svg>
-                                </Link>
+                                        Виж детайли
+                                    </Link>
+                                    <Link
+                                        href={contacts()}
+                                        className="btn btn-primary"
+                                    >
+                                        Изпрати запитване
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="18"
+                                            height="18"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M5 12h14" />
+                                            <path d="m12 5 7 7-7 7" />
+                                        </svg>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -273,7 +310,7 @@ Services.layout = {
     breadcrumbs: [
         {
             title: 'Services',
-            href: services(),
+            href: servicesIndex(),
         },
     ],
 };

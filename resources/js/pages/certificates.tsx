@@ -1,6 +1,8 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { DownloadIcon } from 'lucide-react';
 import CertificatesController from '@/actions/App/Http/Controllers/CertificateController';
+import { JsonLd } from '@/components/json-ld';
+import { SeoHead } from '@/components/seo-head';
 import { contacts } from '@/routes';
 import type { Certificate } from '@/types';
 
@@ -9,9 +11,36 @@ export default function Certificates({
 }: {
     certificates: Certificate[];
 }) {
+    const { appUrl, seo } = usePage().props as {
+        appUrl: string;
+        seo: { certificates: { title: string; description: string } };
+    };
+
+    const breadcrumbData = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Начало', item: appUrl },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: seo.certificates.title,
+                item: `${appUrl}/certificates`,
+            },
+        ],
+    };
+
     return (
         <>
-            <Head title="Сертификати" />
+            <SeoHead
+                title={seo.certificates.title}
+                description={seo.certificates.description}
+            >
+                <JsonLd
+                    headKey="certificates-breadcrumb-jsonld"
+                    data={breadcrumbData}
+                />
+            </SeoHead>
             <style>
                 {`
 .certificates-intro {

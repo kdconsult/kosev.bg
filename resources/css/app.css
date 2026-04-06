@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
@@ -16,34 +14,34 @@
 /* === Light Theme — "Forged Precision" === */
 :root {
     /* Backgrounds */
-    --background: oklch(0.978 0.012 83);        /* gold-50: warm cream white */
-    --foreground: oklch(0.205 0.008 255);        /* charcoal-900: dark iron */
+    --background: oklch(0.978 0.012 83); /* gold-50: warm cream white */
+    --foreground: oklch(0.205 0.008 255); /* charcoal-900: dark iron */
 
     /* Cards & Panels */
-    --card: oklch(0.993 0.005 83);              /* warm white with gold hint */
+    --card: oklch(0.993 0.005 83); /* warm white with gold hint */
     --card-foreground: oklch(0.205 0.008 255);
 
-    --color-brand-gold-scrolled: oklch(0.850 0.065 83);
+    --color-brand-gold-scrolled: oklch(0.85 0.065 83);
 
     /* Popover */
     --popover: oklch(0.993 0.005 83);
     --popover-foreground: oklch(0.205 0.008 255);
 
     /* Primary — dark iron for buttons/nav */
-    --primary: oklch(0.205 0.008 255);          /* charcoal-900 */
+    --primary: oklch(0.205 0.008 255); /* charcoal-900 */
     --primary-foreground: oklch(0.978 0.012 83); /* gold-50 */
-    --primary-dark: oklch(0.160 0.006 255);     /* charcoal-950: deepest iron */
+    --primary-dark: oklch(0.16 0.006 255); /* charcoal-950: deepest iron */
 
     /* Secondary — light steel surface */
-    --secondary: oklch(0.920 0.005 254);        /* charcoal-100 */
-    --secondary-foreground: oklch(0.250 0.010 255); /* charcoal-850 */
+    --secondary: oklch(0.92 0.005 254); /* charcoal-100 */
+    --secondary-foreground: oklch(0.25 0.01 255); /* charcoal-850 */
 
     /* Muted — warm whisper */
-    --muted: oklch(0.950 0.025 83);             /* gold-100 */
-    --muted-foreground: oklch(0.540 0.020 254); /* charcoal-500 */
+    --muted: oklch(0.95 0.025 83); /* gold-100 */
+    --muted-foreground: oklch(0.54 0.02 254); /* charcoal-500 */
 
     /* Accent — brand gold */
-    --accent: oklch(0.748 0.094 83);            /* gold-500: #c9a86c */
+    --accent: oklch(0.748 0.094 83); /* gold-500: #c9a86c */
     --accent-foreground: oklch(0.993 0.005 83); /* warm white */
 
     /* Destructive */
@@ -51,88 +49,88 @@
     --destructive-foreground: oklch(0.577 0.245 27.325);
 
     /* Borders & Inputs */
-    --border: oklch(0.840 0.008 254);           /* charcoal-200 */
-    --input: oklch(0.840 0.008 254);
-    --ring: oklch(0.748 0.094 83);              /* gold: focus rings in brand color */
+    --border: oklch(0.84 0.008 254); /* charcoal-200 */
+    --input: oklch(0.84 0.008 254);
+    --ring: oklch(0.748 0.094 83); /* gold: focus rings in brand color */
 
     /* Charts (gold → steel gradient) */
     --chart-1: oklch(0.748 0.094 83);
-    --chart-2: oklch(0.580 0.025 258);
-    --chart-3: oklch(0.450 0.020 255);
-    --chart-4: oklch(0.370 0.015 255);
-    --chart-5: oklch(0.300 0.012 255);
+    --chart-2: oklch(0.58 0.025 258);
+    --chart-3: oklch(0.45 0.02 255);
+    --chart-4: oklch(0.37 0.015 255);
+    --chart-5: oklch(0.3 0.012 255);
 
     --radius: 0.625rem;
 
     /* Sidebar */
-    --sidebar: oklch(0.965 0.003 254);          /* charcoal-50 */
+    --sidebar: oklch(0.965 0.003 254); /* charcoal-50 */
     --sidebar-foreground: oklch(0.205 0.008 255);
     --sidebar-primary: oklch(0.748 0.094 83);
     --sidebar-primary-foreground: oklch(0.993 0.005 83);
-    --sidebar-accent: oklch(0.950 0.025 83);
-    --sidebar-accent-foreground: oklch(0.250 0.010 255);
-    --sidebar-border: oklch(0.840 0.008 254);
+    --sidebar-accent: oklch(0.95 0.025 83);
+    --sidebar-accent-foreground: oklch(0.25 0.01 255);
+    --sidebar-border: oklch(0.84 0.008 254);
     --sidebar-ring: oklch(0.748 0.094 83);
 }
 
 /* === Dark Theme — brushed dark steel === */
 .dark {
     /* Backgrounds */
-    --background: oklch(0.175 0.007 255);       /* deep iron */
-    --foreground: oklch(0.950 0.025 83);        /* gold-100: warm off-white text */
+    --background: oklch(0.175 0.007 255); /* deep iron */
+    --foreground: oklch(0.95 0.025 83); /* gold-100: warm off-white text */
 
     /* Cards & Panels */
-    --card: oklch(0.230 0.010 255);             /* elevated iron panel */
-    --card-foreground: oklch(0.950 0.025 83);
+    --card: oklch(0.23 0.01 255); /* elevated iron panel */
+    --card-foreground: oklch(0.95 0.025 83);
 
     --color-brand-gold-scrolled: oklch(0.641 0.095 83);
 
     /* Popover */
-    --popover: oklch(0.250 0.010 255);          /* charcoal-850 */
-    --popover-foreground: oklch(0.950 0.025 83);
+    --popover: oklch(0.25 0.01 255); /* charcoal-850 */
+    --popover-foreground: oklch(0.95 0.025 83);
 
     /* Primary — bright steel for buttons/nav */
-    --primary: oklch(0.920 0.005 254);          /* charcoal-100 */
+    --primary: oklch(0.92 0.005 254); /* charcoal-100 */
     --primary-foreground: oklch(0.205 0.008 255);
-    --primary-dark: oklch(0.750 0.012 254);     /* charcoal-300: dimmed hover */
+    --primary-dark: oklch(0.75 0.012 254); /* charcoal-300: dimmed hover */
 
     /* Secondary — dark steel panel */
-    --secondary: oklch(0.300 0.012 255);        /* charcoal-800 */
-    --secondary-foreground: oklch(0.920 0.005 254);
+    --secondary: oklch(0.3 0.012 255); /* charcoal-800 */
+    --secondary-foreground: oklch(0.92 0.005 254);
 
     /* Muted — subtle dark surfaces */
-    --muted: oklch(0.300 0.012 255);            /* charcoal-800 */
-    --muted-foreground: oklch(0.650 0.015 254); /* charcoal-400 */
+    --muted: oklch(0.3 0.012 255); /* charcoal-800 */
+    --muted-foreground: oklch(0.65 0.015 254); /* charcoal-400 */
 
     /* Accent — slightly desaturated gold for dark mode eye comfort */
-    --accent: oklch(0.720 0.085 83);
-    --accent-foreground: oklch(0.160 0.006 255); /* charcoal-950 */
+    --accent: oklch(0.72 0.085 83);
+    --accent-foreground: oklch(0.16 0.006 255); /* charcoal-950 */
 
     /* Destructive */
     --destructive: oklch(0.704 0.191 22.216);
     --destructive-foreground: oklch(0.637 0.237 25.331);
 
     /* Borders & Inputs */
-    --border: oklch(1 0 0 / 8%);               /* subtle edge reveal */
+    --border: oklch(1 0 0 / 8%); /* subtle edge reveal */
     --input: oklch(1 0 0 / 12%);
-    --ring: oklch(0.720 0.085 83);              /* desaturated gold */
+    --ring: oklch(0.72 0.085 83); /* desaturated gold */
 
     /* Charts */
     --chart-1: oklch(0.748 0.094 83);
-    --chart-2: oklch(0.650 0.015 254);
-    --chart-3: oklch(0.540 0.020 254);
-    --chart-4: oklch(0.450 0.020 255);
-    --chart-5: oklch(0.370 0.015 255);
+    --chart-2: oklch(0.65 0.015 254);
+    --chart-3: oklch(0.54 0.02 254);
+    --chart-4: oklch(0.45 0.02 255);
+    --chart-5: oklch(0.37 0.015 255);
 
     /* Sidebar */
-    --sidebar: oklch(0.205 0.008 255);          /* charcoal-900 */
-    --sidebar-foreground: oklch(0.950 0.025 83);
+    --sidebar: oklch(0.205 0.008 255); /* charcoal-900 */
+    --sidebar-foreground: oklch(0.95 0.025 83);
     --sidebar-primary: oklch(0.748 0.094 83);
-    --sidebar-primary-foreground: oklch(0.160 0.006 255);
-    --sidebar-accent: oklch(0.300 0.012 255);
-    --sidebar-accent-foreground: oklch(0.920 0.005 254);
+    --sidebar-primary-foreground: oklch(0.16 0.006 255);
+    --sidebar-accent: oklch(0.3 0.012 255);
+    --sidebar-accent-foreground: oklch(0.92 0.005 254);
     --sidebar-border: oklch(1 0 0 / 8%);
-    --sidebar-ring: oklch(0.720 0.085 83);
+    --sidebar-ring: oklch(0.72 0.085 83);
 }
 
 @keyframes scrollPulse {
@@ -181,35 +179,37 @@
 
     /* Shadows */
     --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-lg:
+        0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl:
+        0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
     /* Brand Gold scale (hue ~83) */
     --color-brand-gold: oklch(0.748 0.094 83);
-    --color-brand-gold-light: oklch(0.850 0.065 83);
+    --color-brand-gold-light: oklch(0.85 0.065 83);
     --color-brand-gold-dark: oklch(0.641 0.095 83);
     --color-cream: oklch(0.978 0.012 83);
 
     /* Industrial Neutrals */
     --color-white: oklch(1 0 0);
     --color-iron: oklch(0.205 0.008 255);
-    --color-iron-light: oklch(0.300 0.012 255);
-    --color-steel: oklch(0.540 0.020 254);
-    --color-steel-light: oklch(0.750 0.012 254);
+    --color-iron-light: oklch(0.3 0.012 255);
+    --color-steel: oklch(0.54 0.02 254);
+    --color-steel-light: oklch(0.75 0.012 254);
 
     /* Accent variant */
-    --color-accent-light: oklch(0.850 0.065 83);
+    --color-accent-light: oklch(0.85 0.065 83);
 
     /* Gray scale — charcoal/iron family (hue ~254-255) */
     --color-gray-50: oklch(0.965 0.003 254);
-    --color-gray-100: oklch(0.920 0.005 254);
-    --color-gray-200: oklch(0.840 0.008 254);
-    --color-gray-300: oklch(0.750 0.012 254);
-    --color-gray-400: oklch(0.650 0.015 254);
-    --color-gray-500: oklch(0.540 0.020 254);
-    --color-gray-600: oklch(0.450 0.020 255);
-    --color-gray-700: oklch(0.370 0.015 255);
-    --color-gray-800: oklch(0.300 0.012 255);
+    --color-gray-100: oklch(0.92 0.005 254);
+    --color-gray-200: oklch(0.84 0.008 254);
+    --color-gray-300: oklch(0.75 0.012 254);
+    --color-gray-400: oklch(0.65 0.015 254);
+    --color-gray-500: oklch(0.54 0.02 254);
+    --color-gray-600: oklch(0.45 0.02 255);
+    --color-gray-700: oklch(0.37 0.015 255);
+    --color-gray-800: oklch(0.3 0.012 255);
     --color-gray-900: oklch(0.205 0.008 255);
 
     /* Semantic color mappings → Tailwind utilities */
@@ -546,7 +546,7 @@ img {
     background: linear-gradient(
         135deg,
         rgba(26, 26, 46, 0.95) 0%,
-        rgba(26, 26, 46, 0.80) 100%
+        rgba(26, 26, 46, 0.8) 100%
     );
 }
 

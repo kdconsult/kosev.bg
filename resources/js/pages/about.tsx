@@ -1,15 +1,35 @@
-import { Head, Link } from '@inertiajs/react';
-import type {
-    LucideIcon} from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
+import type { LucideIcon } from 'lucide-react';
 import {
     CheckCircleIcon,
     HandshakeIcon,
     Rotate3DIcon,
     UserCircleIcon,
 } from 'lucide-react';
+import { JsonLd } from '@/components/json-ld';
+import { SeoHead } from '@/components/seo-head';
 import { about, contacts } from '@/routes';
 
 export default function AboutUs() {
+    const { appUrl, seo } = usePage().props as {
+        appUrl: string;
+        seo: { about: { title: string; description: string } };
+    };
+
+    const breadcrumbData = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Начало', item: appUrl },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: seo.about.title,
+                item: `${appUrl}/about`,
+            },
+        ],
+    };
+
     const values = [
         {
             title: 'Качество',
@@ -87,7 +107,15 @@ export default function AboutUs() {
 
     return (
         <>
-            <Head title="За нас" />
+            <SeoHead
+                title={seo.about.title}
+                description={seo.about.description}
+            >
+                <JsonLd
+                    headKey="about-breadcrumb-jsonld"
+                    data={breadcrumbData}
+                />
+            </SeoHead>
             <style>
                 {`
 .story-grid {

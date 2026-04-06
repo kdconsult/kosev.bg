@@ -1,25 +1,61 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
+import { JsonLd } from '@/components/json-ld';
+import { SeoHead } from '@/components/seo-head';
 import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
 import { index, show } from '@/routes/projects';
 import type { Category, Project } from '@/types';
 
-export default function ProjectsList({ projects, categories }: { projects: Project[]; categories: Category[] }) {
+export default function ProjectsList({
+    projects,
+    categories,
+}: {
+    projects: Project[];
+    categories: Category[];
+}) {
+    const { appUrl, seo } = usePage().props as {
+        appUrl: string;
+        seo: { projects: { title: string; description: string } };
+    };
     const [activeFilter, setActiveFilter] = useState('all');
     const filters = [
         { id: 'all', label: 'Всички' },
         ...categories.map((c) => ({ id: c.slug, label: c.name })),
     ];
 
+    const breadcrumbData = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Начало', item: appUrl },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: seo.projects.title,
+                item: `${appUrl}/projects`,
+            },
+        ],
+    };
+
     const filteredProjects =
         activeFilter === 'all'
             ? projects
-            : projects.filter((project) => project.category.slug === activeFilter);
+            : projects.filter(
+                  (project) => project.category.slug === activeFilter,
+              );
 
     return (
         <>
-            <Head title="Проекти" />
+            <SeoHead
+                title={seo.projects.title}
+                description={seo.projects.description}
+            >
+                <JsonLd
+                    headKey="projects-breadcrumb-jsonld"
+                    data={breadcrumbData}
+                />
+            </SeoHead>
             <style>
                 {`
     .projects-grid {
@@ -185,7 +221,10 @@ export default function ProjectsList({ projects, categories }: { projects: Proje
                                     <p>{project.description}</p>
                                     <div className="project-tags">
                                         {project.tags.map((tag) => (
-                                            <span className="tag" key={tag.slug}>
+                                            <span
+                                                className="tag"
+                                                key={tag.slug}
+                                            >
                                                 {tag.name}
                                             </span>
                                         ))}

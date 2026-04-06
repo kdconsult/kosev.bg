@@ -1,8 +1,11 @@
-import { Head } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 import { ClockIcon, MailIcon, MapPin, PhoneIcon } from 'lucide-react';
+import { useSyncExternalStore } from 'react';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import ContactForm from '@/components/contact-form';
 import GMaps from '@/components/g-maps';
+import { JsonLd } from '@/components/json-ld';
+import { SeoHead } from '@/components/seo-head';
 import { contacts } from '@/routes';
 
 const recaptchaSiteKey = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
@@ -34,10 +37,54 @@ export default function Contacts() {
             answer: 'Да, приемаме всички стандартни CAD формати: STEP, IGES, DXF, DWG, PDF, както и SolidWorks и AutoCAD файлове.',
         },
     ];
+    const { appUrl, seo } = usePage().props as {
+        appUrl: string;
+        seo: { contacts: { title: string; description: string } };
+    };
+    const hasMounted = useSyncExternalStore(
+        () => () => {},
+        () => true,
+        () => false,
+    );
+
+    const faqData = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: faq.answer,
+            },
+        })),
+    };
+
+    const breadcrumbData = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Начало', item: appUrl },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: seo.contacts.title,
+                item: `${appUrl}/contacts`,
+            },
+        ],
+    };
 
     return (
-        <GoogleReCaptchaProvider reCaptchaKey={recaptchaSiteKey}>
-            <Head title="Свържете се с нас" />
+        <>
+            <SeoHead
+                title={seo.contacts.title}
+                description={seo.contacts.description}
+            >
+                <JsonLd
+                    headKey="contacts-jsonld"
+                    data={[faqData, breadcrumbData]}
+                />
+            </SeoHead>
             <style>
                 {`
 .contact-grid {
@@ -224,7 +271,15 @@ export default function Contacts() {
                             </div>
                         </div>
                         <div className="my-auto">
-                            <ContactForm />
+                            {hasMounted ? (
+                                <GoogleReCaptchaProvider
+                                    reCaptchaKey={recaptchaSiteKey}
+                                >
+                                    <ContactForm />
+                                </GoogleReCaptchaProvider>
+                            ) : (
+                                <ContactForm />
+                            )}
                         </div>
                     </div>
                 </div>
@@ -232,13 +287,17 @@ export default function Contacts() {
 
             <section className="p-2 md:p-8 lg:p-16">
                 <div className="relative aspect-video overflow-hidden rounded-xl">
-                    <GMaps
-                        position={{
-                            lat: 43.8649131,
-                            lng: 25.9887618,
-                            alt: '1132m',
-                        }}
-                    />
+                    {hasMounted ? (
+                        <GMaps
+                            position={{
+                                lat: 43.8649131,
+                                lng: 25.9887618,
+                                alt: '1132m',
+                            }}
+                        />
+                    ) : (
+                        <div className="h-full w-full bg-muted" />
+                    )}
                 </div>
             </section>
 
@@ -261,7 +320,7 @@ export default function Contacts() {
                     </div>
                 </div>
             </section>
-        </GoogleReCaptchaProvider>
+        </>
     );
 }
 

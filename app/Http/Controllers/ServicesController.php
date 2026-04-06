@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
-use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -20,8 +19,12 @@ class ServicesController extends Controller
         ]);
     }
 
-    public function show(Service $service): RedirectResponse
+    public function show(Service $service): Response
     {
-        return redirect()->to(route('services.index').'#'.$service->slug);
+        return Inertia::render('services/show', [
+            'service' => new ServiceResource(
+                $service->load(['tags', 'specs'])
+            ),
+        ]);
     }
 }

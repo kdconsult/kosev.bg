@@ -1,23 +1,70 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { ChevronLeft } from 'lucide-react';
 import { useState } from 'react';
+import { JsonLd } from '@/components/json-ld';
+import { SeoHead } from '@/components/seo-head';
 import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
 import { index as projectsIndex } from '@/routes/projects';
 import type { Project } from '@/types';
 
 export default function ProjectDetail({ project }: { project: Project }) {
+    const { appUrl } = usePage().props as { appUrl: string };
     const [activeImageIndex, setActiveImageIndex] = useState(-1);
     const activeImage =
         activeImageIndex === -1
             ? project.cover_image?.originalUrl
             : project.images[activeImageIndex]?.originalUrl;
+    const description =
+        project.description.length > 160
+            ? `${project.description.slice(0, 157)}...`
+            : project.description;
+
+    const creativeWorkData = {
+        '@context': 'https://schema.org',
+        '@type': 'CreativeWork',
+        name: project.title,
+        description,
+        image: project.cover_image?.originalUrl,
+        about: project.industry,
+        keywords: project.tags.map((tag) => tag.name).join(', '),
+    };
+
+    const breadcrumbData = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Начало', item: appUrl },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Проекти',
+                item: `${appUrl}/projects`,
+            },
+            {
+                '@type': 'ListItem',
+                position: 3,
+                name: project.title,
+                item: `${appUrl}/projects/${project.slug}`,
+            },
+        ],
+    };
 
     return (
         <>
-            <Head title={project.title} />
+            <SeoHead
+                title={project.title}
+                description={description}
+                ogImage={project.cover_image?.originalUrl}
+                type="article"
+            >
+                <JsonLd headKey="project-jsonld" data={creativeWorkData} />
+                <JsonLd
+                    headKey="project-breadcrumb-jsonld"
+                    data={breadcrumbData}
+                />
+            </SeoHead>
 
-            {/* Main content would go here - images, description, specs, etc. */}
             <style>{`
 /* show pages: hero aligns to bottom, not center */
 .page-hero { align-items: flex-end; }
@@ -126,21 +173,31 @@ export default function ProjectDetail({ project }: { project: Project }) {
                         <div className="detail-grid">
                             <div className="gallery">
                                 <div className="gallery-main">
-                                    <img src={activeImage} alt={project.title} />
+                                    <img
+                                        src={activeImage}
+                                        alt={project.title}
+                                    />
                                 </div>
                                 <div className="gallery-thumbs">
                                     {project.images.map((img, idx) => (
                                         <button
                                             className={cn(
                                                 'thumb',
-                                                activeImageIndex === idx && 'active',
+                                                activeImageIndex === idx &&
+                                                    'active',
                                             )}
                                             key={img.id}
-                                            onClick={() => setActiveImageIndex(idx)}
+                                            onClick={() =>
+                                                setActiveImageIndex(idx)
+                                            }
                                         >
                                             <img
                                                 src={img.thumbUrl}
-                                                alt={project.title + ' ' + (idx + 1)}
+                                                alt={
+                                                    project.title +
+                                                    ' ' +
+                                                    (idx + 1)
+                                                }
                                                 loading="lazy"
                                             />
                                         </button>
@@ -149,10 +206,14 @@ export default function ProjectDetail({ project }: { project: Project }) {
                             </div>
 
                             <div className="project-info">
-                                <p className="project-desc">{project.description}</p>
+                                <p className="project-desc">
+                                    {project.description}
+                                </p>
 
                                 <div className="meta-row">
-                                    <span className="meta-label">Индустрия</span>
+                                    <span className="meta-label">
+                                        Индустрия
+                                    </span>
                                     <span className="meta-value industry-badge">
                                         {project.industry}
                                     </span>

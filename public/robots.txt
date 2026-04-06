@@ -1,2 +1,9 @@
 User-agent: *
-Disallow:
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /login
+Disallow: /register
+Disallow: /settings/
+Disallow: /locale/
+
+Sitemap: https://kosev.bg/sitemap.xml

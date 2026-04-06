@@ -1,16 +1,42 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
+import { JsonLd } from '@/components/json-ld';
+import { SeoHead } from '@/components/seo-head';
 import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
 import { index, show } from '@/routes/products';
 import type { Category, Product } from '@/types';
 
-export default function ProductList({ products, categories }: { products: Product[]; categories: Category[] }) {
+export default function ProductList({
+    products,
+    categories,
+}: {
+    products: Product[];
+    categories: Category[];
+}) {
+    const { appUrl, seo } = usePage().props as {
+        appUrl: string;
+        seo: { products: { title: string; description: string } };
+    };
     const [activeFilter, setActiveFilter] = useState('all');
     const filters = [
         { id: 'all', label: 'Всички' },
         ...categories.map((c) => ({ id: c.slug, label: c.name })),
     ];
+
+    const breadcrumbData = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Начало', item: appUrl },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: seo.products.title,
+                item: `${appUrl}/products`,
+            },
+        ],
+    };
 
     const filteredProducts =
         activeFilter === 'all'
@@ -19,7 +45,15 @@ export default function ProductList({ products, categories }: { products: Produc
 
     return (
         <>
-            <Head title="Продукти" />
+            <SeoHead
+                title={seo.products.title}
+                description={seo.products.description}
+            >
+                <JsonLd
+                    headKey="products-breadcrumb-jsonld"
+                    data={breadcrumbData}
+                />
+            </SeoHead>
             <style>{`
     .products-grid {
       display: grid;
@@ -184,7 +218,10 @@ export default function ProductList({ products, categories }: { products: Produc
                                     <p>{product.description}</p>
                                     <div className="product-tags">
                                         {product.tags.slice(0, 3).map((tag) => (
-                                            <span className="tag" key={tag.slug}>
+                                            <span
+                                                className="tag"
+                                                key={tag.slug}
+                                            >
                                                 {tag.name}
                                             </span>
                                         ))}
