@@ -2,6 +2,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { LayoutDashboardIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Breadcrumbs } from '@/components/breadcrumbs';
+import { LanguageSwitcher } from '@/components/language-switcher';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
@@ -25,7 +26,7 @@ const activeItemStyles = 'active';
 
 export function AppHeader({ breadcrumbs = [] }: Props) {
     const page = usePage();
-    const { auth } = page.props;
+    const { auth, nav } = page.props;
     const getInitials = useInitials();
     const { whenCurrentUrl, isCurrentOrParentUrl } = useCurrentUrl();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -51,7 +52,6 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
   background-color: var(--color-background);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -237,7 +237,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
 }
 
             `}</style>
-            <header className={cn({ scrolled: isScrolled})}>
+            <header className={cn({ 'z-10': true, 'scrolled': isScrolled })}>
                 <div className="header-content container">
                     <Link href={home()} className="logo">
                         <img
@@ -251,7 +251,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                             href={home()}
                             className={whenCurrentUrl(home(), activeItemStyles)}
                         >
-                            Начало
+                            {nav.home}
                         </Link>
                         <Link
                             href={services()}
@@ -260,7 +260,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                 activeItemStyles,
                             )}
                         >
-                            Услуги
+                            {nav.services}
                         </Link>
                         <Link
                             href={projectsIndex()}
@@ -270,7 +270,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                     : undefined
                             }
                         >
-                            Проекти
+                            {nav.projects}
                         </Link>
                         <Link
                             href={products()}
@@ -280,7 +280,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                     : undefined
                             }
                         >
-                            Продукти
+                            {nav.products}
                         </Link>
                         <Link
                             href={about()}
@@ -289,7 +289,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                 activeItemStyles,
                             )}
                         >
-                            За нас
+                            {nav.about}
                         </Link>
                         <Link
                             href={certificates()}
@@ -298,7 +298,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                 activeItemStyles,
                             )}
                         >
-                            Сертификати
+                            {nav.certificates}
                         </Link>
                     </nav>
 
@@ -306,8 +306,10 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                         href={contacts()}
                         className="btn btn-primary header-cta"
                     >
-                        Изпрати запитване
+                        {nav.contact_cta}
                     </Link>
+
+                    <LanguageSwitcher />
 
                     {auth.user && (
                         <Link
@@ -343,46 +345,49 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                             href={home()}
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            Начало
+                            {nav.home}
                         </Link>
                         <Link
                             href={services()}
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            Услуги
+                            {nav.services}
                         </Link>
                         <Link
                             href={projectsIndex()}
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            Проекти
+                            {nav.projects}
                         </Link>
                         <Link
                             href={products()}
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            Продукти
+                            {nav.products}
                         </Link>
                         <Link
                             href={about()}
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            За нас
+                            {nav.about}
                         </Link>
                         <Link
                             href={certificates()}
                             onClick={() => setMobileMenuOpen(false)}
                         >
-                            Сертификати
+                            {nav.certificates}
                         </Link>
                     </nav>
-                    <Link
-                        href={contacts()}
-                        className="btn btn-primary mobile-cta"
-                        onClick={() => setMobileMenuOpen(false)}
-                    >
-                        Изпрати запитване
-                    </Link>
+                    <div className="mobile-cta flex items-center justify-between gap-4">
+                        <Link
+                            href={contacts()}
+                            className="btn btn-primary"
+                            onClick={() => setMobileMenuOpen(false)}
+                        >
+                            {nav.contact_cta}
+                        </Link>
+                        <LanguageSwitcher />
+                    </div>
                 </div>
             </header>
 

@@ -1,8 +1,11 @@
 import { Head } from '@inertiajs/react';
 import { ClockIcon, MailIcon, MapPin, PhoneIcon } from 'lucide-react';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import ContactForm from '@/components/contact-form';
 import GMaps from '@/components/g-maps';
 import { contacts } from '@/routes';
+
+const recaptchaSiteKey = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
 
 export default function Contacts() {
     const faqs = [
@@ -33,7 +36,7 @@ export default function Contacts() {
     ];
 
     return (
-        <>
+        <GoogleReCaptchaProvider reCaptchaKey={recaptchaSiteKey}>
             <Head title="Свържете се с нас" />
             <style>
                 {`
@@ -219,18 +222,23 @@ export default function Contacts() {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                            <div className="my-auto">
-                                <ContactForm />
-                            </div>
+                        <div className="my-auto">
+                            <ContactForm />
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section className='p-2 md:p-8 lg:p-16'>
-                <div className="relative rounded-xl overflow-hidden aspect-video">
-                    <GMaps position={{ lat: 43.8649131, lng: 25.9887618, alt: '1132m' }} />
+            <section className="p-2 md:p-8 lg:p-16">
+                <div className="relative aspect-video overflow-hidden rounded-xl">
+                    <GMaps
+                        position={{
+                            lat: 43.8649131,
+                            lng: 25.9887618,
+                            alt: '1132m',
+                        }}
+                    />
                 </div>
             </section>
 
@@ -253,7 +261,7 @@ export default function Contacts() {
                     </div>
                 </div>
             </section>
-        </>
+        </GoogleReCaptchaProvider>
     );
 }
 

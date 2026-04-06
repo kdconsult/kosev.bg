@@ -225,7 +225,6 @@ export default function HeroSection() {
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1.25rem 0;
-  z-index: 2;
 }
 
 .trust-content {

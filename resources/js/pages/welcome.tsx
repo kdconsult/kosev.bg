@@ -1,4 +1,5 @@
 import { Head } from '@inertiajs/react';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import CapabilitiesSection from '@/components/home-page/capabilities.section';
 import CtaFormSection from '@/components/home-page/cta-form.section';
 import HeroSection from '@/components/home-page/hero.section';
@@ -9,7 +10,15 @@ import TestimonialsSection from '@/components/home-page/testimonials.section';
 import WhyChooseUsSection from '@/components/home-page/why-choose-us.section';
 import type { Product, Service } from '@/types';
 
-export default function Welcome({ featuredProducts, services }: { featuredProducts: Product[], services: Service[] }) {
+const recaptchaSiteKey = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
+
+export default function Welcome({
+    featuredProducts,
+    services,
+}: {
+    featuredProducts: Product[];
+    services: Service[];
+}) {
     return (
         <>
             <Head title="Начало" />
@@ -20,7 +29,9 @@ export default function Welcome({ featuredProducts, services }: { featuredProduc
             <IndustriesSection />
             <QualitySection />
             <TestimonialsSection />
-            <CtaFormSection />
+            <GoogleReCaptchaProvider reCaptchaKey={recaptchaSiteKey}>
+                <CtaFormSection />
+            </GoogleReCaptchaProvider>
         </>
     );
 }

@@ -8,7 +8,16 @@ declare module '@inertiajs/core' {
             currentYear: number;
             sidebarOpen: boolean;
             locale: string;
-            recaptchaSiteKey: string;
+            locales: string[];
+            nav: {
+                home: string;
+                services: string;
+                projects: string;
+                products: string;
+                about: string;
+                certificates: string;
+                contact_cta: string;
+            };
             [key: string]: unknown;
         };
     }
