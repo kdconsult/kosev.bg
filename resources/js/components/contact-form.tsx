@@ -34,13 +34,14 @@ export default function ContactForm() {
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
     async function submit(e: SubmitEvent<HTMLFormElement>) {
+        e.preventDefault();
+        
         if (!executeRecaptcha) {
             console.error('reCAPTCHA not yet available');
 
             return;
         }
 
-        e.preventDefault();
         const token = await executeRecaptcha('contact_form');        
 
         if (!token) {

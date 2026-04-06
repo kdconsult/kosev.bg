@@ -23,14 +23,19 @@ class MailRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'g-recaptcha-response' => ['required', 'string', new Recaptcha],
+        $rules = [
             'name' => ['required', 'string', 'max:255', 'min:2'],
             'email' => ['required', 'email', 'max:255'],
             'company' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20'],
             'message' => ['required', 'string'],
         ];
+
+        if (filled(config('services.recaptcha.secret_key'))) {
+            $rules['g-recaptcha-response'] = ['required', 'string', new Recaptcha];
+        }
+
+        return $rules;
     }
 
     public function messages(): array

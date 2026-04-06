@@ -14,7 +14,7 @@ it('redirects back with validation errors for invalid contact submissions', func
     ]);
 
     $response->assertRedirect(route('contacts'))
-        ->assertSessionHasErrors(['name', 'email', 'message']);
+        ->assertSessionHasErrors(['name', 'email', 'message', 'g-recaptcha-response']);
 
     Mail::assertNothingSent();
 });
