@@ -4,7 +4,7 @@ import { JsonLd } from '@/components/json-ld';
 
 type SeoHeadProps = {
     title: string;
-    description: string;
+    description: string | null;
     ogImage?: string | null;
     canonical?: string;
     type?: 'website' | 'article' | 'product';
@@ -40,7 +40,7 @@ export function SeoHead({
     );
     const locale = page.props.locale || 'bg';
     const siteName = page.props.name || 'KOSEV';
-    const cleanDescription = description.trim().replace(/\s+/g, ' ');
+    const cleanDescription = description?.trim()?.replace(/\s+/g, ' ') ?? '';
     const fullUrl = toAbsoluteUrl(canonical || page.url, baseUrl);
     const image = toAbsoluteUrl(ogImage || '/apple-touch-icon.png', baseUrl);
 
