@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProjectsController as AdminProjectController;
 use App\Http\Controllers\Admin\ServicesController as AdminServiceController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
@@ -21,6 +22,7 @@ Route::inertia('about', 'about')->name('about');
 Route::resource('certificates', CertificateController::class)->only(['index', 'show']);
 Route::inertia('contacts', 'contacts')->name('contacts');
 Route::post('contact', [MailController::class, '__invoke'])->name('contact.send');
+Route::post('locale/{locale}', LocaleController::class)->name('locale.switch');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
