@@ -2,6 +2,7 @@ import { Head } from '@inertiajs/react';
 import { ClockIcon, MailIcon, MapPin, PhoneIcon } from 'lucide-react';
 import ContactForm from '@/components/contact-form';
 import { contacts } from '@/routes';
+import GMaps from '@/components/g-maps';
 
 export default function Contacts() {
     const faqs = [
@@ -101,36 +102,6 @@ export default function Contacts() {
   }
 }
 
-.map-placeholder {
-  position: relative;
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  aspect-ratio: 16 / 9;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.map-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.4);
-
-  span {
-    padding: 0.75rem 1.5rem;
-    background: var(--color-background);
-    border-radius: var(--radius-md);
-    font-weight: 500;
-    color: var(--color-foreground);
-  }
-}
-
 .faq-section {
   background: var(--color-secondary);
 }
@@ -180,7 +151,7 @@ export default function Contacts() {
                 </div>
             </section>
 
-            <section className="section contact-section">
+            <section className="p-2 md:p-8 lg:p-16">
                 <div className="container">
                     <div className="contact-grid">
                         <div className="contact-info">
@@ -192,7 +163,7 @@ export default function Contacts() {
 
                             <div className="info-cards">
                                 <div className="info-card">
-                                    <div className="info-icon">                                        
+                                    <div className="info-icon">
                                         <MapPin width={24} />
                                     </div>
                                     <div className="info-content">
@@ -221,7 +192,7 @@ export default function Contacts() {
                                 </div>
 
                                 <div className="info-card">
-                                    <div className="info-icon">                                        
+                                    <div className="info-icon">
                                         <MailIcon size={24} />
                                     </div>
                                     <div className="info-content">
@@ -235,7 +206,7 @@ export default function Contacts() {
                                 </div>
 
                                 <div className="info-card">
-                                    <div className="info-icon">                                        
+                                    <div className="info-icon">
                                         <ClockIcon size={24} />
                                     </div>
                                     <div className="info-content">
@@ -249,21 +220,17 @@ export default function Contacts() {
                                 </div>
                             </div>
 
-                            <div className="map-placeholder">
-                                <img
-                                    src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80"
-                                    alt="Карта на локацията"
-                                />
-                                <div className="map-overlay">
-                                    <span>Вижте ни на картата</span>
-                                </div>
+                        </div>
+                            <div className="my-auto">
+                                <ContactForm />
                             </div>
-                        </div>
-
-                        <div className="my-auto">
-                            <ContactForm />
-                        </div>
                     </div>
+                </div>
+            </section>
+
+            <section className='p-2 md:p-8 lg:p-16'>
+                <div className="relative rounded-xl overflow-hidden aspect-video">
+                    <GMaps position={{ lat: 43.8649131, lng: 25.9887618, alt: '1132m' }} />
                 </div>
             </section>
 
