@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Award, BookOpen, Cog, FolderGit2, LayoutGrid, Package, Wrench } from 'lucide-react';
+import { Award, BookOpen, Cog, FolderGit2, LayoutGrid, Package, Tag, Wrench } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -14,6 +14,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { index as categoriesIndex } from '@/routes/admin/categories';
 import { index as certificatesIndex } from '@/routes/admin/certificates';
 import { index as productsIndex } from '@/routes/admin/products';
 import { index as projectsIndex } from '@/routes/admin/projects';
@@ -45,6 +46,11 @@ const mainNavItems: NavItem[] = [
         title: 'Certificates',
         href: certificatesIndex(),
         icon: Award,
+    },
+    {
+        title: 'Categories',
+        href: categoriesIndex(),
+        icon: Tag,
     },
 ];
 

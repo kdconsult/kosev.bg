@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Concerns\HasSlug;
+use App\Enums\CategoryType;
 use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,6 +26,10 @@ class Category extends Model
         'type',
     ];
 
+    protected $casts = [
+        'type' => CategoryType::class,
+    ];
+
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
@@ -37,11 +42,11 @@ class Category extends Model
 
     public function scopeForProjects(Builder $query): void
     {
-        $query->where('type', 'project');
+        $query->where('type', CategoryType::Project);
     }
 
     public function scopeForProducts(Builder $query): void
     {
-        $query->where('type', 'product');
+        $query->where('type', CategoryType::Product);
     }
 }

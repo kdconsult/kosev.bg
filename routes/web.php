@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoriesController as AdminCategoryController;
 use App\Http\Controllers\Admin\CertificatesController as AdminCertificateController;
 use App\Http\Controllers\Admin\DeleteMediaController;
 use App\Http\Controllers\Admin\ProductsController as AdminProductController;
@@ -30,6 +31,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('projects', AdminProjectController::class);
         Route::resource('products', AdminProductController::class);
         Route::resource('services', AdminServiceController::class);
+        Route::resource('categories', AdminCategoryController::class)
+            ->only(['index', 'store', 'update', 'destroy']);
         Route::resource('certificates', AdminCertificateController::class);
         Route::post('delete-media', DeleteMediaController::class)->name('delete-media');
     });

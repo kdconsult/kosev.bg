@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\CategoryType;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,7 +22,7 @@ class CategoryFactory extends Factory
 
         return [
             'name' => ['bg' => $name, 'en' => $name],
-            'type' => $this->faker->randomElement(['project', 'product']),
+            'type' => $this->faker->randomElement(CategoryType::cases()),
         ];
     }
 }
