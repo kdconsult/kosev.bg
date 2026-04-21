@@ -13,7 +13,7 @@ class CertificateController extends Controller
     {
         return Inertia::render('certificates', [
             'certificates' => CertificateResource::collection(
-                Certificate::orderBy('sort_order')->get()
+                Certificate::active()->orderBySort()->get()
             ),
         ]);
     }

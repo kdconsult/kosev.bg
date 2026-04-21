@@ -25,7 +25,12 @@ class Certificate extends Model implements HasMedia
         'slug',
         'name',
         'description',
+        'active',
         'sort_order',
+    ];
+
+    protected $casts = [
+        'active' => 'boolean',
     ];
 
     public function registerMediaCollections(): void
@@ -49,5 +54,14 @@ class Certificate extends Model implements HasMedia
     protected function orderBySort(Builder $query): void
     {
         $query->orderBy('sort_order');
+    }
+
+    /**
+     * Scope a query to only include active certificates.
+     */
+    #[Scope]
+    protected function active(Builder $query): void
+    {
+        $query->where('active', true);
     }
 }

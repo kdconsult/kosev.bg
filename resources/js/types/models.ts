@@ -57,6 +57,7 @@ export interface Certificate {
     description: string;
     imagePath: string;
     pdfPath: string;
+    active: boolean;
 }
 
 export interface Service {

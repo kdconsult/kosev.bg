@@ -16,7 +16,7 @@ class CertificatesController extends Controller
      */
     public function index()
     {
-        $certificates = CertificateResource::collection(Certificate::orderBySort()->get());
+        $certificates = CertificateResource::collection(Certificate::orderBy('active')->orderBySort()->get());
 
         return Inertia::render('admin/certificates/index', [
             'certificates' => $certificates,
@@ -38,7 +38,7 @@ class CertificatesController extends Controller
      */
     public function store(StoreCertificateRequest $request)
     {
-        $certificate = Certificate::create($request->validated());
+        $certificate = Certificate::create($request->safe()->only(['name', 'description', 'active']));
 
         if ($request->hasFile('pdf')) {
             $certificate
@@ -74,7 +74,7 @@ class CertificatesController extends Controller
      */
     public function update(UpdateCertificateRequest $request, Certificate $certificate)
     {
-        $certificate->update($request->validated());
+        $certificate->update($request->safe()->only(['name', 'description', 'active']));
 
         if ($request->hasFile('pdf')) {
             $certificate

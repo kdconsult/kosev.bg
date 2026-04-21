@@ -51,7 +51,7 @@ export default function CertificatesIndex({
                             />
                             <CardHeader className="flex-1">
                                 <CardAction>
-                                    <Badge variant="secondary">Featured</Badge>
+                                    {!certificate.active && <Badge variant="secondary" className='bg-red-300 dark:bg-red-700 text-red-700 dark:text-red-300'>Inactive</Badge>}
                                 </CardAction>
                                 <CardTitle>{certificate.name}</CardTitle>
                                 <CardDescription>

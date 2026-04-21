@@ -21,6 +21,7 @@ class CertificateResource extends JsonResource
         return [
             'id' => $this->id,
             'slug' => $this->slug,
+            'active' => $this->active,
             'name' => $this->getTranslation('name', $locale) ?? $this->getTranslation('name', config('app.fallback_locale')),
             'description' => $this->getTranslation('description', $locale) ?? $this->getTranslation('description', config('app.fallback_locale')),
             'imagePath' => $media ? $media->getUrl('thumb') : 'https://placehold.co/600x400',

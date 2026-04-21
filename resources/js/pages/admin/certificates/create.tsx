@@ -7,9 +7,10 @@ import CertificateForm from './_form';
 
 export default function CertificatesIndex({ locales }: { locales: string[] }) {
     const { data, setData, post, processing, errors } = useForm({
-        title: { bg: '', en: '' },
+        name: { bg: '', en: '' },
         description: { bg: '', en: '' },
         active: true,
+        pdf: null as File | null,
     });
 
     const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
@@ -20,8 +21,8 @@ export default function CertificatesIndex({ locales }: { locales: string[] }) {
             onSuccess: () => {
                 console.log('Certificate created successfully');
             },
-            onError: (errors) => {
-                console.error('Error creating certificate:', errors);
+            onError: (errs: Record<string, string>) => {
+                console.error('Error creating certificate:', errs);
             },
         });
     };
