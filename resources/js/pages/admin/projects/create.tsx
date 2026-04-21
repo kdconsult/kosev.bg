@@ -1,9 +1,10 @@
 import { Head, useForm } from '@inertiajs/react';
-import ProductsController from '@/actions/App/Http/Controllers/Admin/ProductsController';
 import Heading from '@/components/heading';
 import { index } from '@/routes/admin/products';
 import type { Category } from '@/types/models';
 import { ProjectForm } from './_form';
+import ProjectsController from '@/actions/App/Http/Controllers/Admin/ProjectsController';
+import { SubmitEvent } from 'react';
 
 interface TagSuggestion {
     slug: string;
@@ -19,15 +20,15 @@ export default function Create({ categories, availableTags }: Props) {
     const { data, setData, post, processing, errors } = useForm({
         title: { bg: '', en: '' },
         description: { bg: '', en: '' },
-        category_slug: '',
+        category_id: '',
         tags: [] as string[],
         services: [] as string[],
         specs: [] as { label: { bg: string; en: string }; value: { bg: string; en: string } }[],
     });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post(ProductsController.store.url());
+        post(ProjectsController.store.url());
     };
 
     return (
@@ -58,6 +59,6 @@ export default function Create({ categories, availableTags }: Props) {
 Create.layout = {
     breadcrumbs: [
         { title: 'Projects', href: index() },
-        { title: 'Create', href: ProductsController.create.url() },
+        { title: 'Create', href: ProjectsController.create.url() },
     ],
 };

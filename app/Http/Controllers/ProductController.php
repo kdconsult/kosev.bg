@@ -18,7 +18,7 @@ class ProductController extends Controller
                 Product::with(['category', 'tags'])->get()
             ),
             'categories' => CategoryResource::collection(
-                Category::forProducts()->get()
+                Category::forProducts()->withItems()->get()
             ),
         ]);
     }

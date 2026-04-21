@@ -12,7 +12,7 @@ class ProjectResource extends JsonResource
      *     slug: string,
      *     title: array<string, string>,
      *     description: array<string, string>,
-     *     category_slug: string|null,
+     *     category_id: string|null,
      *     tags: array<int, array{slug: string, name: string}>,
      *    specs: array<int, array{id: int, label: array<string, string>, value: array<string, string>, sort_order: int}>,
      * }
@@ -23,7 +23,7 @@ class ProjectResource extends JsonResource
             'slug' => $this->slug,
             'title' => $this->getTranslations('title'),
             'description' => $this->getTranslations('description'),
-            'category_slug' => $this->whenLoaded('category', fn () => $this->category?->slug),
+            'category_id' => $this->category_id,
             'tags' => $this->whenLoaded('tags', fn () => $this->tags->map(fn ($tag) => [
                 'slug' => $tag->slug,
                 'name' => $tag->getTranslation('name', 'bg') ?: $tag->getTranslation('name', 'en'),

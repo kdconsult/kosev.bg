@@ -49,4 +49,11 @@ class Category extends Model
     {
         $query->where('type', CategoryType::Product);
     }
+
+    public function scopeWithItems(Builder $query): void
+    {
+        $query->where(function (Builder $q) {
+            $q->has('projects')->orHas('products');
+        });
+    }
 }

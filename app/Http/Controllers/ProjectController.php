@@ -21,7 +21,7 @@ class ProjectController extends Controller
                 Project::with(['category', 'tags'])->get()
             ),
             'categories' => CategoryResource::collection(
-                Category::forProjects()->get()
+                Category::forProjects()->withItems()->get()
             ),
         ]);
     }

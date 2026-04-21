@@ -19,14 +19,13 @@ class Project extends Model implements HasMedia
     /** @use HasFactory<ProjectFactory> */
     use HasFactory, HasSlug, HasTranslations, InteractsWithMedia;
 
-    public array $translatable = ['title', 'description', 'industry'];
+    public array $translatable = ['title', 'description'];
 
     protected $fillable = [
         'slug',
         'category_id',
         'title',
         'description',
-        'industry',
     ];
 
     public function registerMediaCollections(): void

@@ -17,6 +17,7 @@ class CategoryResource extends JsonResource
         return [
             'slug' => $this->slug,
             'name' => $this->getTranslation('name', app()->getLocale(), false) ?: $this->getTranslation('name', 'bg'),
+            'id' => $this->id,
         ];
     }
 }

@@ -25,8 +25,9 @@ test('projects index returns 200 with projects and categories props', function (
 });
 
 test('projects index filters are built from project categories only', function () {
-    Category::factory()->create(['type' => 'project']);
+    $projectCategory = Category::factory()->create(['type' => 'project']);
     Category::factory()->create(['type' => 'product']);
+    Project::factory()->create(['category_id' => $projectCategory->id]);
 
     $response = $this->get(route('projects.index'));
 

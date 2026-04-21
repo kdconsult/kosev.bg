@@ -30,6 +30,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { index, create } from '@/routes/admin/projects';
+import { Category } from '@/types';
 
 interface Tag {
     slug: string;
@@ -40,8 +41,8 @@ interface AdminProject {
     slug: string;
     title: string;
     description: string;
-    industry: string;
-    category_slug: string | null;
+    category: Category | null;
+    category_id: number | null;
     tags: Tag[];
 }
 
@@ -237,9 +238,9 @@ export default function ProjectsIndex({ projects, filters }: Props) {
                                             {project.title || project.slug}
                                         </TableCell>
                                         <TableCell>
-                                            {project.industry ? (
+                                            {project.category ? (
                                                 <Badge variant="outline">
-                                                    {project.industry}
+                                                    {project.category.name}
                                                 </Badge>
                                             ) : (
                                                 <span className="text-sm text-muted-foreground">

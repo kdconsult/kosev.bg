@@ -26,7 +26,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
         name: project.title,
         description,
         image: project.cover_image?.originalUrl,
-        about: project.industry,
+        about: project.category.name,
         keywords: project.tags.map((tag) => tag.name).join(', '),
     };
 
@@ -164,7 +164,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
                             <ChevronLeft className="mr-2 h-4 w-4" />
                             Всички проекти
                         </Link>
-                        <span className="hero-badge">{project.industry}</span>
+                        <span className="hero-badge">{project.category?.name}</span>
                         <h1>{project.title}</h1>
                     </div>
                 </section>
@@ -212,10 +212,10 @@ export default function ProjectDetail({ project }: { project: Project }) {
 
                                 <div className="meta-row">
                                     <span className="meta-label">
-                                        Индустрия
+                                        Категория
                                     </span>
                                     <span className="meta-value industry-badge">
-                                        {project.industry}
+                                        {project.category?.name}
                                     </span>
                                 </div>
 

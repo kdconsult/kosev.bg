@@ -18,7 +18,7 @@ interface AdminProject {
     slug: string;
     title: { bg: string; en: string };
     description: { bg: string; en: string };
-    category_slug: string | null;
+    category_id: number | null;
     tags: TagSuggestion[];
     services: TagSuggestion[];
     specs: {
@@ -58,7 +58,7 @@ export default function Edit({
             bg: project.description.bg ?? '',
             en: project.description.en ?? '',
         },
-        category_slug: project.category_slug ?? '',
+        category_id: project.category_id ?? '',
         tags: project.tags.map((t) => t.name),
         specs: (project.specs ?? []).map((s) => ({
             label: { bg: s.label.bg ?? '', en: s.label.en ?? '' },

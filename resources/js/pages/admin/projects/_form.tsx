@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 import type { InertiaLinkProps } from '@inertiajs/react';
-import { useState } from 'react';
+import { SubmitEvent, useState } from 'react';
 import InputError from '@/components/input-error';
 import { SpecFields  } from '@/components/spec-fields';
 import type {SpecData} from '@/components/spec-fields';
@@ -22,7 +22,7 @@ import type { Category } from '@/types/models';
 interface ProjectFormData {
     title: { bg: string; en: string };
     description: { bg: string; en: string };
-    category_slug: string;
+    category_id: string;
     tags: string[];
     specs: SpecData[];
 }
@@ -32,7 +32,7 @@ interface ProjectFormErrors {
     'title.en'?: string;
     'description.bg'?: string;
     'description.en'?: string;
-    category_slug?: string;
+    category_id?: string;
     tags?: string;
     [key: string]: string | undefined;
 }
@@ -50,7 +50,7 @@ interface ProjectFormProps {
     categories: Category[];
     availableTags: TagSuggestion[];
     slug?: string;
-    onSubmit: (e: React.FormEvent) => void;
+    onSubmit: (e: SubmitEvent<HTMLFormElement>) => void;
     submitLabel: string;
     cancelHref: NonNullable<InertiaLinkProps['href']>;
 }
@@ -74,7 +74,7 @@ export function ProjectForm({
     submitLabel,
     cancelHref,
 }: ProjectFormProps) {
-    const [activeLocale, setActiveLocale] = useState<Locale>('bg');
+    const [activeLocale, setActiveLocale] = useState<Locale>('bg');    
 
     return (
         <form
@@ -204,21 +204,21 @@ export function ProjectForm({
                     Category <span className="text-destructive">*</span>
                 </Label>
                 <Select
-                    value={data.category_slug}
-                    onValueChange={(val) => setData('category_slug', val)}
+                    value={data.category_id?.toString() || ''}
+                    onValueChange={(val) => setData('category_id', Number.parseInt(val, 10))}
                 >
                     <SelectTrigger>
                         <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
                     <SelectContent>
                         {categories.map((cat) => (
-                            <SelectItem key={cat.slug} value={cat.slug}>
+                            <SelectItem key={cat.id} value={cat.id.toString()}>
                                 {cat.name}
                             </SelectItem>
                         ))}
                     </SelectContent>
                 </Select>
-                <InputError message={errors.category_slug} />
+                <InputError message={errors.category_id} />
             </div>
 
             <div className="grid gap-2">

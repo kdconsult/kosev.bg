@@ -1,6 +1,7 @@
 export interface Category {
     slug: string;
     name: string;
+    id: number;
 }
 
 export interface Image {
