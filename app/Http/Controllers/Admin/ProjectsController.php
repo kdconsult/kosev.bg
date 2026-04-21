@@ -132,6 +132,7 @@ class ProjectsController extends Controller
 
     public function destroy(Project $project): RedirectResponse
     {
+        $project->tags()->detach();
         $project->specs()->delete();
         $project->delete();
 

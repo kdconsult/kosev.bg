@@ -26,8 +26,9 @@ test('products index returns 200 with products and categories props', function (
 });
 
 test('products index filters are built from product categories only', function () {
-    Category::factory()->create(['type' => 'product']);
+    $productCategory = Category::factory()->create(['type' => 'product']);
     Category::factory()->create(['type' => 'project']);
+    Product::factory()->create(['category_id' => $productCategory->id]);
 
     $response = $this->get(route('products.index'));
 

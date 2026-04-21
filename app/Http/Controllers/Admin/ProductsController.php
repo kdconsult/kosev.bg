@@ -59,22 +59,20 @@ class ProductsController extends Controller
             'description' => $request->validated('description'),
         ]);
 
-        if ($request->has('coverImage') && $request->file('coverImage')->isValid()) {
+        if ($request->hasFile('coverImage') && $request->file('coverImage')->isValid()) {
             $product->addMediaFromRequest('coverImage')
                 ->toMediaCollection('cover_image', 'media');
         }
 
-        if ($request->has('images')) {
+        if ($request->hasFile('images')) {
             $product->addMultipleMediaFromRequest(['images'])
                 ->each(fn ($fileAdder) => $fileAdder->toMediaCollection('images', 'media'));
         }
 
-        if ($request->has('tags')) {
-            $tagIds = collect($request->validated('tags'))->map(fn (string $name) => (Tag::where('name->bg', $name)->first()
-                    ?? Tag::create(['name' => ['bg' => $name, 'en' => $name]]))->id);
+        $tagIds = collect($request->validated('tags', []))->map(fn (string $name) => (Tag::where('name->bg', $name)->first()
+            ?? Tag::create(['name' => ['bg' => $name, 'en' => $name]]))->id);
 
-            $product->tags()->sync($tagIds->all());
-        }
+        $product->tags()->sync($tagIds->all());
 
         $serviceIds = Service::whereIn('name->bg', $request->validated('services', []) ?? [])->pluck('id');
         $product->services()->sync($serviceIds->all());
@@ -119,12 +117,12 @@ class ProductsController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
-        if ($request->has('coverImage') && $request->file('coverImage')->isValid()) {
+        if ($request->hasFile('coverImage') && $request->file('coverImage')->isValid()) {
             $product->addMediaFromRequest('coverImage')
                 ->toMediaCollection('cover_image', 'media');
         }
 
-        if ($request->has('images')) {
+        if ($request->hasFile('images')) {
             $product->addMultipleMediaFromRequest(['images'])
                 ->each(fn ($fileAdder) => $fileAdder->toMediaCollection('images', 'media'));
         }
@@ -161,6 +159,8 @@ class ProductsController extends Controller
 
     public function destroy(Product $product): RedirectResponse
     {
+        $product->tags()->detach();
+        $product->services()->detach();
         $product->specs()->delete();
         $product->delete();
 
