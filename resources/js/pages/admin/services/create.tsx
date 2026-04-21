@@ -4,7 +4,17 @@ import Heading from '@/components/heading';
 import { index } from '@/routes/admin/services';
 import { ServiceForm } from './_form';
 
-export default function Create() {
+interface TagSuggestion {
+    slug: string;
+    name: string;
+}
+
+interface Props {
+    availableProducts: TagSuggestion[];
+    availableTags: TagSuggestion[];
+}
+
+export default function Create({ availableProducts, availableTags }: Props) {
     const { data, setData, post, processing, errors } = useForm({
         name: { bg: '', en: '' },
         description: { bg: '', en: '' },
@@ -35,8 +45,8 @@ export default function Create() {
                         onSubmit={handleSubmit}
                         submitLabel="Create Service"
                         cancelHref={index()}
-                        availableProducts={[]}
-                        availableTags={[]}
+                        availableProducts={availableProducts}
+                        availableTags={availableTags}
                     />
                 </div>
             </div>

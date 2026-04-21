@@ -34,12 +34,42 @@ class ServicesController extends Controller
 
     public function create(): Response
     {
-        return Inertia::render('admin/services/create');
+        return Inertia::render('admin/services/create', [
+            'availableProducts' => Product::all()->map(fn ($product) => [
+                'slug' => $product->slug,
+                'name' => $product->getTranslation('title', 'bg') ?: $product->getTranslation('title', 'en'),
+            ])->values(),
+            'availableTags' => Tag::all()->map(fn ($tag) => [
+                'slug' => $tag->slug,
+                'name' => $tag->getTranslation('name', 'bg') ?: $tag->getTranslation('name', 'en'),
+            ])->values(),
+        ]);
     }
 
     public function store(StoreServiceRequest $request): RedirectResponse
     {
-        Service::create($request->validated());
+        $service = Service::create($request->safe()->only(['name', 'description', 'is_active']));
+
+        if ($request->hasFile('cover_image') && $request->file('cover_image')->isValid()) {
+            $service->addMediaFromRequest('cover_image')
+                ->toMediaCollection('cover_image', 'media');
+        }
+
+        $tagIds = collect($request->validated('tags', []))->map(fn (string $name) => (Tag::where('name->bg', $name)->first()
+            ?? Tag::create(['name' => ['bg' => $name, 'en' => $name]]))->id);
+
+        $service->tags()->sync($tagIds->all());
+
+        $productIds = Product::whereIn('title->bg', $request->validated('products', []) ?? [])->pluck('id');
+        $service->products()->sync($productIds->all());
+
+        foreach ($request->validated('specs', []) as $i => $specData) {
+            $service->specs()->create([
+                'label' => $specData['label'],
+                'value' => $specData['value'],
+                'sort_order' => $i,
+            ]);
+        }
 
         return redirect()->route('admin.services.index')
             ->with('success', 'Service created.');
@@ -52,11 +82,9 @@ class ServicesController extends Controller
 
     public function edit(Service $service): Response
     {
-        $media = $service->coverImage();
-
         return Inertia::render('admin/services/edit', [
             'service' => new AdminServiceResource($service->load(['products', 'tags', 'specs'])),
-            'coverImageUrl' => $media?->getUrl() ?? 'https://placehold.co/800x600',
+            'coverImageUrl' => $service->coverImage()?->getUrl() ?? null,
             'availableProducts' => Product::all()->map(fn ($product) => [
                 'slug' => $product->slug,
                 'name' => $product->getTranslation('title', 'bg') ?: $product->getTranslation('title', 'en'),
@@ -70,15 +98,15 @@ class ServicesController extends Controller
 
     public function update(UpdateServiceRequest $request, Service $service): RedirectResponse
     {
-        $service->update($request->validated());
+        $service->update($request->safe()->only(['name', 'description', 'is_active']));
 
-        if ($request->has('cover_image') && $request->file('cover_image')->isValid()) {
+        if ($request->hasFile('cover_image') && $request->file('cover_image')->isValid()) {
             $service->addMediaFromRequest('cover_image')
                 ->toMediaCollection('cover_image', 'media');
         }
 
-        $tagIds = collect($request->input('tags', []))->map(fn (string $name) => (Tag::where('name->bg', $name)->first()
-                ?? Tag::create(['name' => ['bg' => $name, 'en' => $name]]))->id);
+        $tagIds = collect($request->validated('tags', []))->map(fn (string $name) => (Tag::where('name->bg', $name)->first()
+            ?? Tag::create(['name' => ['bg' => $name, 'en' => $name]]))->id);
 
         $service->tags()->sync($tagIds->all());
 
@@ -101,7 +129,9 @@ class ServicesController extends Controller
 
     public function destroy(Service $service): RedirectResponse
     {
+        $service->tags()->detach();
         $service->products()->detach();
+        $service->specs()->delete();
         $service->delete();
 
         return redirect()->route('admin.services.index')
