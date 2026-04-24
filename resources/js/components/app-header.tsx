@@ -62,12 +62,18 @@ export function AppHeader() {
   align-items: center;
   gap: 0.75rem;
   text-decoration: none;
-  border-radius: 8px;
-  padding: 4px;
-  background-color: var(--color-neutral-800);
+  border-radius: 10px;
+  padding: 6px 10px;
+  background-color: var(--color-primary);
+  border: 1px solid oklch(0.748 0.094 83 / 0.25);
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: oklch(0.748 0.094 83 / 0.5);
+  }
 
   img {
-    height: 50px;
+    height: 48px;
   }
 }
 

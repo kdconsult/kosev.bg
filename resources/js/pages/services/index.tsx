@@ -64,9 +64,12 @@ export default function Services({ services }: { services: Service[] }) {
                     {services.map((service, i) => (
                         <div
                             id={service.slug}
-                            className="mb-20 grid items-center gap-8 last:mb-0 lg:grid-cols-2 lg:gap-16 py-8"
+                            className="service-section mb-20 grid items-center gap-8 last:mb-0 lg:grid-cols-2 lg:gap-16 py-8"
                             key={service.id}
                         >
+                            <span className="service-number" aria-hidden="true">
+                                {String(i + 1).padStart(2, '0')}
+                            </span>
                             <div className={cn(i % 2 !== 0 && 'lg:order-2')}>
                                 <img
                                     src={service.cover_image?.originalUrl}

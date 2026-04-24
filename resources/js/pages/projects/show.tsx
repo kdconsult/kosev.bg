@@ -183,22 +183,28 @@ export default function ProjectDetail({ project }: { project: Project }) {
                                 {project.images.length > 0 && (
                                     <div className="gallery-thumbs">
                                         <button
-                                                className={cn(
-                                                    'thumb',
-                                                    activeImageIndex === -1 &&
-                                                        'active',
-                                                )}
-                                                key={project.cover_image?.id || 'cover'}
-                                                onClick={() =>
-                                                    setActiveImageIndex(-1)
+                                            className={cn(
+                                                'thumb',
+                                                activeImageIndex === -1 &&
+                                                    'active',
+                                            )}
+                                            key={
+                                                project.cover_image?.id ||
+                                                'cover'
+                                            }
+                                            onClick={() =>
+                                                setActiveImageIndex(-1)
+                                            }
+                                        >
+                                            <img
+                                                src={
+                                                    project.cover_image
+                                                        ?.thumbUrl
                                                 }
-                                            >
-                                                <img
-                                                    src={project.cover_image?.thumbUrl}
-                                                    alt={project.title + ' cover'}
-                                                    loading="lazy"
-                                                />
-                                            </button>
+                                                alt={project.title + ' cover'}
+                                                loading="lazy"
+                                            />
+                                        </button>
                                         {project.images.map((img, idx) => (
                                             <button
                                                 className={cn(
@@ -240,32 +246,37 @@ export default function ProjectDetail({ project }: { project: Project }) {
                                     </span>
                                 </div>
 
-                                <div className="specs-block">
-                                    <h3>Технически детайли</h3>
-                                    <table className="specs-table">
-                                        <tbody>
-                                            {project.specs.map((spec) => (
-                                                <tr key={spec.label}>
-                                                    <td className="spec-label">
-                                                        {spec.label}
-                                                    </td>
-                                                    <td className="spec-value">
-                                                        {spec.value}
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div className="tags-block">
-                                    {project.tags.map((tag) => (
-                                        <span className="tag" key={tag.slug}>
-                                            {tag.name}
-                                        </span>
-                                    ))}
-                                </div>
-
+                                {project.specs.length > 0 && (
+                                    <div className="specs-block">
+                                        <h3>Технически детайли</h3>
+                                        <table className="specs-table">
+                                            <tbody>
+                                                {project.specs.map((spec) => (
+                                                    <tr key={spec.label}>
+                                                        <td className="spec-label">
+                                                            {spec.label}
+                                                        </td>
+                                                        <td className="spec-value">
+                                                            {spec.value}
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
+                                {project.tags.length > 0 && (
+                                    <div className="tags-block">
+                                        {project.tags.map((tag) => (
+                                            <span
+                                                className="tag"
+                                                key={tag.slug}
+                                            >
+                                                {tag.name}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
                                 <Link
                                     href={contacts()}
                                     className="btn btn-accent btn-lg cta-btn"
