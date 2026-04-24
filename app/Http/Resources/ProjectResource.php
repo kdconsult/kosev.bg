@@ -16,10 +16,13 @@ class ProjectResource extends JsonResource
     {
         $locale = app()->getLocale();
 
+        $description = $this->getTranslation('description', $locale, false) ?: $this->getTranslation('description', 'bg');
+
         return [
             'slug' => $this->slug,
             'title' => $this->getTranslation('title', $locale, false) ?: $this->getTranslation('title', config('app.fallback_locale')),
-            'description' => $this->getTranslation('description', $locale, false) ?: $this->getTranslation('description', config('app.fallback_locale')),
+            'description' => $description,
+            'short_description' => $description ? str()->limit(strip_tags($description), 150) : null,
             'category' => new CategoryResource($this->whenLoaded('category')),
             'cover_image' => $this->coverImage() ? ['id' => $this->coverImage()->id, 'thumbUrl' => $this->coverImage()->getUrl('thumb'), 'originalUrl' => $this->coverImage()->getUrl()] : ['id' => null, 'thumbUrl' => 'https://placehold.co/600x400', 'originalUrl' => 'https://placehold.co/600x400'],
             'images' => $this->images() ? $this->images()->map(fn ($image) => ['id' => $image->id, 'thumbUrl' => $image->getUrl('thumb'), 'originalUrl' => $image->getUrl()]) : null,

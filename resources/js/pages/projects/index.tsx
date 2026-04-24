@@ -212,13 +212,13 @@ export default function ProjectsList({
                                     />
                                     <div className="project-overlay">
                                         <span className="project-category">
-                                            {project.industry}
+                                            {project.category.name}
                                         </span>
                                     </div>
                                 </div>
                                 <div className="project-content">
                                     <h3>{project.title}</h3>
-                                    <p>{project.description}</p>
+                                    <p>{project.short_description}</p>
                                     <div className="project-tags">
                                         {project.tags.map((tag) => (
                                             <span

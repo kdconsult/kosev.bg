@@ -76,7 +76,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
 .gallery-main {
   border-radius: var(--radius-xl);
   overflow: hidden;
-  aspect-ratio: 4 / 3;
+//   aspect-ratio: 4 / 3;
   margin-bottom: 1rem;
 
   img {
@@ -164,7 +164,9 @@ export default function ProjectDetail({ project }: { project: Project }) {
                             <ChevronLeft className="mr-2 h-4 w-4" />
                             Всички проекти
                         </Link>
-                        <span className="hero-badge">{project.category?.name}</span>
+                        <span className="hero-badge">
+                            {project.category?.name}
+                        </span>
                         <h1>{project.title}</h1>
                     </div>
                 </section>
@@ -178,31 +180,50 @@ export default function ProjectDetail({ project }: { project: Project }) {
                                         alt={project.title}
                                     />
                                 </div>
-                                <div className="gallery-thumbs">
-                                    {project.images.map((img, idx) => (
+                                {project.images.length > 0 && (
+                                    <div className="gallery-thumbs">
                                         <button
-                                            className={cn(
-                                                'thumb',
-                                                activeImageIndex === idx &&
-                                                    'active',
-                                            )}
-                                            key={img.id}
-                                            onClick={() =>
-                                                setActiveImageIndex(idx)
-                                            }
-                                        >
-                                            <img
-                                                src={img.thumbUrl}
-                                                alt={
-                                                    project.title +
-                                                    ' ' +
-                                                    (idx + 1)
+                                                className={cn(
+                                                    'thumb',
+                                                    activeImageIndex === -1 &&
+                                                        'active',
+                                                )}
+                                                key={project.cover_image?.id || 'cover'}
+                                                onClick={() =>
+                                                    setActiveImageIndex(-1)
                                                 }
-                                                loading="lazy"
-                                            />
-                                        </button>
-                                    ))}
-                                </div>
+                                            >
+                                                <img
+                                                    src={project.cover_image?.thumbUrl}
+                                                    alt={project.title + ' cover'}
+                                                    loading="lazy"
+                                                />
+                                            </button>
+                                        {project.images.map((img, idx) => (
+                                            <button
+                                                className={cn(
+                                                    'thumb',
+                                                    activeImageIndex === idx &&
+                                                        'active',
+                                                )}
+                                                key={img.id}
+                                                onClick={() =>
+                                                    setActiveImageIndex(idx)
+                                                }
+                                            >
+                                                <img
+                                                    src={img.thumbUrl}
+                                                    alt={
+                                                        project.title +
+                                                        ' ' +
+                                                        (idx + 1)
+                                                    }
+                                                    loading="lazy"
+                                                />
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="project-info">

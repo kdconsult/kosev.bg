@@ -25,6 +25,7 @@ export interface Project {
     slug: string;
     title: string;
     description: string;
+    short_description: string | null;
     industry: string;
     category: Category;
     cover_image: Image | null;

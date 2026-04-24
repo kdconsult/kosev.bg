@@ -215,7 +215,7 @@ export default function ProductList({
                                 </div>
                                 <div className="product-content">
                                     <h3>{product.title}</h3>
-                                    <p>{product.description}</p>
+                                    <p>{product.short_description}</p>
                                     <div className="product-tags">
                                         {product.tags.slice(0, 3).map((tag) => (
                                             <span
