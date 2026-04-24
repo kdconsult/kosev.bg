@@ -21,6 +21,7 @@ class ServiceResource extends JsonResource
             'slug' => $this->slug,
             'name' => $this->name,
             'description' => $this->description,
+            'short_description' => $this->description ? str()->limit(strip_tags($this->description), 150) : null,
             'cover_image' => ['originalUrl' => $this->coverImage()?->getUrl() ?? 'https://placehold.co/800x600'],
             'tags' => TagResource::collection($this->whenLoaded('tags')),
             'specs' => SpecResource::collection($this->whenLoaded('specs')),

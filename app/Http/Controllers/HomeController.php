@@ -15,11 +15,14 @@ class HomeController extends Controller
     {
         return Inertia::render('welcome', [
             'services' => ServiceResource::collection(
-                Service::with(['specs'])->active()->get()
+                Service::with(['specs'])->active()->take(3)->get()
             ),
             'featuredProducts' => ProductResource::collection(
                 Product::with(['category'])->take(3)->get()
             ),
+            'translations' => [
+                'buttons' => __('buttons'),
+            ],
         ]);
     }
 }

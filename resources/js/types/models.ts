@@ -42,6 +42,7 @@ export interface Product {
     slug: string;
     title: string;
     description: string;
+    short_description: string | null;
     category: Category;
     cover_image: Image | null;
     images: Image[];
@@ -65,6 +66,7 @@ export interface Service {
     slug: string;
     name: string;
     description: string;
+    short_description: string | null;
     cover_image: Image | null;
     products: Product[];
     tags: Tag[];

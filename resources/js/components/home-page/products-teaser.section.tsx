@@ -2,178 +2,68 @@ import { Link } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
 import { index as products, show } from '@/routes/products';
 import type { Product } from '@/types';
+import { Translations } from '@/types/translations';
 
 export default function ProductsTeaserSection({
     featuredProducts,
+    translations
 }: {
     featuredProducts: Product[];
+    translations: Translations;
 }) {
     return (
-        <>
-            <style>{`
-.products-teaser {
-  background: var(--color-secondary);
-}
+        <section className="section bg-secondary">
+            <div className="container">
+                <div className="mx-auto mb-16 max-w-175 text-center md:mb-20">
+                    <span className="section-subtitle">Нашите продукти</span>
+                    <h2>Прецизни метални изделия</h2>
+                    <p>
+                        Произвеждаме широк спектър от метални изделия по
+                        клиентски спецификации — от единични детайли до
+                        серийно производство.
+                    </p>
+                </div>
 
-.products-grid {
-  display: grid;
-  gap: 2rem;
-  margin-bottom: 3rem;
-
-  @media (min-width: 640px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.product-card {
-  background: var(--color-card);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-  transition: all 0.3s ease;
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-
-  &:hover {
-    box-shadow: var(--shadow-xl);
-    transform: translateY(-4px);
-
-    .product-image img {
-      transform: scale(1.05);
-    }
-
-    .view-link {
-      color: var(--color-brand-gold);
-    }
-  }
-}
-
-.product-image {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 4 / 3;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-}
-
-.product-overlay {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-}
-
-.product-category {
-  display: inline-block;
-  padding: 0.375rem 0.75rem;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  border-radius: 100px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--color-white);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.product-content {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-
-  h3 {
-    font-size: 1.125rem;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    font-size: 0.9375rem;
-    color: var(--color-muted-foreground);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    flex: 1;
-  }
-}
-
-.view-link {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-primary);
-  transition: color 0.2s ease;
-}
-
-.cta-row {
-  display: flex;
-  justify-content: center;
-}
-
-        `}</style>
-            <section className="section products-teaser">
-                <div className="container">
-                    <div className="section-header">
-                        <span className="section-subtitle">
-                            Нашите продукти
-                        </span>
-                        <h2>Прецизни метални изделия</h2>
-                        <p>
-                            Произвеждаме широк спектър от метални изделия по
-                            клиентски спецификации — от единични детайли до
-                            серийно производство.
-                        </p>
-                    </div>
-
-                    <div className="products-grid">
-                        {featuredProducts.map((product) => (
-                            <Link
-                                className="product-card"
-                                href={show(product.slug)}
-                                key={product.slug}
-                            >
-                                <div className="product-image">
-                                    <img
-                                        src={product.cover_image?.thumbUrl}
-                                        alt={product.title}
-                                        loading="lazy"
-                                    />
-                                    <div className="product-overlay">
-                                        <span className="product-category">
-                                            {product.category.name}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="product-content">
-                                    <h3>{product.title}</h3>
-                                    <p>{product.description}</p>
-                                    <span className="view-link">
-                                        Виж детайли
-                                        <ChevronRight className="inline-block h-4 w-4" />
+                <div className="mb-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                    {featuredProducts.map((product) => (
+                        <Link
+                            className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card text-inherit no-underline transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                            href={show(product.slug)}
+                            key={product.slug}
+                        >
+                            <div className="relative aspect-4/3 overflow-hidden">
+                                <img
+                                    src={product.cover_image?.thumbUrl}
+                                    alt={product.title}
+                                    loading="lazy"
+                                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
+                                <div className="absolute top-4 left-4">
+                                    <span className="inline-block rounded-full bg-black/60 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-white backdrop-blur-sm">
+                                        {product.category.name}
                                     </span>
                                 </div>
-                            </Link>
-                        ))}
-                    </div>
-
-                    <div className="cta-row">
-                        <Link
-                            href={products()}
-                            className="btn btn-accent btn-lg"
-                        >
-                            Виж всички продукти
+                            </div>
+                            <div className="flex flex-1 flex-col p-6">
+                                <h3 className="mb-2 text-lg">{product.title}</h3>
+                                <p className="mb-4 flex-1 text-[0.9375rem] leading-relaxed text-muted-foreground">
+                                    {product.short_description}
+                                </p>
+                                <span className="text-sm font-semibold text-primary transition-colors duration-200 group-hover:text-brand-gold">
+                                    {translations.buttons.see_details}
+                                    <ChevronRight className="inline-block h-4 w-4" />
+                                </span>
+                            </div>
                         </Link>
-                    </div>
+                    ))}
                 </div>
-            </section>
-        </>
+
+                <div className="flex justify-center">
+                    <Link href={products()} className="btn btn-accent btn-lg">
+                        {translations.buttons.view_all_products}
+                    </Link>
+                </div>
+            </div>
+        </section>
     );
 }
