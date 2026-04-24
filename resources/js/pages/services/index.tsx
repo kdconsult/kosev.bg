@@ -105,7 +105,7 @@ export default function Services({ services }: { services: Service[] }) {
             </section>
 
             <section className="bg-secondary py-16">
-                <div className="container flex items-center justify-between gap-8">
+                <div className="container flex flex-col md:flex-row md:items-center justify-between gap-8">
                     <div>
                         <h2>Нуждаете се от специализирано решение?</h2>
                         <p>

@@ -1,14 +1,14 @@
 import { Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
 import { CheckIcon, LinkIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import { Breadcrumbs } from '@/components/breadcrumbs';
 import { JsonLd } from '@/components/json-ld';
 import { SeoHead } from '@/components/seo-head';
+import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
 import { index as servicesIndex, show } from '@/routes/services';
 import type { BreadcrumbItem, Service } from '@/types';
-import { Translations } from '@/types/translations';
-import { Breadcrumbs } from '@/components/breadcrumbs';
+import type { Translations } from '@/types/translations';
 
 export default function ServiceDetail({ service }: { service: Service }) {
     const [activeImageIndex, setActiveImageIndex] = useState(-1);

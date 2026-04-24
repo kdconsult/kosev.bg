@@ -11,8 +11,6 @@ import { index as products } from '@/routes/products';
 import { index as projectsIndex } from '@/routes/projects';
 import { index as services } from '@/routes/services';
 
-
-
 const activeItemStyles = 'active';
 
 export function AppHeader() {
@@ -29,11 +27,6 @@ export function AppHeader() {
 
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
-
-    function toggleMobileMenu() {
-        const menu = document.querySelector('.mobile-nav');
-        menu?.classList.toggle('open');
-    }
 
     return (
         <>
@@ -176,17 +169,18 @@ export function AppHeader() {
   span {
     display: block;
     width: 100%;
-    height: 1.5px;
+    height: 2px;
     background: var(--color-foreground);
     transition: all 0.3s ease;
+    border-radius: 2px;
   }
 
   &.open {
     span:first-child {
-      transform: translateY(3.75px) rotate(45deg);
+      transform: translateY(4px) rotate(45deg);
     }
     span:last-child {
-      transform: translateY(-3.75px) rotate(-45deg);
+      transform: translateY(-4px) rotate(-45deg);
     }
   }
 }
@@ -216,7 +210,10 @@ export function AppHeader() {
       border-bottom: 1px solid var(--color-border);
 
       &.active {
-        color: var(--color-primary-foreground);
+        color: var(--color-primary);
+        font-weight: 600;
+        border-left: 3px solid var(--color-primary);
+        padding-left: 0.75rem;
       }
     }
   }
@@ -301,21 +298,25 @@ export function AppHeader() {
                         {nav.contact_cta}
                     </Link>
 
-                    <LanguageSwitcher />
-
-                    {auth.user && (
-                        <Link
-                            href={dashboard()}
-                            className="flex items-center gap-1 rounded-4xl bg-accent p-3 text-xs"
-                        >
-                            <LayoutDashboardIcon className="mr-2" size={18} />
-                            {getInitials(auth.user?.name || 'Потребител')}
-                        </Link>
-                    )}
+                    <div className="hidden items-center gap-4 md:flex">
+                        <LanguageSwitcher />
+                        {auth.user && (
+                            <Link
+                                href={dashboard()}
+                                className="flex items-center gap-1 rounded-4xl bg-accent p-3 text-xs"
+                            >
+                                <LayoutDashboardIcon
+                                    className="mr-2"
+                                    size={18}
+                                />
+                                {getInitials(auth.user?.name || 'Потребител')}
+                            </Link>
+                        )}
+                    </div>
 
                     <button
                         className="mobile-menu-btn"
-                        onClick={toggleMobileMenu}
+                        onClick={() => setMobileMenuOpen((prev) => !prev)}
                         aria-expanded={mobileMenuOpen ? 'true' : 'false'}
                         aria-label="Отвори меню"
                     >
@@ -330,7 +331,7 @@ export function AppHeader() {
                     </button>
                 </div>
 
-                <div className={cn('mobile-nav', { open: mobileMenuOpen })}>
+                <div className={cn('mobile-nav', { open: mobileMenuOpen }, 'space-y-4')}>
                     <nav aria-label="Мобилна навигация">
                         <Link
                             className={whenCurrentUrl(home(), activeItemStyles)}
@@ -341,30 +342,35 @@ export function AppHeader() {
                         </Link>
                         <Link
                             href={services()}
+                            className={isCurrentOrParentUrl(services()) ? activeItemStyles : undefined}
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             {nav.services}
                         </Link>
                         <Link
                             href={projectsIndex()}
+                            className={isCurrentOrParentUrl(projectsIndex()) ? activeItemStyles : undefined}
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             {nav.projects}
                         </Link>
                         <Link
                             href={products()}
+                            className={isCurrentOrParentUrl(products()) ? activeItemStyles : undefined}
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             {nav.products}
                         </Link>
                         <Link
                             href={about()}
+                            className={whenCurrentUrl(about(), activeItemStyles)}
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             {nav.about}
                         </Link>
                         <Link
                             href={certificates()}
+                            className={whenCurrentUrl(certificates(), activeItemStyles)}
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             {nav.certificates}
@@ -378,7 +384,21 @@ export function AppHeader() {
                         >
                             {nav.contact_cta}
                         </Link>
+                    </div>
+                    <div className="flex items-center gap-4 justify-between">
                         <LanguageSwitcher />
+                        {auth.user && (
+                            <Link
+                                href={dashboard()}
+                                className="flex items-center gap-1 rounded-4xl bg-accent p-3 text-xs"
+                            >
+                                <LayoutDashboardIcon
+                                    className="mr-2"
+                                    size={18}
+                                />
+                                {getInitials(auth.user?.name || 'Потребител')}
+                            </Link>
+                        )}
                     </div>
                 </div>
             </header>

@@ -1,5 +1,6 @@
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
+import { Breadcrumbs } from '@/components/breadcrumbs';
 import { JsonLd } from '@/components/json-ld';
 import { SeoHead } from '@/components/seo-head';
 import { cn } from '@/lib/utils';
@@ -7,7 +8,6 @@ import { contacts } from '@/routes';
 import { index, show } from '@/routes/products';
 import { show as showService } from '@/routes/services';
 import type { Product } from '@/types';
-import { Breadcrumbs } from '@/components/breadcrumbs';
 
 export default function ProductDetail({ product }: { product: Product }) {
     const { appUrl } = usePage().props as { appUrl: string };
