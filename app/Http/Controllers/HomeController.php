@@ -19,10 +19,7 @@ class HomeController extends Controller
             ),
             'featuredProducts' => ProductResource::collection(
                 Product::with(['category'])->take(3)->get()
-            ),
-            'translations' => [
-                'buttons' => __('buttons'),
-            ],
+            ),            
         ]);
     }
 }

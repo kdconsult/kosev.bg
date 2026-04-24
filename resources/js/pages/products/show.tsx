@@ -4,9 +4,10 @@ import { JsonLd } from '@/components/json-ld';
 import { SeoHead } from '@/components/seo-head';
 import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
-import { index } from '@/routes/products';
+import { index, show } from '@/routes/products';
 import { show as showService } from '@/routes/services';
 import type { Product } from '@/types';
+import { Breadcrumbs } from '@/components/breadcrumbs';
 
 export default function ProductDetail({ product }: { product: Product }) {
     const { appUrl } = usePage().props as { appUrl: string };
@@ -52,6 +53,18 @@ export default function ProductDetail({ product }: { product: Product }) {
             },
         ],
     };
+
+    const breadcrumbs = [
+        { title: 'Начало', href: appUrl },
+        {
+            title: 'Продукти',
+            href: index(),
+        },
+        {
+            title: product.title,
+            href: show(product.slug),
+        },
+    ];
 
     return (
         <>
@@ -144,10 +157,12 @@ export default function ProductDetail({ product }: { product: Product }) {
                         />
                         <div className="hero-overlay"></div>
                     </div>
+                    <div className="relative">
+                        <div className="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl">
+                            <Breadcrumbs breadcrumbs={breadcrumbs} />
+                        </div>
+                    </div>
                     <div className="hero-content container">
-                        <Link href={index()} className="back-link">
-                            ← Всички продукти
-                        </Link>
                         <span className="hero-badge">
                             {product.category.name}
                         </span>

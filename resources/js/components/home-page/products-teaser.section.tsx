@@ -2,7 +2,7 @@ import { Link } from '@inertiajs/react';
 import { ChevronRight } from 'lucide-react';
 import { index as products, show } from '@/routes/products';
 import type { Product } from '@/types';
-import { Translations } from '@/types/translations';
+import type { Translations } from '@/types/translations';
 
 export default function ProductsTeaserSection({
     featuredProducts,

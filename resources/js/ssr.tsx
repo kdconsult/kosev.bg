@@ -1,11 +1,11 @@
 import { createInertiaApp } from '@inertiajs/react';
 import createServer from '@inertiajs/react/server';
+import ReactDOMServer from 'react-dom/server';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import BaseLayout from '@/layouts/app/app-header-layout';
 import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import SettingsLayout from '@/layouts/settings/layout';
-import ReactDOMServer from 'react-dom/server';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -35,6 +35,7 @@ createServer((page) =>
             const pages = import.meta.glob<{ default: React.ComponentType }>(
                 './pages/**/*.tsx',
             );
+
             return pages[`./pages/${name}.tsx`]().then(
                 (module) => module.default,
             );

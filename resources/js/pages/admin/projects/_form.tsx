@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import type { InertiaLinkProps } from '@inertiajs/react';
-import { SubmitEvent, useState } from 'react';
+import type { SubmitEvent} from 'react';
+import { useState } from 'react';
 import InputError from '@/components/input-error';
 import { SpecFields  } from '@/components/spec-fields';
 import type {SpecData} from '@/components/spec-fields';

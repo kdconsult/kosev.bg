@@ -1,4 +1,5 @@
 import type { Auth } from '@/types/auth';
+import type { Translations } from '@/types/translations';
 
 declare module '@inertiajs/core' {
     export interface InertiaConfig {
@@ -9,7 +10,7 @@ declare module '@inertiajs/core' {
             currentYear: number;
             sidebarOpen: boolean;
             locale: string;
-            locales: string[];
+            locales: string[];            
             nav: {
                 home: string;
                 services: string;
@@ -28,6 +29,7 @@ declare module '@inertiajs/core' {
                 certificates: { title: string; description: string };
                 contacts: { title: string; description: string };
             };
+            translations: Translations
             [key: string]: unknown;
         };
     }

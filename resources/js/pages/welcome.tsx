@@ -12,22 +12,21 @@ import WhyChooseUsSection from '@/components/home-page/why-choose-us.section';
 import { JsonLd } from '@/components/json-ld';
 import { SeoHead } from '@/components/seo-head';
 import type { Product, Service } from '@/types';
-import { Translations } from '@/types/translations';
+import type { Translations } from '@/types/translations';
 
 const recaptchaSiteKey = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
 
 export default function Welcome({
     featuredProducts,
     services,
-    translations,
 }: {
     featuredProducts: Product[];
     services: Service[];
-    translations: Translations;
 }) {
-    const { appUrl, seo } = usePage().props as {
+    const { appUrl, seo, translations } = usePage().props as {
         appUrl: string;
         seo: { home: { title: string; description: string } };
+        translations: Translations;
     };
     const hasMounted = useSyncExternalStore(
         () => () => {},

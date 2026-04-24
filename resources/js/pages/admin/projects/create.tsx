@@ -1,10 +1,10 @@
 import { Head, useForm } from '@inertiajs/react';
+import type { SubmitEvent } from 'react';
+import ProjectsController from '@/actions/App/Http/Controllers/Admin/ProjectsController';
 import Heading from '@/components/heading';
 import { index } from '@/routes/admin/products';
 import type { Category } from '@/types/models';
 import { ProjectForm } from './_form';
-import ProjectsController from '@/actions/App/Http/Controllers/Admin/ProjectsController';
-import { SubmitEvent } from 'react';
 
 interface TagSuggestion {
     slug: string;

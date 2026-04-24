@@ -1,30 +1,21 @@
 import { Link, usePage } from '@inertiajs/react';
 import { LayoutDashboardIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Breadcrumbs } from '@/components/breadcrumbs';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
-import {
-    home,
-    about,
-    contacts,
-    dashboard,
-} from '@/routes';
-import {index as certificates} from '@/routes/certificates';
+import { home, about, contacts, dashboard } from '@/routes';
+import { index as certificates } from '@/routes/certificates';
 import { index as products } from '@/routes/products';
 import { index as projectsIndex } from '@/routes/projects';
 import { index as services } from '@/routes/services';
-import type { BreadcrumbItem } from '@/types';
 
-type Props = {
-    breadcrumbs?: BreadcrumbItem[];
-};
+
 
 const activeItemStyles = 'active';
 
-export function AppHeader({ breadcrumbs = [] }: Props) {
+export function AppHeader() {
     const page = usePage();
     const { auth, nav } = page.props;
     const getInitials = useInitials();
@@ -237,11 +228,11 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
 }
 
             `}</style>
-            <header className={cn({ 'z-10': true, 'scrolled': isScrolled })}>
+            <header className={cn({ 'z-10': true, scrolled: isScrolled })}>
                 <div className="header-content container">
                     <Link href={home()} className="logo">
                         <img
-                            src="https://kosev.bg/wp-content/uploads/2019/08/kosev1.png"
+                            src="/storage/images/kosev/kosev1.png"
                             alt="Logo"
                         />
                     </Link>
@@ -255,10 +246,11 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                         </Link>
                         <Link
                             href={services()}
-                            className={whenCurrentUrl(
-                                services(),
-                                activeItemStyles,
-                            )}
+                            className={
+                                isCurrentOrParentUrl(services())
+                                    ? activeItemStyles
+                                    : undefined
+                            }
                         >
                             {nav.services}
                         </Link>
@@ -390,14 +382,6 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                     </div>
                 </div>
             </header>
-
-            {breadcrumbs.length > 1 && (
-                <div className="flex w-full border-b border-sidebar-border/70">
-                    <div className="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl">
-                        <Breadcrumbs breadcrumbs={breadcrumbs} />
-                    </div>
-                </div>
-            )}
         </>
     );
 }

@@ -1,9 +1,9 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { show } from '@/routes/services';
+import { index } from '@/routes/services';
 import type { Service } from '@/types/models';
 import type { Translations } from '@/types/translations';
-import { index } from '@/routes/services';
 
 export default function CapabilitiesSection({
     services,

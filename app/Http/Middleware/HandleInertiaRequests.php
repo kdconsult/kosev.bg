@@ -40,6 +40,9 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'appUrl' => rtrim((string) config('app.url'), '/'),
             'seo' => __('seo'),
+            'translations' => [
+                'buttons' => __('buttons'),
+            ],
             'currentYear' => date('Y'),
             'auth' => [
                 'user' => $request->user(),

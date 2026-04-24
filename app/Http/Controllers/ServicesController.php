@@ -14,7 +14,7 @@ class ServicesController extends Controller
      */
     public function index(): Response
     {
-        return Inertia::render('services', [
+        return Inertia::render('services/index', [
             'services' => ServiceResource::collection(Service::with('tags', 'specs')->active()->get()),
         ]);
     }
@@ -23,7 +23,7 @@ class ServicesController extends Controller
     {
         return Inertia::render('services/show', [
             'service' => new ServiceResource(
-                $service->load(['tags', 'specs'])
+                $service->load(['tags', 'specs', 'products'])
             ),
         ]);
     }

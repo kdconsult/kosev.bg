@@ -30,7 +30,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { index, create } from '@/routes/admin/projects';
-import { Category } from '@/types';
+import type { Category } from '@/types';
 
 interface Tag {
     slug: string;

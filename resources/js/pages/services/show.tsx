@@ -1,13 +1,18 @@
 import { Link, usePage } from '@inertiajs/react';
-import { ChevronLeft } from 'lucide-react';
+import { CheckIcon, LinkIcon } from 'lucide-react';
 import { JsonLd } from '@/components/json-ld';
 import { SeoHead } from '@/components/seo-head';
 import { contacts } from '@/routes';
-import { index as servicesIndex } from '@/routes/services';
-import type { Service } from '@/types';
+import { index as servicesIndex, show } from '@/routes/services';
+import type { BreadcrumbItem, Service } from '@/types';
+import { Translations } from '@/types/translations';
+import { Breadcrumbs } from '@/components/breadcrumbs';
 
 export default function ServiceDetail({ service }: { service: Service }) {
-    const { appUrl } = usePage().props as { appUrl: string };
+    const { appUrl, translations } = usePage().props as {
+        appUrl: string;
+        translations: Translations;
+    };
 
     const breadcrumbData = {
         '@context': 'https://schema.org',
@@ -34,6 +39,21 @@ export default function ServiceDetail({ service }: { service: Service }) {
         ],
     };
 
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: 'Начало',
+            href: appUrl,
+        },
+        {
+            title: 'Услуги',
+            href: servicesIndex(),
+        },
+        {
+            title: service.name,
+            href: show(service.slug),
+        },
+    ];
+
     return (
         <>
             <SeoHead
@@ -48,52 +68,6 @@ export default function ServiceDetail({ service }: { service: Service }) {
                 />
             </SeoHead>
 
-            <style>{`
-.page-hero {
-  align-items: flex-end;
-}
-
-.service-detail {
-  background: var(--color-background);
-}
-
-.service-desc {
-  font-size: 1.0625rem;
-  line-height: 1.8;
-}
-
-.service-image {
-  overflow: hidden;
-  border-radius: var(--radius-xl);
-
-  img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-  }
-}
-
-.specs-block {
-  h3 {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-}
-
-.tags-block {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.cta-btn {
-  align-self: flex-start;
-}
-            `}</style>
-
             <section className="page-hero">
                 <div className="hero-bg">
                     <img
@@ -105,21 +79,23 @@ export default function ServiceDetail({ service }: { service: Service }) {
                     />
                     <div className="hero-overlay"></div>
                 </div>
+                <div className="relative">
+                    <div className="mx-auto flex h-12 w-full items-center justify-start px-4 text-neutral-500 md:max-w-7xl">
+                        <Breadcrumbs breadcrumbs={breadcrumbs} />
+                    </div>
+                </div>
                 <div className="hero-content container">
-                    <Link href={servicesIndex()} className="back-link">
-                        <ChevronLeft className="mr-2 h-4 w-4" />
-                        Всички услуги
-                    </Link>
                     <span className="hero-badge">Услуга</span>
                     <h1>{service.name}</h1>
                 </div>
             </section>
 
-            <section className="section service-detail">
+            <section className="section bg-background">
                 <div className="container">
                     <div className="detail-grid">
-                        <div className="service-image">
+                        <div className="overflow-hidden rounded-xl">
                             <img
+                                className="aspect-4/3 h-auto w-full rounded-xl object-center"
                                 src={
                                     service.cover_image?.originalUrl ||
                                     'https://placehold.co/800x600'
@@ -129,45 +105,77 @@ export default function ServiceDetail({ service }: { service: Service }) {
                         </div>
 
                         <div className="flex flex-col gap-8">
-                            <p className="service-desc">
+                            <p className="text-[1.0625rem] leading-[1.8]">
                                 {service.description}
                             </p>
 
                             {service.specs?.length > 0 && (
-                                <div className="specs-block">
-                                    <h3>Технически възможности</h3>
-                                    <table className="specs-table">
-                                        <tbody>
-                                            {service.specs.map((spec) => (
-                                                <tr key={spec.label}>
-                                                    <td className="spec-label">
-                                                        {spec.label}
-                                                    </td>
-                                                    <td className="spec-value">
-                                                        {spec.value}
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
+                                <div className="mb-6">
+                                    <h4 className="mb-3 text-[0.9375rem] font-semibold text-foreground">
+                                        Технически възможности
+                                    </h4>
+                                    <ul className="m-0 grid list-none gap-2 p-0">
+                                        {service.specs?.map((spec) => (
+                                            <li
+                                                key={spec.label}
+                                                className="flex gap-2 border-b border-border py-2 text-[0.9375rem]"
+                                            >
+                                                <span className="text-muted-foreground">
+                                                    {spec.label}:
+                                                </span>
+                                                <span className="font-medium text-foreground">
+                                                    {spec.value}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
                             )}
 
                             {service.tags?.length > 0 && (
-                                <div className="tags-block">
-                                    {service.tags.map((tag) => (
-                                        <span className="tag" key={tag.slug}>
-                                            {tag.name}
-                                        </span>
-                                    ))}
+                                <div className="mb-6">
+                                    <h4 className="mb-3 text-[0.9375rem] font-semibold text-foreground">
+                                        Предимства
+                                    </h4>
+                                    <ul className="m-0 grid list-none gap-2 p-0 sm:grid-cols-2">
+                                        {service.tags?.map((tag, idx) => (
+                                            <li
+                                                key={idx}
+                                                className="flex items-center gap-2 text-[0.9375rem] text-foreground"
+                                            >
+                                                <CheckIcon className="h-5 w-5 text-primary" />
+                                                {tag.name}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {service.products?.length > 0 && (
+                                <div className="mb-6">
+                                    <h4 className="mb-3 text-[0.9375rem] font-semibold text-foreground">
+                                        Продукти от нашето портфолио
+                                    </h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {service.products?.map((product) => (
+                                            <Link
+                                                href={`/products/${product.slug}`}
+                                                className="tag flex items-center gap-1"
+                                                key={product.slug}
+                                            >
+                                                {product.title}
+                                                <LinkIcon className="ml-1 h-4 w-4 text-muted-foreground" />
+                                            </Link>
+                                        ))}
+                                    </div>
                                 </div>
                             )}
 
                             <Link
                                 href={contacts()}
-                                className="btn btn-accent btn-lg cta-btn"
+                                className="btn btn-accent btn-lg self-start"
                             >
-                                Изпрати запитване за тази услуга
+                                {translations.buttons.send_inquiry_for_service}
                             </Link>
                         </div>
                     </div>
@@ -176,3 +184,15 @@ export default function ServiceDetail({ service }: { service: Service }) {
         </>
     );
 }
+
+ServiceDetail.layout = {
+    breadcrumbs: [
+        {
+            title: 'Services',
+            href: servicesIndex(),
+        },
+        {
+            title: 'Service Detail',
+        },
+    ],
+};
