@@ -55,6 +55,11 @@ class ServicesController extends Controller
                 ->toMediaCollection('cover_image', 'media');
         }
 
+        if ($request->hasFile('images')) {
+            $service->addMultipleMediaFromRequest(['images'])
+                ->each(fn ($fileAdder) => $fileAdder->toMediaCollection('images', 'media'));
+        }
+
         $tagIds = collect($request->validated('tags', []))->map(fn (string $name) => (Tag::where('name->bg', $name)->first()
             ?? Tag::create(['name' => ['bg' => $name, 'en' => $name]]))->id);
 
@@ -85,6 +90,7 @@ class ServicesController extends Controller
         return Inertia::render('admin/services/edit', [
             'service' => new AdminServiceResource($service->load(['products', 'tags', 'specs'])),
             'coverImageUrl' => $service->coverImage()?->getUrl() ?? null,
+            'images' => $service->getMedia('images')->map(fn ($media) => ['url' => $media->getUrl('thumb'), 'alt' => $service->name, 'id' => $media->id]),
             'availableProducts' => Product::all()->map(fn ($product) => [
                 'slug' => $product->slug,
                 'name' => $product->getTranslation('title', 'bg') ?: $product->getTranslation('title', 'en'),
@@ -103,6 +109,11 @@ class ServicesController extends Controller
         if ($request->hasFile('cover_image') && $request->file('cover_image')->isValid()) {
             $service->addMediaFromRequest('cover_image')
                 ->toMediaCollection('cover_image', 'media');
+        }
+
+        if ($request->hasFile('images')) {
+            $service->addMultipleMediaFromRequest(['images'])
+                ->each(fn ($fileAdder) => $fileAdder->toMediaCollection('images', 'media'));
         }
 
         $tagIds = collect($request->validated('tags', []))->map(fn (string $name) => (Tag::where('name->bg', $name)->first()

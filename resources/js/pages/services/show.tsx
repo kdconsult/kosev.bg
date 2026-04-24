@@ -1,5 +1,7 @@
 import { Link, usePage } from '@inertiajs/react';
+import { useState } from 'react';
 import { CheckIcon, LinkIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { JsonLd } from '@/components/json-ld';
 import { SeoHead } from '@/components/seo-head';
 import { contacts } from '@/routes';
@@ -9,6 +11,12 @@ import { Translations } from '@/types/translations';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 
 export default function ServiceDetail({ service }: { service: Service }) {
+    const [activeImageIndex, setActiveImageIndex] = useState(-1);
+    const activeImage =
+        activeImageIndex === -1
+            ? service.cover_image?.originalUrl
+            : service.images[activeImageIndex]?.originalUrl;
+
     const { appUrl, translations } = usePage().props as {
         appUrl: string;
         translations: Translations;
@@ -93,15 +101,41 @@ export default function ServiceDetail({ service }: { service: Service }) {
             <section className="section bg-background">
                 <div className="container">
                     <div className="detail-grid">
-                        <div className="overflow-hidden rounded-xl">
-                            <img
-                                className="aspect-4/3 h-auto w-full rounded-xl object-center"
-                                src={
-                                    service.cover_image?.originalUrl ||
-                                    'https://placehold.co/800x600'
-                                }
-                                alt={service.name}
-                            />
+                        <div className="gallery">
+                            <div className="mb-4 overflow-hidden rounded-xl">
+                                <img
+                                    className="aspect-4/3 h-auto w-full rounded-xl "
+                                    src={activeImage || 'https://placehold.co/800x600'}
+                                    alt={service.name}
+                                />
+                            </div>
+                            {service.images?.length > 0 && (
+                                <div className="flex gap-3">
+                                    <button
+                                        className={cn('thumb', activeImageIndex === -1 && 'active')}
+                                        onClick={() => setActiveImageIndex(-1)}
+                                    >
+                                        <img
+                                            src={service.cover_image?.thumbUrl || 'https://placehold.co/400x300'}
+                                            alt={service.name + ' cover'}
+                                            loading="lazy"
+                                        />
+                                    </button>
+                                    {service.images.map((img, idx) => (
+                                        <button
+                                            key={idx}
+                                            className={cn('thumb', activeImageIndex === idx && 'active')}
+                                            onClick={() => setActiveImageIndex(idx)}
+                                        >
+                                            <img
+                                                src={img.thumbUrl}
+                                                alt={service.name + ' ' + (idx + 1)}
+                                                loading="lazy"
+                                            />
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         <div className="flex flex-col gap-8">

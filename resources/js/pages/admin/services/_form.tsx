@@ -42,6 +42,8 @@ interface ServiceFormErrors {
     'name.en'?: string;
     'description.bg'?: string;
     'description.en'?: string;
+    cover_image?: string;
+    images?: string;
     [key: string]: string | undefined;
 }
 
@@ -255,6 +257,24 @@ console.log(specs);
                         </FieldDescription>
                         {errors.cover_image && (
                             <FieldError>{errors.cover_image}</FieldError>
+                        )}
+                    </Field>
+                    <Field>
+                        <FieldLabel htmlFor="images">Images</FieldLabel>
+                        <Input
+                            id="images"
+                            type="file"
+                            multiple
+                            onChange={(e) => {
+                                setData('images', e.target.files || null);
+                            }}
+                            aria-invalid={errors.images ? 'true' : 'false'}
+                        />
+                        <FieldDescription>
+                            Select additional images to upload.
+                        </FieldDescription>
+                        {errors.images && (
+                            <FieldError>{errors.images}</FieldError>
                         )}
                     </Field>
                     <div className="flex items-center justify-between">

@@ -21,11 +21,6 @@ export interface Spec {
     value: string;
 }
 
-export interface Service {
-    slug: string;
-    name: string;
-}
-
 export interface Project {
     slug: string;
     title: string;
@@ -68,6 +63,7 @@ export interface Service {
     description: string;
     short_description: string | null;
     cover_image: Image | null;
+    images: Image[];
     products: Product[];
     tags: Tag[];
     specs: Spec[];

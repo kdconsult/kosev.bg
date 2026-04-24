@@ -29,6 +29,8 @@ class UpdateServiceRequest extends FormRequest
             'description.en' => ['nullable', 'string'],
             'is_active' => ['boolean'],
             'cover_image' => ['nullable', 'image', 'max:2048'],
+            'images' => ['nullable', 'array'],
+            'images.*' => ['image', 'max:5120'],
             'products' => ['nullable', 'array'],
             'products.*' => ['string', 'max:255'],
             'tags' => ['nullable', 'array'],

@@ -1,6 +1,10 @@
-import { Head, router, useForm } from '@inertiajs/react';
+import { Head, router, useForm, useHttp } from '@inertiajs/react';
+import { useState } from 'react';
 import ServicesController from '@/actions/App/Http/Controllers/Admin/ServicesController';
 import Heading from '@/components/heading';
+import { Button } from '@/components/ui/button';
+import { Card, CardFooter } from '@/components/ui/card';
+import { deleteMedia } from '@/routes/admin';
 import { index } from '@/routes/admin/services';
 import { ServiceForm } from './_form';
 
@@ -29,14 +33,19 @@ interface Props {
     availableProducts: { slug: string; name: string }[];
     availableTags: { slug: string; name: string }[];
     coverImageUrl: string | null;
+    images: { url: string; alt: string; id: number }[];
 }
 
 export default function Edit({
     service,
     coverImageUrl,
+    images,
     availableProducts,
     availableTags,
 }: Props) {
+    const { post } = useHttp();
+    const [imagesState, setImagesState] = useState(images);
+
     const { data, setData, put, processing, errors } = useForm({
         name: { bg: service.name.bg ?? '', en: service.name.en ?? '' },
         description: {
@@ -52,6 +61,19 @@ export default function Edit({
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         put(ServicesController.update.url(service));
+    };
+
+    const removeImage = (index: number) => {
+        if (!confirm('Are you sure you want to remove this image?')) {
+            return;
+        }
+
+        const media = imagesState[index];
+        post(deleteMedia.url({ query: { media_id: media.id } }), {
+            onSuccess: () => {
+                setImagesState(imagesState.filter((im) => im.id !== media.id));
+            },
+        });
     };
 
     const onDelete = () => {
@@ -84,8 +106,8 @@ export default function Edit({
                     description={`Editing: ${service.name.bg || service.slug}`}
                 />
 
-                <div className="flex w-full justify-between">
-                    <div className="w-full max-w-2xl">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <div className="max-w-2xl">
                         <ServiceForm
                             data={data}
                             setData={setData}
@@ -99,12 +121,45 @@ export default function Edit({
                             availableTags={availableTags}
                         />
                     </div>
-                    <div className="w-fit">
+                    <div className="grid gap-4">
+                        <h2 className="mb-2 text-lg font-semibold">Cover Image</h2>
                         <img
                             src={coverImageUrl ?? undefined}
                             alt={data.name.bg}
-                            className="rounded-md"
+                            className="h-auto max-w-full rounded-xl"
                         />
+
+                        {imagesState.length > 0 && (
+                            <div>
+                                <h3 className="mb-2 text-lg font-semibold">
+                                    Additional Images
+                                </h3>
+                                <div className="flex flex-wrap gap-2">
+                                    {imagesState.map((image, index) => (
+                                        <Card
+                                            className="relative w-full max-w-42 pt-0"
+                                            size="sm"
+                                            key={image.id}
+                                        >
+                                            <img
+                                                src={image.url}
+                                                alt={image.alt || `Image ${index + 1}`}
+                                                className="relative z-20 aspect-video w-full object-cover"
+                                            />
+                                            <CardFooter>
+                                                <Button
+                                                    className="w-full"
+                                                    variant="destructive"
+                                                    onClick={() => removeImage(index)}
+                                                >
+                                                    Remove Image
+                                                </Button>
+                                            </CardFooter>
+                                        </Card>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
