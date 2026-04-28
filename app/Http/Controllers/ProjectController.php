@@ -23,6 +23,7 @@ class ProjectController extends Controller
             'categories' => CategoryResource::collection(
                 Category::forProjects()->withItems()->get()
             ),
+            'translations' => __('projects')
         ]);
     }
 
@@ -35,6 +36,7 @@ class ProjectController extends Controller
             'project' => new ProjectResource(
                 $project->load(['category', 'tags', 'specs'])
             ),
+            'translations' => __('projects.singleProjectPage')
         ]);
     }
 }

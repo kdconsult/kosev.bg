@@ -20,6 +20,7 @@ class ProductController extends Controller
             'categories' => CategoryResource::collection(
                 Category::forProducts()->withItems()->get()
             ),
+            'translations' => __('products')
         ]);
     }
 
@@ -29,6 +30,7 @@ class ProductController extends Controller
             'product' => new ProductResource(
                 $product->load(['category', 'tags', 'specs', 'services'])
             ),
+            'translations' => __('products.singleProductPage')
         ]);
     }
 }

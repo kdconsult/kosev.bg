@@ -1,16 +1,76 @@
 import { Link, usePage } from '@inertiajs/react';
 import type { LucideIcon } from 'lucide-react';
 import {
-    CheckCircleIcon,
+    CheckIcon,
+    GavelIcon,
     HandshakeIcon,
-    Rotate3DIcon,
+    LightbulbIcon,
+    SproutIcon,
     UserCircleIcon,
 } from 'lucide-react';
 import { JsonLd } from '@/components/json-ld';
 import { SeoHead } from '@/components/seo-head';
 import { about, contacts } from '@/routes';
 
-export default function AboutUs() {
+type TeamMember = {
+    name: string;
+    position: string;
+    description: string;
+};
+
+type ValueItem = {
+    title: string;
+    description: string;
+    icon: string;
+};
+
+type AboutUsTrans = {
+    heroSection: {
+        title: string;
+        badge: string;
+        description: string;
+        image?: string;
+    };
+    storySection: {
+        title: string;
+        badge: string;
+        description: string;
+        image?: string;
+    };
+    valuesSection: {
+        title: string;
+        badge: string;
+        description: string;
+        image?: string;
+        values: ValueItem[];
+    };
+    teamSection: {
+        title: string;
+        badge: string;
+        description: string;
+        image?: string;
+        team: TeamMember[];
+    };
+    productionSiteSection: {
+        title: string;
+        badge: string;
+        description: string;
+        image?: string[];
+        equipment: string[];
+    };
+    statsSection: { number: string; label: string }[];
+    ctaSection: {
+        title: string;
+        description: string;
+        button: string;
+    };
+};
+
+export default function AboutUs({
+    translations,
+}: {
+    translations: AboutUsTrans;
+}) {
     const { appUrl, seo } = usePage().props as {
         appUrl: string;
         seo: { about: { title: string; description: string } };
@@ -30,80 +90,16 @@ export default function AboutUs() {
         ],
     };
 
-    const values = [
-        {
-            title: 'Качество',
-            description:
-                'Всеки продукт преминава през стриктен контрол за качество.',
-            icon: 'verified_user',
-        },
-        {
-            title: 'Прецизност',
-            description:
-                'Модерни технологии за максимална точност в производството.',
-            icon: 'track_changes',
-        },
-        {
-            title: 'Партньорство',
-            description:
-                'Изграждаме дългосрочни взаимоотношения с нашите клиенти.',
-            icon: 'handshake',
-        },
-        {
-            title: 'Гъвкавост',
-            description:
-                'Адаптираме се към специфичните нужди на всеки клиент.',
-            icon: 'transform',
-        },
-    ];
-
     const iconMap: Record<string, LucideIcon> = {
+        gavel: GavelIcon,
         verified_user: UserCircleIcon,
-        track_changes: CheckCircleIcon,
+        lightbulb: LightbulbIcon,
         handshake: HandshakeIcon,
-        transform: Rotate3DIcon,
+        sprout: SproutIcon,
     };
 
-    const teamMembers = [
-        {
-            name: 'Милен Косев',
-            role: 'Управител',
-            bio: 'Основател на компанията с над 25 години опит в металообработката.',
-        },
-        {
-            name: 'Мария Петрова',
-            role: 'Търговски директор',
-            bio: 'Отговаря за връзките с европейските партньори и развитието на бизнеса.',
-        },
-        {
-            name: 'Георги Димитров',
-            role: 'Технически директор',
-            bio: 'Ръководи производствените процеси и внедряването на нови технологии.',
-        },
-        {
-            name: 'Елена Николова',
-            role: 'Мениджър качество',
-            bio: 'Осигурява спазването на стандартите и сертификацията на продуктите.',
-        },
-    ];
-
-    const facilityFeatures = [
-        '5000+ кв.м. производствена площ',
-        'Fiber лазер TRUMPF 6kW',
-        'CNC абкант преси TRUMPF',
-        'Роботизирани заваръчни клетки',
-        'CAD/CAM система за проектиране',
-        '3D измервателно оборудване',
-        'Собствен автопарк за доставки',
-        'ERP система за управление',
-    ];
-
-    const stats = [
-        { value: '20+', label: 'Години опит' },
-        { value: '80+', label: 'Служители' },
-        { value: '50+', label: 'Европейски партньори' },
-        { value: '500+', label: 'Проекта годишно' },
-    ];
+    const values = Object.values(translations.valuesSection.values) as ValueItem[];
+    const team = Object.values(translations.teamSection.team) as TeamMember[];
 
     return (
         <>
@@ -358,19 +354,18 @@ export default function AboutUs() {
             </style>
             <section className="page-hero">
                 <div className="hero-bg">
-                    <img
-                        src="/storage/images/kosev/kosev-back.jpg"
-                        alt="Производствена база KOSEV"
-                    />
+                    {translations.heroSection.image && (
+                        <img
+                            src={translations.heroSection.image}
+                            alt="Производствена база KOSEV"
+                        />
+                    )}
                     <div className="hero-overlay"></div>
                 </div>
                 <div className="hero-content container">
-                    <span className="hero-badge">За нас</span>
-                    <h1>Над 20 години традиция в металообработката</h1>
-                    <p>
-                        KOSEV LTD е водещ производител на метални изделия в
-                        България, обслужващ европейски партньори от 2003 година.
-                    </p>
+                    <span className="hero-badge">{translations.heroSection.badge}</span>
+                    <h1>{translations.heroSection.title}</h1>
+                    <p> {translations.heroSection.description} </p>
                 </div>
             </section>
 
@@ -379,31 +374,21 @@ export default function AboutUs() {
                     <div className="story-grid">
                         <div className="story-content">
                             <span className="section-subtitle">
-                                Нашата история
+                                {translations.storySection.badge}
                             </span>
-                            <h2>От семеен бизнес до европейски партньор</h2>
+                            <h2>{translations.storySection.title}</h2>
                             <p>
-                                KOSEV LTD е основана през 2003 година като
-                                семейна компания с визия за високо качество в
-                                металообработката. През годините израснахме от
-                                малък цех до модерно производствено предприятие
-                                с над 5000 кв.м. производствена площ.
-                            </p>
-                            <p>
-                                Днес сме доверен партньор на над 50 компании от
-                                цяла Европа, включително Германия, Франция,
-                                Италия, Австрия и Холандия. Нашият успех се
-                                дължи на непрекъснатите инвестиции в модерно
-                                оборудване, квалифициран персонал и стриктен
-                                контрол на качеството.
+                                {translations.storySection.description}
                             </p>
                         </div>
                         <div className="story-image">
-                            <img
-                                src="/storage/images/kosev/kosev-front.jpg"
-                                alt="Производствена база"
-                                loading="lazy"
-                            />
+                            {translations.storySection.image && (
+                                <img
+                                    src={translations.storySection.image}
+                                    alt="Производствена база"
+                                    loading="lazy"
+                                />
+                            )}
                         </div>
                     </div>
                 </div>
@@ -413,24 +398,25 @@ export default function AboutUs() {
                 <div className="container">
                     <div className="section-header">
                         <span className="section-subtitle">
-                            Нашите ценности
+                            {translations.valuesSection.badge}
                         </span>
                         <h2 className="section-title">
-                            Принципите, които ни водят
+                            {translations.valuesSection.title}
                         </h2>
                     </div>
 
                     <div className="values-grid">
-                        {values.map((value, idx) => (
+                        { values.map((value, idx) => (
                             <div className="value-card" key={idx}>
-                                {(() => {
-                                    const Icon = iconMap[value.icon];
-
-                                    return Icon ? (
-                                        <Icon className="h-10 w-10 min-w-10" />
-                                    ) : null;
-                                })()}
-                                <h3>{value.title}</h3>
+                                <div className="flex items-center justify-center gap-4 mb-8">
+                                    {(() => {
+                                        const Icon = iconMap[value.icon];
+                                        return Icon ? (
+                                            <Icon className="h-10 w-10 min-w-10" />
+                                        ) : null;
+                                    })()}
+                                    <h3>{value.title}</h3>
+                                </div>
                                 <p>{value.description}</p>
                             </div>
                         ))}
@@ -441,23 +427,22 @@ export default function AboutUs() {
             <section className="section team">
                 <div className="container">
                     <div className="section-header">
-                        <span className="section-subtitle">Нашият екип</span>
-                        <h2 className="section-title">Хората зад успеха</h2>
+                        <span className="section-subtitle">{translations.teamSection.badge}</span>
+                        <h2 className="section-title">{translations.teamSection.title}</h2>
                         <p className="section-description">
-                            Над 80 квалифицирани специалисти работят ежедневно,
-                            за да осигурят най-високо качество.
+                            {translations.teamSection.description}
                         </p>
                     </div>
 
                     <div className="team-grid">
-                        {teamMembers.map((member, idx) => (
+                        { team.map((member, idx) => (
                             <div className="team-card" key={idx}>
                                 <div className="team-avatar">
                                     {member.name.charAt(0)}
                                 </div>
                                 <h4>{member.name}</h4>
-                                <span className="team-role">{member.role}</span>
-                                <p>{member.bio}</p>
+                                <span className="team-role">{member.position}</span>
+                                <p>{member.description}</p>
                             </div>
                         ))}
                     </div>
@@ -469,31 +454,15 @@ export default function AboutUs() {
                     <div className="facility-grid">
                         <div className="facility-content">
                             <span className="section-subtitle">
-                                Производствена база
+                                {translations.productionSiteSection.badge}
                             </span>
-                            <h2>Модерно оборудване и съоръжения</h2>
-                            <p>
-                                Нашата производствена база разполага с над 5000
-                                кв.м. покрита площ, оборудвана с най-съвременни
-                                машини от водещи световни производители.
-                            </p>
+                            <h2>{translations.productionSiteSection.title}</h2>
+                            <p>{translations.productionSiteSection.description}</p>
 
                             <ul className="facility-features">
-                                {facilityFeatures.map((feature, idx) => (
+                                {translations.productionSiteSection.equipment.map((feature, idx) => (
                                     <li key={idx}>
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <path d="M20 6 9 17l-5-5" />
-                                        </svg>
+                                        <CheckIcon className="h-5 w-5" />
                                         {feature}
                                     </li>
                                 ))}
@@ -501,16 +470,16 @@ export default function AboutUs() {
                         </div>
 
                         <div className="facility-images">
-                            <img
-                                src="/storage/images/kosev/modern-tech.jpg"
-                                alt="CNC машини"
-                                loading="lazy"
-                            />
-                            <img
-                                src="/storage/images/kosev/modern-tech-2.jpg"
-                                alt="Лазерно оборудване"
-                                loading="lazy"
-                            />
+                            {translations.productionSiteSection.image?.length && (
+                                translations.productionSiteSection.image.map((img, idx) => (
+                                    <img
+                                        key={idx}
+                                        src={img}
+                                        alt={`Производствена база ${idx + 1}`}
+                                        loading="lazy"
+                                    />
+                                ))
+                            )}
                         </div>
                     </div>
                 </div>
@@ -519,9 +488,9 @@ export default function AboutUs() {
             <section className="section stats-section">
                 <div className="container">
                     <div className="stats-grid">
-                        {stats.map((stat, idx) => (
+                        { translations.statsSection.map((stat, idx) => (
                             <div className="stat-item" key={idx}>
-                                <span className="stat-value">{stat.value}</span>
+                                <span className="stat-value">{stat.number}</span>
                                 <span className="stat-label">{stat.label}</span>
                             </div>
                         ))}
@@ -532,14 +501,13 @@ export default function AboutUs() {
             <section className="cta-banner">
                 <div className="container">
                     <div className="cta-content">
-                        <h2>Станете наш партньор</h2>
+                        <h2>{translations.ctaSection.title}</h2>
                         <p>
-                            Свържете се с нас и открийте как можем да
-                            подпомогнем вашето производство.
+                            {translations.ctaSection.description}
                         </p>
                     </div>
-                    <Link href={contacts()} className="btn btn-accent btn-lg">
-                        Свържете се с нас
+                    <Link href={contacts()} className="btn btn-accent btn-lg min-w-max">
+                        {translations.ctaSection.button}
                     </Link>
                 </div>
             </section>

@@ -19,11 +19,13 @@ const recaptchaSiteKey = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
 export default function Welcome({
     featuredProducts,
     services,
+    translations
 }: {
     featuredProducts: Product[];
     services: Service[];
+    translations: Translations;
 }) {
-    const { appUrl, seo, translations } = usePage().props as {
+    const { appUrl, seo } = usePage().props as {
         appUrl: string;
         seo: { home: { title: string; description: string } };
         translations: Translations;
@@ -47,13 +49,13 @@ export default function Welcome({
             <SeoHead title={seo.home.title} description={seo.home.description}>
                 <JsonLd headKey="website-jsonld" data={websiteData} />
             </SeoHead>
-            <HeroSection />
-            <CapabilitiesSection services={services} translations={translations} />
-            <ProductsTeaserSection featuredProducts={featuredProducts} translations={translations} />
-            <WhyChooseUsSection />
-            <IndustriesSection />
-            <QualitySection />
-            <TestimonialsSection />
+            <HeroSection translations={translations.heroSection} />
+            <CapabilitiesSection services={services} translations={translations.capabilitiesSection} />
+            <ProductsTeaserSection featuredProducts={featuredProducts} translations={translations.productsTeaserSection} />
+            <WhyChooseUsSection translations={translations.whyChooseUsSection} />
+            <IndustriesSection translations={translations.industriesSection} />
+            <QualitySection translations={translations.qualitySection} />
+            <TestimonialsSection translations={translations.testimonialsSection} />
             {hasMounted ? (
                 <GoogleReCaptchaProvider reCaptchaKey={recaptchaSiteKey}>
                     <CtaFormSection />

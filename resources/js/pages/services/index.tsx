@@ -6,20 +6,39 @@ import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
 import { index as servicesIndex, show as showService } from '@/routes/services';
 import type { Service } from '@/types';
-import type { Translations } from '@/types/translations';
 
-export default function Services({ services }: { services: Service[] }) {
-    const { appUrl, seo, translations } = usePage().props as {
+type ServicesTranslations = {
+    seo: {
+        home: string;
+    };
+    heroSection: {
+        title: string;
+        description: string;
+        badge: string;
+        image: string;
+    },
+    ctaSection: {
+        title: string;
+        description: string;
+        button: string;
+    },
+    buttons: {
+        seeDetails: string;
+        sendInquiry: string;
+    }
+};
+
+export default function Services({ services, translations }: { services: Service[]; translations: ServicesTranslations }) {
+    const { appUrl, seo } = usePage().props as {
         appUrl: string;
         seo: { services: { title: string; description: string } };
-        translations: Translations;
     };
 
     const breadcrumbData = {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Начало', item: appUrl },
+            { '@type': 'ListItem', position: 1, name: translations.seo.home, item: appUrl },
             {
                 '@type': 'ListItem',
                 position: 2,
@@ -50,12 +69,9 @@ export default function Services({ services }: { services: Service[] }) {
                     <div className="hero-overlay"></div>
                 </div>
                 <div className="hero-content container">
-                    <span className="hero-badge">Нашите услуги</span>
-                    <h1>Пълен спектър услуги за металообработка</h1>
-                    <p>
-                        От лазерно рязане до финална сглобка - предлагаме
-                        цялостни решения за вашето производство.
-                    </p>
+                    <span className="hero-badge">{translations.heroSection.badge}</span>
+                    <h1>{translations.heroSection.title}</h1>
+                    <p>{translations.heroSection.description}</p>
                 </div>
             </section>
 
@@ -91,13 +107,13 @@ export default function Services({ services }: { services: Service[] }) {
                                         href={showService(service.slug)}
                                         className="btn btn-secondary"
                                     >
-                                        {translations.buttons.see_details}
+                                        {translations.buttons.seeDetails}
                                     </Link>
                                     <Link
                                         href={contacts()}
                                         className="btn btn-primary"
                                     >
-                                        {translations.buttons.send_inquiry}
+                                        {translations.buttons.sendInquiry       }
                                         <ArrowRight className="h-5 w-5" />
                                     </Link>
                                 </div>
@@ -110,10 +126,9 @@ export default function Services({ services }: { services: Service[] }) {
             <section className="bg-secondary py-16">
                 <div className="container flex flex-col md:flex-row md:items-center justify-between gap-8">
                     <div>
-                        <h2>Нуждаете се от специализирано решение?</h2>
+                        <h2>{translations.ctaSection.title}</h2>
                         <p>
-                            Свържете се с нас за персонализирана консултация и
-                            оферта.
+                            {translations.ctaSection.description}
                         </p>
                     </div>
                     <div className='shrink-0'>
@@ -121,7 +136,7 @@ export default function Services({ services }: { services: Service[] }) {
                             href={contacts()}
                             className="btn btn-accent btn-lg"
                         >
-                            {translations.buttons.contact_us}
+                            {translations.ctaSection.button}
                         </Link>
                     </div>
                 </div>

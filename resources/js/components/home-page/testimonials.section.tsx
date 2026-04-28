@@ -1,25 +1,6 @@
-const testimonials = [
-    {
-        name: 'Hans Mueller',
-        role: 'Procurement Manager',
-        company: 'AutoTech GmbH',
-        quote: 'KOSEV е нашият основен доставчик на метални компоненти вече 8 години. Качеството е неизменно високо, а сроковете винаги се спазват.',
-    },
-    {
-        name: 'Pierre Dubois',
-        role: 'Operations Director',
-        company: 'MechaParts SA',
-        quote: 'Работата с KOSEV е истинско удоволствие. Техният екип е отзивчив и професионален, а техническите възможности им позволяват да изпълнят и най-сложните поръчки.',
-    },
-    {
-        name: 'Marco Rossi',
-        role: 'Technical Director',
-        company: 'IndustriaItalia SpA',
-        quote: 'Прецизността на лазерното рязане и качеството на заваръчните работи надминават очакванията ни. KOSEV е надежден партньор за нашето производство.',
-    },
-];
+import { Translations } from "@/types/translations";
 
-export default function TestimonialsSection() {
+export default function TestimonialsSection({translations}: {translations: Translations['testimonialsSection']}) {
     return (
         <>
             <style>{`.testimonials {
@@ -107,14 +88,17 @@ export default function TestimonialsSection() {
             <section className="section testimonials">
                 <div className="container">
                     <div className="section-header">
-                        <span className="section-subtitle">Отзиви</span>
+                        <span className="section-subtitle">{translations.badge}</span>
                         <h2 className="section-title">
-                            Какво казват нашите партньори
+                            {translations.title}
                         </h2>
+                        <p className="section-description">
+                            {translations.description}
+                        </p>    
                     </div>
 
                     <div className="testimonials-grid">
-                        {testimonials.map((testimonial, idx) => (
+                        {translations.testimonials.map((testimonial, idx) => (
                             <div className="testimonial-card" key={idx}>
                                 <div className="testimonial-quote">
                                     <svg

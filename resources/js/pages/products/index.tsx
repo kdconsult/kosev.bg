@@ -6,13 +6,34 @@ import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
 import { index, show } from '@/routes/products';
 import type { Category, Product } from '@/types';
+import { MoveRight } from 'lucide-react';
+
+type ProductTranslations = {
+    heroSection: {
+        title: string;
+        description: string;
+        badge: string;
+        image: string;
+    };
+    productsListSection: {
+        allItems: string;
+        seeDetails: string;
+    };
+    ctaSection: {
+        title: string;
+        description: string;
+        button: string;
+    };
+};
 
 export default function ProductList({
     products,
     categories,
+    translations,
 }: {
     products: Product[];
     categories: Category[];
+    translations: ProductTranslations;
 }) {
     const { appUrl, seo } = usePage().props as {
         appUrl: string;
@@ -20,7 +41,7 @@ export default function ProductList({
     };
     const [activeFilter, setActiveFilter] = useState('all');
     const filters = [
-        { id: 'all', label: 'Всички' },
+        { id: 'all', label: translations.productsListSection.allItems },
         ...categories.map((c) => ({ id: c.slug, label: c.name })),
     ];
 
@@ -161,20 +182,21 @@ export default function ProductList({
 
             <section className="page-hero">
                 <div className="hero-bg">
-                    <img
-                        src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=2000&q=80"
-                        alt="Метални продукти"
-                    />
+                    {translations.heroSection.image && (
+                        <img
+                            src={translations.heroSection.image}
+                            alt={translations.heroSection.title}
+                        />
+                    )}
+
                     <div className="hero-overlay"></div>
                 </div>
                 <div className="hero-content container">
-                    <span className="hero-badge">Нашите продукти</span>
-                    <h1>Метални изделия по поръчка</h1>
-                    <p>
-                        Произвеждаме прецизни метални изделия по клиентски
-                        спецификации. От единични детайли до серийно
-                        производство — всичко с гарантирано качество.
-                    </p>
+                    <span className="hero-badge">
+                        {translations.heroSection.badge}
+                    </span>
+                    <h1>{translations.heroSection.title}</h1>
+                    <p>{translations.heroSection.description}</p>
                 </div>
             </section>
 
@@ -226,8 +248,14 @@ export default function ProductList({
                                             </span>
                                         ))}
                                     </div>
-                                    <span className="view-link">
-                                        Виж детайли →
+                                    <span className="view-link flex items-center gap-4">
+                                        <>
+                                            {
+                                                translations.productsListSection
+                                                    .seeDetails
+                                            }
+                                            <MoveRight size={14} />
+                                        </>
                                     </span>
                                 </div>
                             </Link>
@@ -239,14 +267,11 @@ export default function ProductList({
             <section className="cta-banner">
                 <div className="container">
                     <div className="cta-content">
-                        <h2>Търсите конкретен продукт?</h2>
-                        <p>
-                            Изпратете ни чертеж или спецификация и ще ви
-                            предложим решение.
-                        </p>
+                        <h2>{translations.ctaSection.title}</h2>
+                        <p>{translations.ctaSection.description}</p>
                     </div>
-                    <Link href={contacts()} className="btn btn-accent btn-lg">
-                        Изпрати запитване
+                    <Link href={contacts()} className="btn btn-accent btn-lg min-w-max">
+                        {translations.ctaSection.button}
                     </Link>
                 </div>
             </section>

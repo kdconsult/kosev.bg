@@ -1,9 +1,26 @@
 import { Link } from '@inertiajs/react';
-import { ChevronRight } from 'lucide-react';
-import { contacts } from '@/routes';
+import {
+    ChevronRight,
+    ClockIcon,
+    GlobeIcon,
+    LucideIcon,
+    ShieldCheck,
+} from 'lucide-react';
+import { about } from '@/routes';
 import { index as services } from '@/routes/services';
+import { Translations } from '@/types/translations';
 
-export default function HeroSection() {
+export default function HeroSection({
+    translations,
+}: {
+    translations: Translations['heroSection'];
+}) {
+    const iconMap: Record<string, LucideIcon> = {
+        shield_check: ShieldCheck,
+        globe: GlobeIcon,
+        clock: ClockIcon,
+    };
+
     return (
         <>
             <style>
@@ -259,13 +276,16 @@ export default function HeroSection() {
                         muted={true}
                         loop
                         playsInline
-                        poster="/storage/images/hero-poster.jpg"
+                        poster={translations.video.poster}
                         className="hero-video"
                     >
-                        <source
-                            src="/storage/videos/hero-video.mp4"
-                            type="video/mp4"
-                        />
+                        {translations.video.sources.map((source, index) => (
+                            <source
+                                key={'src-' + index}
+                                src={source.src}
+                                type={source.type}
+                            />
+                        ))}
                     </video>
                     <div className="video-overlay"></div>
                 </div>
@@ -274,29 +294,22 @@ export default function HeroSection() {
                 <div className="home-hero-content container">
                     <div className="hero-text">
                         <span className="hero-badge hidden md:block">
-                            Над 20 години опит в металообработката
+                            {translations.badge}
                         </span>
 
-                        <h1 className="hero-title">
-                            Прецизност в детайла,
-                            <br />
-                            качество в резултата
-                        </h1>
+                        <h1 className="hero-title">{translations.title}</h1>
 
                         <p className="hero-description hidden md:block">
-                            KOSEV LTD е вашият партньор за висококачествено
-                            лазерно рязане и метални конструкции. Обслужваме
-                            водещи европейски компании с прецизност и
-                            надеждност.
+                            {translations.description}
                         </p>
 
                         <div className="hero-actions">
-                            <Link href={contacts()} className="btn-primary btn">
-                                Изпратете запитване
+                            <Link href={about()} className="btn-primary btn">
+                                {translations.ctaButton}
                                 <ChevronRight className="ml-2" />
                             </Link>
                             <Link href={services()} className="btn btn-outline">
-                                Нашите услуги
+                                {translations.ourServicesButton}
                             </Link>
                         </div>
                     </div>
@@ -304,31 +317,36 @@ export default function HeroSection() {
                     {/* <!-- Stats Card --> */}
                     <div className="hero-stats">
                         <div className="stats-card">
-                            <div className="stat-item">
-                                <span className="stat-number">500+</span>
-                                <span className="stat-label">
-                                    Завършени проекта
-                                </span>
-                            </div>
-                            <div className="stat-divider"></div>
-                            <div className="stat-item">
-                                <span className="stat-number">50+</span>
-                                <span className="stat-label">
-                                    Европейски партньори
-                                </span>
-                            </div>
-                            <div className="stat-divider"></div>
-                            <div className="stat-item">
-                                <span className="stat-number">20+</span>
-                                <span className="stat-label">Години опит</span>
-                            </div>
+                            {translations.stats.map((stat, index) => (
+                                <div
+                                  key={'stat-' + index}
+                                  className='flex items-center gap-10'
+                                >
+                                    <div
+                                        className="stat-item"
+                                    >
+                                        <span className="stat-number">
+                                            {stat.number}
+                                        </span>
+                                        <span className="stat-label">
+                                            {stat.label}
+                                        </span>
+                                    </div>
+                                    {index < translations.stats.length - 1 && (
+                                        <div
+                                            key={'divider-' + index}
+                                            className="stat-divider"
+                                        ></div>
+                                    )}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
 
                 {/* <!-- Scroll Indicator --> */}
                 <div className="scroll-indicator">
-                    <span>Разгледайте</span>
+                    <span>{translations.scrollIndicator}</span>
                     <div className="scroll-line"></div>
                 </div>
 
@@ -336,58 +354,19 @@ export default function HeroSection() {
                 <div className="trust-bar">
                     <div className="container">
                         <div className="trust-content">
-                            <div className="trust-item">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.5"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                >
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-                                    <path d="m9 12 2 2 4-4" />
-                                </svg>
-                                <span>ISO 9001:2015</span>
-                            </div>
-                            <div className="trust-item">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.5"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                >
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-                                    <path d="M2 12h20" />
-                                </svg>
-                                <span>Европейски стандарти</span>
-                            </div>
-                            <div className="trust-item">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.5"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                >
-                                    <circle cx="12" cy="12" r="10" />
-                                    <polyline points="12 6 12 12 16 14" />
-                                </svg>
-                                <span>Навременна доставка</span>
-                            </div>
+                            {translations.trustBar.map((item, index) => {
+                                const IconComponent =
+                                    iconMap[item.icon] || GlobeIcon; // Default to GlobeIcon if not found
+                                return (
+                                    <div
+                                        key={'trust-' + index}
+                                        className="trust-item"
+                                    >
+                                        <IconComponent size={20} />
+                                        <span>{item.title}</span>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

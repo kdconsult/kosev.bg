@@ -9,7 +9,23 @@ import { index, show } from '@/routes/products';
 import { show as showService } from '@/routes/services';
 import type { Product } from '@/types';
 
-export default function ProductDetail({ product }: { product: Product }) {
+type ProductDetailTranslations = {
+    specs: string;
+    relatedServices: string;
+    ctaButton: string;
+    seo: {
+        home:string;
+        products: string;
+    }
+};
+
+export default function ProductDetail({
+    product,
+    translations,
+}: {
+    product: Product;
+    translations: ProductDetailTranslations;
+}) {
     const { appUrl } = usePage().props as { appUrl: string };
     const [activeImageIndex, setActiveImageIndex] = useState(-1);
     const activeImage =
@@ -38,11 +54,11 @@ export default function ProductDetail({ product }: { product: Product }) {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Начало', item: appUrl },
+            { '@type': 'ListItem', position: 1, name: translations.seo.home, item: appUrl },
             {
                 '@type': 'ListItem',
                 position: 2,
-                name: 'Продукти',
+                name: translations.seo.products,
                 item: `${appUrl}/products`,
             },
             {
@@ -55,9 +71,9 @@ export default function ProductDetail({ product }: { product: Product }) {
     };
 
     const breadcrumbs = [
-        { title: 'Начало', href: appUrl },
+        { title: translations.seo.home, href: appUrl },
         {
-            title: 'Продукти',
+            title: translations.seo.products,
             href: index(),
         },
         {
@@ -228,52 +244,62 @@ export default function ProductDetail({ product }: { product: Product }) {
                                     {product.description}
                                 </p>
 
-                                <div className="specs-block">
-                                    <h3>Технически характеристики</h3>
-                                    <table className="specs-table">
-                                        <tbody>
-                                            {product.specs.map((spec, idx) => (
-                                                <tr key={idx}>
-                                                    <td className="spec-label">
-                                                        {spec.label}
-                                                    </td>
-                                                    <td className="spec-value">
-                                                        {spec.value}
-                                                    </td>
-                                                </tr>
+                                {product.specs.length > 0 && (
+                                    <div className="specs-block">
+                                        <h3>{translations.specs}</h3>
+                                        <table className="specs-table">
+                                            <tbody>
+                                                {product.specs.map(
+                                                    (spec, idx) => (
+                                                        <tr key={idx}>
+                                                            <td className="spec-label">
+                                                                {spec.label}
+                                                            </td>
+                                                            <td className="spec-value">
+                                                                {spec.value}
+                                                            </td>
+                                                        </tr>
+                                                    ),
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
+                                {product.services.length > 0 && (
+                                    <div className="services-block">
+                                        <h3>{translations.relatedServices}</h3>
+                                        <div className="services-badges">
+                                            {product.services.map((service) => (
+                                                <Link
+                                                    href={showService(
+                                                        service.slug,
+                                                    )}
+                                                    className="service-badge"
+                                                    key={service.slug}
+                                                >
+                                                    {service.name}
+                                                </Link>
                                             ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div className="services-block">
-                                    <h3>Свързани услуги</h3>
-                                    <div className="services-badges">
-                                        {product.services.map((service) => (
-                                            <Link
-                                                href={showService(service.slug)}
-                                                className="service-badge"
-                                                key={service.slug}
+                                        </div>
+                                    </div>
+                                )}
+                                {product.tags.length > 0 && (
+                                    <div className="tags-block">
+                                        {product.tags.map((tag) => (
+                                            <span
+                                                className="tag"
+                                                key={tag.slug}
                                             >
-                                                {service.name}
-                                            </Link>
+                                                {tag.name}
+                                            </span>
                                         ))}
                                     </div>
-                                </div>
-
-                                <div className="tags-block">
-                                    {product.tags.map((tag) => (
-                                        <span className="tag" key={tag.slug}>
-                                            {tag.name}
-                                        </span>
-                                    ))}
-                                </div>
-
+                                )}
                                 <Link
                                     href={contacts()}
                                     className="btn btn-accent btn-lg cta-btn"
                                 >
-                                    Изпрати запитване за този продукт
+                                    {translations.ctaButton}
                                 </Link>
                             </div>
                         </div>

@@ -25,7 +25,7 @@ class MailController extends Controller
         Mail::to(config('mail.contact_address'))->cc(config('mail.contact_cc_address'))->send(new ContactMessage($mailData));
         Mail::to($validated['email'])->send(new MessageReceived($mailData));
 
-        Inertia::flash('success', 'Your message has been sent successfully!');
+        Inertia::flash('success', __('contact.form.successMessage'));
 
         return back();
     }

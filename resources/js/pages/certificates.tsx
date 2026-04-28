@@ -6,10 +6,38 @@ import { SeoHead } from '@/components/seo-head';
 import { contacts } from '@/routes';
 import type { Certificate } from '@/types';
 
+type CertificatesTranslations = {
+    heroSection: {
+        title: string;
+        badge: string;
+        description: string;
+        image: string;
+    };
+    infoSection: {
+        title: string;
+        badge?: string;
+        description?: string;
+        cards?: {
+            number: string;
+            label: string;
+        }[];
+    };
+    certificatesSection: {
+        buttonLabel: string;
+    },
+    ctaSection: {
+        title: string;
+        description: string;
+        buttonLabel: string;
+    }
+};
+
 export default function Certificates({
     certificates,
+    translations,
 }: {
     certificates: Certificate[];
+    translations: CertificatesTranslations;
 }) {
     const { appUrl, seo } = usePage().props as {
         appUrl: string;
@@ -191,20 +219,20 @@ export default function Certificates({
             </style>
             <section className="page-hero">
                 <div className="hero-bg">
-                    <img
-                        src="https://kosev.bg/wp-content/uploads/2019/09/about_us_2-overlay.jpg"
-                        alt="Сертификати и качество"
-                    />
+                    {translations.heroSection.image && (
+                        <img
+                            src={translations.heroSection.image}
+                            alt={translations.heroSection.title}
+                        />
+                    )}
                     <div className="hero-overlay"></div>
                 </div>
                 <div className="hero-content container">
-                    <span className="hero-badge">Нашите сертификати</span>
-                    <h1>Доказано качество и надеждност</h1>
-                    <p>
-                        Нашите международни сертификати са доказателство за
-                        ангажимента ни към качество, безопасност и устойчивост
-                        на производството.
-                    </p>
+                    <span className="hero-badge">
+                        {translations.heroSection.badge}
+                    </span>
+                    <h1>{translations.heroSection.title}</h1>
+                    <p>{translations.heroSection.description} </p>
                 </div>
             </section>
 
@@ -213,42 +241,22 @@ export default function Certificates({
                     <div className="intro-grid">
                         <div className="intro-text">
                             <span className="section-subtitle">
-                                Стандарти от световна класа
+                                {translations.infoSection.badge}
                             </span>
-                            <h2>Сертифицирани по международни стандарти</h2>
+                            <h2>{translations.infoSection.title}</h2>
                             <p>
-                                Поддържаме всички ключови международни
-                                сертификати, необходими за доставки към
-                                Европейския съюз и глобалните индустрии. Всеки
-                                сертификат представлява строги одитни проверки и
-                                постоянно подобрение на нашите процеси.
+                                {translations.infoSection.description}
                             </p>
                         </div>
                         <div className="stats-grid">
-                            <div className="stat-card">
-                                <span className="stat-number">4</span>
-                                <span className="stat-label">
-                                    Международни сертификата
-                                </span>
-                            </div>
-                            <div className="stat-card">
-                                <span className="stat-number">15+</span>
-                                <span className="stat-label">
-                                    Години сертифицирано производство
-                                </span>
-                            </div>
-                            <div className="stat-card">
-                                <span className="stat-number">100%</span>
-                                <span className="stat-label">
-                                    Успешни одити
-                                </span>
-                            </div>
-                            <div className="stat-card">
-                                <span className="stat-number">EU</span>
-                                <span className="stat-label">
-                                    Признати в целия ЕС
-                                </span>
-                            </div>
+                            {translations.infoSection.cards?.map((card, index) => (
+                                <div className="stat-card" key={index}>
+                                    <span className="stat-number">{card.number}</span>
+                                    <span className="stat-label">
+                                        {card.label}
+                                    </span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -276,7 +284,7 @@ export default function Certificates({
                                         className="btn-download"
                                     >
                                         <DownloadIcon className="h-4 w-4" />
-                                        Изтегли PDF
+                                        {translations.certificatesSection.buttonLabel}
                                     </a>
                                 </div>
                             </div>
@@ -289,11 +297,10 @@ export default function Certificates({
                 <div className="container flex flex-col items-center justify-between md:flex-row">
                     <div className="cta-content flex-1">
                         <h2 className="text-2xl">
-                            Нужна ви е документация за доставки?
+                            {translations.ctaSection.title}
                         </h2>
                         <p>
-                            Свържете се с нас и ще ви предоставим пълния
-                            комплект сертификати.
+                            {translations.ctaSection.description}
                         </p>
                     </div>
                     <div>
@@ -301,7 +308,7 @@ export default function Certificates({
                             href={contacts()}
                             className="btn btn-accent btn-lg w-full"
                         >
-                            Свържете се с нас
+                            {translations.ctaSection.buttonLabel}
                         </Link>
                     </div>
                 </div>

@@ -8,7 +8,18 @@ import { contacts } from '@/routes';
 import { index as projectsIndex } from '@/routes/projects';
 import type { Project } from '@/types';
 
-export default function ProjectDetail({ project }: { project: Project }) {
+type ProjectDetailTranslations = {
+    seo: {
+        home: string;
+        projects: string;
+    };    
+    backToProjects: string;
+    categoryLabel: string;
+    specs: string;
+    ctaButton: string;
+};
+
+export default function ProjectDetail({ project, translations }: { project: Project; translations: ProjectDetailTranslations }) {
     const { appUrl } = usePage().props as { appUrl: string };
     const [activeImageIndex, setActiveImageIndex] = useState(-1);
     const activeImage =
@@ -34,11 +45,11 @@ export default function ProjectDetail({ project }: { project: Project }) {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Начало', item: appUrl },
+            { '@type': 'ListItem', position: 1, name: translations.seo.home, item: appUrl },
             {
                 '@type': 'ListItem',
                 position: 2,
-                name: 'Проекти',
+                name: translations.seo.projects,
                 item: `${appUrl}/projects`,
             },
             {
@@ -162,7 +173,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
                     <div className="hero-content container">
                         <Link href={projectsIndex()} className="back-link">
                             <ChevronLeft className="mr-2 h-4 w-4" />
-                            Всички проекти
+                            {translations.backToProjects}
                         </Link>
                         <span className="hero-badge">
                             {project.category?.name}
@@ -239,7 +250,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
 
                                 <div className="meta-row">
                                     <span className="meta-label">
-                                        Категория
+                                        {translations.categoryLabel}
                                     </span>
                                     <span className="meta-value industry-badge">
                                         {project.category?.name}
@@ -248,7 +259,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
 
                                 {project.specs.length > 0 && (
                                     <div className="specs-block">
-                                        <h3>Технически детайли</h3>
+                                        <h3>{translations.specs}</h3>
                                         <table className="specs-table">
                                             <tbody>
                                                 {project.specs.map((spec) => (
@@ -281,7 +292,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
                                     href={contacts()}
                                     className="btn btn-accent btn-lg cta-btn"
                                 >
-                                    Изпрати запитване за подобен проект
+                                    {translations.ctaButton}
                                 </Link>
                             </div>
                         </div>

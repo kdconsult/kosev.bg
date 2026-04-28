@@ -1,35 +1,7 @@
 import { cn } from '@/lib/utils';
+import { Translations } from '@/types/translations';
 
-const industries = [
-    {
-        name: 'Автомобилна индустрия',
-        description:
-            'Прецизни компоненти и части за водещи автомобилни производители в Европа.',
-        image: 'https://images.unsplash.com/photo-1565043666747-69f6646db940?auto=format&fit=crop&w=1200&q=80',
-    },
-    {
-        name: 'Машиностроене',
-        description: 'Компоненти за промишлени машини и оборудване.',
-        image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80',
-    },
-    {
-        name: 'Строителство',
-        description: 'Метални конструкции и елементи за строителния сектор.',
-        image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80',
-    },
-    {
-        name: 'Мебелна индустрия',
-        description: 'Метални рамки и компоненти за мебелно производство.',
-        image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80',
-    },
-    {
-        name: 'Енергетика',
-        description: 'Конструкции за енергийния сектор и възобновяема енергия.',
-        image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=600&q=80',
-    },
-];
-
-export default function IndustriesSection() {
+export default function IndustriesSection({translations}: {translations: Translations['industriesSection']}) {
     return (
         <>
             <style>{`
@@ -149,17 +121,13 @@ export default function IndustriesSection() {
                 <div className="container">
                     <div className="industries-layout">
                         <div className="industries-header">
-                            <span className="section-subtitle">Индустрии</span>
-                            <h2>Обслужваме водещи сектори в Европа</h2>
-                            <p>
-                                Нашите метални изделия намират приложение в
-                                разнообразни индустрии, като осигуряваме
-                                специализирани решения за всеки сектор.
-                            </p>
+                            <span className="section-subtitle">{translations.badge}</span>
+                            <h2>{translations.title}</h2>
+                            <p>{translations.description}</p>
                         </div>
 
                         <div className="industries-grid">
-                            {industries.map((industry, i) => (
+                            {translations.industries.map((industry, i) => (
                                 <div
                                     className={cn('industry-card', {
                                         large: i === 0,

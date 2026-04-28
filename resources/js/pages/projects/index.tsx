@@ -6,13 +6,38 @@ import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
 import { index, show } from '@/routes/projects';
 import type { Category, Project } from '@/types';
+import { MoveRight } from 'lucide-react';
+
+type ProjectsTranslations = {
+    heroSection: {
+        title: string;
+        description: string;
+        badge: string;
+        image: string;
+    };
+    projectsListSection: {
+        allCategories: string;
+        seeDetails: string;
+    };
+    ctaSection: {
+        title: string;
+        description: string;
+        button: string;
+    };
+    seo: {
+        home: string;
+        projects: string;
+    }
+};
 
 export default function ProjectsList({
     projects,
     categories,
+    translations,
 }: {
     projects: Project[];
     categories: Category[];
+    translations: ProjectsTranslations;
 }) {
     const { appUrl, seo } = usePage().props as {
         appUrl: string;
@@ -20,7 +45,7 @@ export default function ProjectsList({
     };
     const [activeFilter, setActiveFilter] = useState('all');
     const filters = [
-        { id: 'all', label: 'Всички' },
+        { id: 'all', label: translations.projectsListSection.allCategories },
         ...categories.map((c) => ({ id: c.slug, label: c.name })),
     ];
 
@@ -28,7 +53,7 @@ export default function ProjectsList({
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Начало', item: appUrl },
+            { '@type': 'ListItem', position: 1, name: translations.seo.home, item: appUrl },
             {
                 '@type': 'ListItem',
                 position: 2,
@@ -164,19 +189,18 @@ export default function ProjectsList({
             </style>
             <section className="page-hero">
                 <div className="hero-bg">
+                    {translations.heroSection.image && 
                     <img
-                        src="https://kosev.bg/wp-content/uploads/2019/09/top-banner-2.jpg"
-                        alt="Метално производство"
-                    />
+                        src={translations.heroSection.image}
+                        alt={translations.heroSection.title}
+                    />}
                     <div className="hero-overlay"></div>
                 </div>
                 <div className="hero-content container">
-                    <span className="hero-badge">Нашите проекти</span>
-                    <h1>Примери от нашето производство</h1>
+                    <span className="hero-badge">{translations.heroSection.badge}</span>
+                    <h1>{translations.heroSection.title}</h1>
                     <p>
-                        Разгледайте избрани проекти от нашето портфолио - от
-                        детайли за автомобилната индустрия до сложни метални
-                        конструкции.
+                        {translations.heroSection.description}
                     </p>
                 </div>
             </section>
@@ -229,8 +253,8 @@ export default function ProjectsList({
                                             </span>
                                         ))}
                                     </div>
-                                    <span className="view-link">
-                                        Виж детайли →
+                                    <span className="view-link flex items-center gap-4">
+                                        {translations.projectsListSection.seeDetails} <MoveRight size={16} />
                                     </span>
                                 </div>
                             </Link>
@@ -242,14 +266,13 @@ export default function ProjectsList({
             <section className="cta-banner">
                 <div className="container">
                     <div className="cta-content">
-                        <h2>Имате проект за реализация?</h2>
+                        <h2>{translations.ctaSection.title}</h2>
                         <p>
-                            Свържете се с нас и ще ви помогнем да го
-                            осъществите.
+                            {translations.ctaSection.description}
                         </p>
                     </div>
-                    <Link href={contacts()} className="btn btn-accent btn-lg">
-                        Изпрати запитване
+                    <Link href={contacts()} className="btn btn-accent btn-lg min-w-max">
+                        {translations.ctaSection.button}
                     </Link>
                 </div>
             </section>

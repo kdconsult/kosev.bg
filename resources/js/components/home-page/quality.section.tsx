@@ -1,23 +1,9 @@
 import { Link } from '@inertiajs/react';
 import { index as certificates } from '@/routes/certificates/index';
+import { Translations } from '@/types/translations';
+import { MoveRight, ShieldCheckIcon } from 'lucide-react';
 
-const certifications = [
-    { name: 'ISO 9001:2015', description: 'Управление на качеството' },
-    { name: 'ISO 14001', description: 'Околна среда' },
-    { name: 'EN 1090', description: 'Стоманени конструкции' },
-    { name: 'ISO 3834', description: 'Качество при заваряване' },
-];
-
-const techFeatures = [
-    'Fiber лазер 6kW',
-    'CNC абкант 320т',
-    'Роботизирано заваряване',
-    'CAD/CAM',
-    '3D измерване',
-    'ERP система',
-];
-
-export default function QualitySection() {
+export default function QualitySection({ translations }: { translations: Translations['qualitySection'] }) {
     return (
         <>
             <style>
@@ -34,50 +20,6 @@ export default function QualitySection() {
   @media (min-width: 1024px) {
     grid-template-columns: 1fr 1fr;
     gap: 6rem;
-  }
-}
-
-.quality-images {
-  @media (min-width: 1024px) {
-    order: 2;
-  }
-}
-
-.image-stack {
-  position: relative;
-}
-
-.image-main {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-  }
-}
-
-.image-secondary {
-  position: absolute;
-  bottom: -2rem;
-  left: -2rem;
-  width: 45%;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-xl);
-  border: 4px solid var(--color-card);
-
-  @media (max-width: 767px) {
-    display: none;
-  }
-
-  img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1;
-    object-fit: cover;
   }
 }
 
@@ -177,7 +119,6 @@ export default function QualitySection() {
 }
 
 .certs-link {
-  display: inline-block;
   margin-top: 1.5rem;
   font-size: 0.9375rem;
   font-weight: 600;
@@ -194,54 +135,33 @@ export default function QualitySection() {
             <section className="section quality">
                 <div className="container">
                     <div className="quality-grid">
-                        <div className="quality-images">
-                            <div className="image-stack">
-                                <div className="image-main">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=800&q=80"
-                                        alt="CNC машина за прецизна обработка"
-                                        loading="lazy"
-                                    />
-                                </div>
-                                <div className="image-secondary">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=2000&q=80"
-                                        alt="Лазерно рязане в действие"
-                                        loading="lazy"
-                                    />
-                                </div>
-                            </div>
+                        <div className="grid grid-cols-1 gap-2 md:gap-4 md:order-2">
+                          {translations.images.map((img, idx) => (
+                            <img
+                                key={idx}
+                                className="rounded-lg"
+                                src={img.src}
+                                alt={img.alt}
+                                loading="lazy"
+                            />    
+                          ))}
                         </div>
 
                         <div className="quality-content">
                             <span className="section-subtitle">
-                                Качество и технологии
+                                {translations.badge}
                             </span>
-                            <h2>Модерно оборудване, безкомпромисно качество</h2>
+                            <h2>{translations.title}</h2>
                             <p className="quality-intro">
-                                Инвестираме непрекъснато в най-съвременно
-                                оборудване и технологии. Нашият стриктен контрол
-                                гарантира изделия с изключително качество.
+                                {translations.description}
                             </p>
 
                             <div className="certifications">
-                                {certifications.map((cert, idx) => (
+                                {translations.certifications.map((cert, idx) => (
                                     <div className="cert-item" key={idx}>
                                         <div className="cert-icon">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="18"
-                                                height="18"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            >
-                                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-                                                <path d="m9 12 2 2 4-4" />
-                                            </svg>
+                                          <ShieldCheckIcon size={18} />
+                                            
                                         </div>
                                         <div className="cert-info">
                                             <span className="cert-name">
@@ -256,9 +176,9 @@ export default function QualitySection() {
                             </div>
 
                             <div className="tech-features">
-                                <h4>Технически възможности</h4>
+                                <h4>{translations.techFeaturesSection.title}</h4>
                                 <div className="features-list">
-                                    {techFeatures.map((feature, idx) => (
+                                    {translations.techFeaturesSection.features.map((feature, idx) => (
                                         <span className="feature-tag" key={idx}>
                                             {feature}
                                         </span>
@@ -266,8 +186,9 @@ export default function QualitySection() {
                                 </div>
                             </div>
 
-                            <Link href={certificates()} className="certs-link">
-                                Виж всички сертификати →
+                            <Link href={certificates()} className="certs-link flex items-center gap-4">
+                                <span>{translations.techFeaturesSection.ctaButton}</span>
+                                 <MoveRight size={16} />
                             </Link>
                         </div>
                     </div>

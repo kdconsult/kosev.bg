@@ -1,5 +1,11 @@
 import { usePage } from '@inertiajs/react';
-import { ClockIcon, MailIcon, MapPin, PhoneIcon } from 'lucide-react';
+import {
+    ClockIcon,
+    LucideIcon,
+    MailIcon,
+    MapPin,
+    PhoneIcon,
+} from 'lucide-react';
 import { useSyncExternalStore } from 'react';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import ContactForm from '@/components/contact-form';
@@ -7,36 +13,43 @@ import GMaps from '@/components/g-maps';
 import { JsonLd } from '@/components/json-ld';
 import { SeoHead } from '@/components/seo-head';
 import { contacts } from '@/routes';
+import { ContactForm as ContactFormTranslation } from '@/types/translations';
 
 const recaptchaSiteKey = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
 
-export default function Contacts() {
-    const faqs = [
-        {
-            question: 'Какви са сроковете за изпълнение?',
-            answer: 'Сроковете зависят от сложността и обема на поръчката. Обикновено стандартни поръчки се изпълняват за 2-4 седмици. За спешни поръчки можем да предложим експресна обработка.',
-        },
-        {
-            question: 'Имате ли минимална поръчка?',
-            answer: 'Не, нямаме строги изисквания за минимална поръчка. Работим както с единични детайли, така и със серийни производства.',
-        },
-        {
-            question: 'Какви материали обработвате?',
-            answer: 'Обработваме всички видове стомана (черна, неръждаема, галванизирана), алуминий, мед и месинг с различни дебелини и размери.',
-        },
-        {
-            question: 'Предлагате ли доставка?',
-            answer: 'Да, разполагаме със собствен транспорт и работим с утвърдени логистични компании за доставки в цяла Европа.',
-        },
-        {
-            question: 'Как да получа оферта?',
-            answer: 'Изпратете ни техническа документация (чертежи, 3D модели) и количества чрез формата за контакт или на нашия имейл. Ще получите оферта до 24 часа.',
-        },
-        {
-            question: 'Приемате ли 3D файлове?',
-            answer: 'Да, приемаме всички стандартни CAD формати: STEP, IGES, DXF, DWG, PDF, както и SolidWorks и AutoCAD файлове.',
-        },
-    ];
+type ContactUsTranslations = {
+    heroSection: {
+        title: string;
+        badge: string;
+        description: string;
+        image: string;
+    };
+    contactInfoSection: {
+        title: string;
+        badge?: string;
+        description?: string;
+        contactMethods: { label: string; value: string; icon: string }[];
+    };
+    form: ContactFormTranslation;
+    faqSection: {
+        title: string;
+        badge?: string;
+        description?: string;
+        faqs: { question: string; answer: string }[];
+    }
+};
+
+export default function Contacts({
+    translations,
+}: {
+    translations: ContactUsTranslations;
+}) {
+    const contactMethods = Object.values(
+        translations.contactInfoSection.contactMethods,
+    );
+
+    const faqs = translations.faqSection.faqs;
+
     const { appUrl, seo } = usePage().props as {
         appUrl: string;
         seo: { contacts: { title: string; description: string } };
@@ -72,6 +85,13 @@ export default function Contacts() {
                 item: `${appUrl}/contacts`,
             },
         ],
+    };
+
+    const iconMap: Record<string, LucideIcon> = {
+        phone: PhoneIcon,
+        mail: MailIcon,
+        pin: MapPin,
+        clock: ClockIcon,
     };
 
     return (
@@ -185,19 +205,20 @@ export default function Contacts() {
             </style>
             <section className="page-hero">
                 <div className="hero-bg">
-                    <img
-                        src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=2000&q=80"
-                        alt="Свържете се с KOSEV"
-                    />
+                    {translations.heroSection.image && (
+                        <img
+                            src={translations.heroSection.image}
+                            alt={translations.heroSection.title}
+                        />
+                    )}
                     <div className="hero-overlay"></div>
                 </div>
                 <div className="hero-content container">
-                    <span className="hero-badge">Контакти</span>
-                    <h1>Свържете се с нас</h1>
-                    <p>
-                        Имате въпроси или проект за обсъждане? Нашият екип е
-                        готов да ви помогне.
-                    </p>
+                    <span className="hero-badge">
+                        {translations.heroSection.badge}
+                    </span>
+                    <h1>{translations.heroSection.title}</h1>
+                    <p>{translations.heroSection.description}</p>
                 </div>
             </section>
 
@@ -205,69 +226,29 @@ export default function Contacts() {
                 <div className="container">
                     <div className="contact-grid">
                         <div className="contact-info">
-                            <h2>Информация за контакт</h2>
+                            <h2>{translations.contactInfoSection.title}</h2>
                             <p className="contact-intro">
-                                Свържете се с нас по телефон, имейл или ни
-                                посетете в нашата производствена база.
+                                {translations.contactInfoSection.description}
                             </p>
 
                             <div className="info-cards">
-                                <div className="info-card">
-                                    <div className="info-icon">
-                                        <MapPin width={24} />
+                                {contactMethods.map((method, idx) => (
+                                    <div className="info-card" key={idx}>
+                                        <div className="info-icon">
+                                            {(() => {
+                                                const Icon =
+                                                    iconMap[method.icon];
+                                                return Icon ? (
+                                                    <Icon width={24} />
+                                                ) : null;
+                                            })()}
+                                        </div>
+                                        <div className="info-content">
+                                            <h4>{method.label}</h4>
+                                            <p>{method.value}</p>
+                                        </div>
                                     </div>
-                                    <div className="info-content">
-                                        <h4>Адрес</h4>
-                                        <p>
-                                            ул. Тракция №2
-                                            <br />
-                                            7003 гр. Русе, България
-                                            <br />
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="info-card">
-                                    <div className="info-icon">
-                                        <PhoneIcon size={24} />
-                                    </div>
-                                    <div className="info-content">
-                                        <h4>Телефон</h4>
-                                        <p>
-                                            +359 32 123 456
-                                            <br />
-                                            +359 88 123 4567
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="info-card">
-                                    <div className="info-icon">
-                                        <MailIcon size={24} />
-                                    </div>
-                                    <div className="info-content">
-                                        <h4>Имейл</h4>
-                                        <p>
-                                            info&#64;kosev.bg
-                                            <br />
-                                            marketing&#64;kosev.bg
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="info-card">
-                                    <div className="info-icon">
-                                        <ClockIcon size={24} />
-                                    </div>
-                                    <div className="info-content">
-                                        <h4>Работно време</h4>
-                                        <p>
-                                            Понеделник - Петък
-                                            <br />
-                                            08:00 - 17:00
-                                        </p>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
                         </div>
                         <div className="my-auto">
@@ -275,10 +256,10 @@ export default function Contacts() {
                                 <GoogleReCaptchaProvider
                                     reCaptchaKey={recaptchaSiteKey}
                                 >
-                                    <ContactForm />
+                                    <ContactForm translations={translations?.form} />
                                 </GoogleReCaptchaProvider>
                             ) : (
-                                <ContactForm />
+                                <ContactForm translations={translations?.form} />
                             )}
                         </div>
                     </div>
@@ -305,9 +286,9 @@ export default function Contacts() {
                 <div className="container">
                     <div className="section-header">
                         <span className="section-subtitle">
-                            Често задавани въпроси
+                            {translations.faqSection.badge}
                         </span>
-                        <h2 className="section-title">Имате въпроси?</h2>
+                        <h2 className="section-title">{translations.faqSection.title}</h2>
                     </div>
 
                     <div className="faq-grid">

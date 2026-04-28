@@ -18,6 +18,7 @@ import {
 } from './ui/field';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
+import { ContactForm as ContactFormTranslation } from '@/types/translations';
 
 const initialFormData = {
     email: '',
@@ -28,7 +29,7 @@ const initialFormData = {
     'g-recaptcha-response': '',
 };
 
-export default function ContactForm() {
+export default function ContactForm({translations}: { translations: ContactFormTranslation | undefined }) {
     const {
         data,
         setData,
@@ -96,26 +97,23 @@ export default function ContactForm() {
                 <FieldGroup>
                     <FieldSet>
                         <FieldLegend>
-                            <h4>Свържете се с нас</h4>
+                            <h4>{translations?.title || 'Свържете се с нас'}</h4>
                         </FieldLegend>
                         <FieldDescription>
-                            Ако имате въпроси, нужда от консултация или искате
-                            да обсъдим вашия проект, не се колебайте да се
-                            свържете с нас. Нашият екип е готов да ви помогне и
-                            да ви предостави необходимата информация.
+                            {translations?.description || 'Ако имате въпроси, нужда от консултация или искате да обсъдим вашия проект, не се колебайте да се свържете с нас.'}
                         </FieldDescription>
                         <FieldGroup>
                             <div className="grid gap-4 lg:grid-cols-2">
                                 <Field>
                                     <FieldLabel htmlFor="name">
-                                        Име *
+                                        {translations?.name || 'Име'} *
                                     </FieldLabel>
                                     <Input
                                         name="name"
                                         type="text"
                                         required
                                         value={data.name}
-                                        placeholder="Вашето Име"
+                                        placeholder={translations?.name || 'Име'}
                                         className="bg-background p-6"
                                         aria-invalid={!!errors.name}
                                         onChange={(e) =>
@@ -128,14 +126,14 @@ export default function ContactForm() {
                                 </Field>
                                 <Field>
                                     <FieldLabel htmlFor="company">
-                                        Фирма
+                                        {translations?.company || 'Компания'}
                                     </FieldLabel>
                                     <Input
                                         name="company"
                                         type="text"
                                         required
                                         value={data.company}
-                                        placeholder="Вашата Фирма"
+                                        placeholder={translations?.company || 'Компания'}
                                         className="bg-background p-6"
                                         aria-invalid={!!errors.company}
                                         onChange={(e) =>
@@ -152,7 +150,7 @@ export default function ContactForm() {
                             <div className="grid gap-4 lg:grid-cols-2">
                                 <Field>
                                     <FieldLabel htmlFor="email">
-                                        Имейл *
+                                        {translations?.email || 'Имейл'} *
                                     </FieldLabel>
                                     <Input
                                         name="email"
@@ -160,7 +158,7 @@ export default function ContactForm() {
                                         type="email"
                                         aria-invalid={!!errors.email}
                                         required
-                                        placeholder="Вашият Имейл"
+                                        placeholder={translations?.email || 'Имейл'}
                                         className="bg-background p-6"
                                         onChange={(e) =>
                                             setData('email', e.target.value)
@@ -172,13 +170,13 @@ export default function ContactForm() {
                                 </Field>
                                 <Field>
                                     <FieldLabel htmlFor="phone">
-                                        Телефон
+                                        {translations?.phone || 'Телефон'} *
                                     </FieldLabel>
                                     <Input
                                         name="phone"
                                         type="text"
                                         required
-                                        placeholder="Вашият Телефон"
+                                        placeholder={translations?.phone || 'Телефон'}
                                         className="bg-background p-6"
                                         value={data.phone}
                                         aria-invalid={!!errors.phone}
@@ -197,12 +195,12 @@ export default function ContactForm() {
                         <FieldGroup>
                             <Field>
                                 <FieldLabel htmlFor="message">
-                                    Съобщение *
+                                    {translations?.message || 'Съобщение'} *
                                 </FieldLabel>
                                 <Textarea
                                     rows={4}
                                     name="message"
-                                    placeholder="Вашето Съобщение тук..."
+                                    placeholder={translations?.message || 'Съобщение'}
                                     color="red"
                                     className="field-sizing-fixed resize-none bg-background p-6 dark:bg-background"
                                     value={data.message}
@@ -225,7 +223,7 @@ export default function ContactForm() {
                         )}
                         {processing ? (
                             <span className="w-full animate-pulse rounded bg-primary/20 p-6 text-center text-sm text-primary">
-                                Изпращане...
+                                {translations?.submitting || 'Изпращане...'}
                             </span>
                         ) : (
                             <Button
@@ -233,7 +231,7 @@ export default function ContactForm() {
                                 className="w-full cursor-pointer bg-accent p-6 lg:p-8"
                                 disabled={processing || !isDirty || hasErrors}
                             >
-                                Изпрати
+                                {translations?.submitButton || 'Изпрати'}
                                 <ArrowRight className="ml-2" />
                             </Button>
                         )}

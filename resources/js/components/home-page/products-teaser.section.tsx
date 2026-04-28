@@ -9,18 +9,16 @@ export default function ProductsTeaserSection({
     translations
 }: {
     featuredProducts: Product[];
-    translations: Translations;
+    translations: Translations['productsTeaserSection'];
 }) {
     return (
         <section className="section bg-secondary">
             <div className="container">
                 <div className="mx-auto mb-16 max-w-175 text-center md:mb-20">
-                    <span className="section-subtitle">Нашите продукти</span>
-                    <h2>Прецизни метални изделия</h2>
+                    <span className="section-subtitle">{translations.badge}</span>
+                    <h2>{translations.title}</h2>
                     <p>
-                        Произвеждаме широк спектър от метални изделия по
-                        клиентски спецификации — от единични детайли до
-                        серийно производство.
+                        {translations.description}
                     </p>
                 </div>
 
@@ -50,7 +48,7 @@ export default function ProductsTeaserSection({
                                     {product.short_description}
                                 </p>
                                 <span className="text-sm font-semibold text-primary transition-colors duration-200 group-hover:text-brand-gold">
-                                    {translations.buttons.see_details}
+                                    {translations.seeDetails}
                                     <ChevronRight className="inline-block h-4 w-4" />
                                 </span>
                             </div>
@@ -60,7 +58,7 @@ export default function ProductsTeaserSection({
 
                 <div className="flex justify-center">
                     <Link href={products()} className="btn btn-accent btn-lg">
-                        {translations.buttons.view_all_products}
+                        {translations.viewAllProducts}
                     </Link>
                 </div>
             </div>

@@ -8,18 +8,31 @@ import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
 import { index as servicesIndex, show } from '@/routes/services';
 import type { BreadcrumbItem, Service } from '@/types';
-import type { Translations } from '@/types/translations';
 
-export default function ServiceDetail({ service }: { service: Service }) {
+type ServiceDetailTranslations = {
+    seo: {
+        home: string;
+        services: string;
+    };
+    heroSection: {
+        badge: string;
+    };
+    ctaButton: string;
+    specs: string;
+    tags: string;
+    linkedProducts: string;
+    sendInquiryForService: string;
+};
+
+export default function ServiceDetail({ service, translations }: { service: Service, translations: ServiceDetailTranslations }) {
     const [activeImageIndex, setActiveImageIndex] = useState(-1);
     const activeImage =
         activeImageIndex === -1
             ? service.cover_image?.originalUrl
             : service.images[activeImageIndex]?.originalUrl;
 
-    const { appUrl, translations } = usePage().props as {
-        appUrl: string;
-        translations: Translations;
+    const { appUrl } = usePage().props as {
+        appUrl: string;        
     };
 
     const breadcrumbData = {
@@ -29,13 +42,13 @@ export default function ServiceDetail({ service }: { service: Service }) {
             {
                 '@type': 'ListItem',
                 position: 1,
-                name: 'Начало',
+                name: translations.seo.home,
                 item: appUrl,
             },
             {
                 '@type': 'ListItem',
                 position: 2,
-                name: 'Услуги',
+                name: translations.seo.services,
                 item: `${appUrl}/services`,
             },
             {
@@ -49,11 +62,11 @@ export default function ServiceDetail({ service }: { service: Service }) {
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
-            title: 'Начало',
+            title: translations.seo.home,
             href: appUrl,
         },
         {
-            title: 'Услуги',
+            title: translations.seo.services,
             href: servicesIndex(),
         },
         {
@@ -93,7 +106,7 @@ export default function ServiceDetail({ service }: { service: Service }) {
                     </div>
                 </div>
                 <div className="hero-content container">
-                    <span className="hero-badge">Услуга</span>
+                    <span className="hero-badge">{translations.heroSection.badge}</span>
                     <h1>{service.name}</h1>
                 </div>
             </section>
@@ -146,7 +159,7 @@ export default function ServiceDetail({ service }: { service: Service }) {
                             {service.specs?.length > 0 && (
                                 <div className="mb-6">
                                     <h4 className="mb-3 text-[0.9375rem] font-semibold text-foreground">
-                                        Технически възможности
+                                        {translations.specs}
                                     </h4>
                                     <ul className="m-0 grid list-none gap-2 p-0">
                                         {service.specs?.map((spec) => (
@@ -169,7 +182,7 @@ export default function ServiceDetail({ service }: { service: Service }) {
                             {service.tags?.length > 0 && (
                                 <div className="mb-6">
                                     <h4 className="mb-3 text-[0.9375rem] font-semibold text-foreground">
-                                        Предимства
+                                        {translations.tags}
                                     </h4>
                                     <ul className="m-0 grid list-none gap-2 p-0 sm:grid-cols-2">
                                         {service.tags?.map((tag, idx) => (
@@ -188,7 +201,7 @@ export default function ServiceDetail({ service }: { service: Service }) {
                             {service.products?.length > 0 && (
                                 <div className="mb-6">
                                     <h4 className="mb-3 text-[0.9375rem] font-semibold text-foreground">
-                                        Продукти от нашето портфолио
+                                        {translations.linkedProducts}
                                     </h4>
                                     <div className="flex flex-wrap gap-2">
                                         {service.products?.map((product) => (
@@ -209,7 +222,7 @@ export default function ServiceDetail({ service }: { service: Service }) {
                                 href={contacts()}
                                 className="btn btn-accent btn-lg self-start"
                             >
-                                {translations.buttons.send_inquiry_for_service}
+                                {translations.sendInquiryForService}
                             </Link>
                         </div>
                     </div>

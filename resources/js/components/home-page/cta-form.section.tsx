@@ -1,7 +1,8 @@
 import { MailIcon, PhoneIcon } from 'lucide-react';
 import ContactForm from '../contact-form';
+import { Translations } from '@/types/translations';
 
-export default function CtaFormSection() {
+export default function CtaFormSection({translations}: { translations?: Translations['ctaFormSection'] }) {
     return (
         <>
             <style>
@@ -85,12 +86,11 @@ export default function CtaFormSection() {
                     <div className="grid items-center gap-12 md:grid-cols-[1fr_1.2fr] lg:gap-20">
                         <div className="cta-content">
                             <span className="section-subtitle">
-                                Свържете се с нас
+                                {translations?.badge || 'Свържете се с нас'}
                             </span>
-                            <h2>Готови да обсъдим вашия проект?</h2>
+                            <h2>{translations?.title || 'Готови да обсъдим вашия проект?'}</h2>
                             <p>
-                                Изпратете ни запитване и нашият екип ще се
-                                свърже с вас в рамките на 24 часа.
+                                {translations?.description || 'Изпратете ни запитване и нашият екип ще се свърже с вас в рамките на 24 часа.'}
                             </p>
 
                             <div className="cta-info">
@@ -100,10 +100,10 @@ export default function CtaFormSection() {
                                     </div>
                                     <div className="info-text">
                                         <span className="info-label">
-                                            Телефон
+                                            {translations?.phone.label || 'Телефон'}
                                         </span>
                                         <span className="info-value">
-                                            +359 88 123 4567
+                                            {translations?.phone.value || '+359 88 123 4567'}
                                         </span>
                                     </div>
                                 </div>
@@ -113,17 +113,17 @@ export default function CtaFormSection() {
                                     </div>
                                     <div className="info-text">
                                         <span className="info-label">
-                                            Имейл
+                                            {translations?.email.label || 'Имейл'}
                                         </span>
                                         <span className="info-value">
-                                            marketing&#64;kosev.bg
+                                            {translations?.email.value || 'marketing@kosev.bg'}
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <ContactForm />
+                        <ContactForm translations={translations?.form} />
                     </div>
                 </div>
             </section>

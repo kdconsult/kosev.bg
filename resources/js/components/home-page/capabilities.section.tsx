@@ -10,22 +10,18 @@ export default function CapabilitiesSection({
     translations,
 }: {
     services: Service[];
-    translations: Translations;
+    translations: Translations['capabilitiesSection'];
 }) {
-    void translations;
-
     return (
         <section className="section bg-background">
             <div className="container">
                 <div className="section-header">
-                    <span className="section-subtitle">Нашите възможности</span>
+                    <span className="section-subtitle">{translations.badge}</span>
                     <h2 className="section-title">
-                        Цялостни решения за металообработка
+                        {translations.title}
                     </h2>
                     <p className="section-description">
-                        От лазерно рязане до финална сглобка - предлагаме пълен
-                        спектър услуги за производство на метални изделия с
-                        изключително качество.
+                        {translations.description}
                     </p>
                 </div>
 
@@ -43,7 +39,7 @@ export default function CapabilitiesSection({
                                     className="h-full w-full object-cover transition-transform duration-600 ease-in-out group-hover:scale-105"
                                 />
                                 <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-transparent from-50% to-black/30" />
-                                <div className="absolute top-4 left-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-accent font-serif text-xs font-semibold text-foreground backdrop-blur-sm transition-all duration-300 group-hover:bg-brand-gold group-hover:text-primary-foreground">
+                                <div className="absolute top-4 left-4 flex h-9 w-9 items-center justify-center rounded-full bg-accent font-serif text-xs font-semibold text-foreground backdrop-blur-sm transition-all duration-300 group-hover:bg-brand-gold group-hover:text-primary-foreground">
                                     0{index + 1}
                                 </div>
                             </div>
@@ -61,7 +57,7 @@ export default function CapabilitiesSection({
                                     className="mt-auto inline-flex items-center gap-2 border-t border-border pt-5 text-sm font-semibold text-foreground"
                                 >
                                     <span>
-                                        {translations.buttons.learn_more}
+                                        {translations.learnMore}
                                     </span>
                                     <ArrowRight
                                         className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
@@ -74,7 +70,7 @@ export default function CapabilitiesSection({
                 </div>
                 <div className="flex justify-center">
                     <Link href={index()} className="btn btn-accent btn-lg">
-                        {translations.buttons.view_all_services}
+                        {translations.viewAllServices}
                     </Link>
                 </div>
             </div>
