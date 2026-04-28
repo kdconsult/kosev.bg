@@ -103,7 +103,7 @@ export default function CtaFormSection({translations}: { translations?: Translat
                                             {translations?.phone.label || 'Телефон'}
                                         </span>
                                         <span className="info-value">
-                                            {translations?.phone.value || '+359 88 123 4567'}
+                                            {translations?.phone.value || '+359 895 573 233'}
                                         </span>
                                     </div>
                                 </div>

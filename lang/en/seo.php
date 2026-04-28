@@ -3,7 +3,7 @@
 return [
     'home' => [
         'title' => 'Home',
-        'description' => 'Kosev Ltd. delivers high-quality metal fabrication, laser cutting, and precision manufacturing services backed by more than 20 years of experience.',
+        'description' => 'Kosev Ltd. delivers high-quality metal fabrication, laser cutting, and precision manufacturing services backed by more than 30 years of experience.',
     ],
     'services' => [
         'title' => 'Services',

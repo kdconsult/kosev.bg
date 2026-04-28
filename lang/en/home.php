@@ -15,10 +15,10 @@ return [
                 ],
             ],
         ],
-        'badge' => 'Over 20 Years of Excellence',
+        'badge' => 'Over 30 Years of Excellence',
         'title' => 'Precision in Detail,
                             Quality in Result',
-        'description' => 'Kosev EOOD is a leading manufacturer of metal products in Bulgaria, serving European partners since 2003. Our mission is to provide high-quality metalworking solutions that meet the specific needs of our clients and contribute to their success.',
+        'description' => 'Kosev EOOD is a leading manufacturer of metal products in Bulgaria, serving European partners since 1994. Our mission is to provide high-quality metalworking solutions that meet the specific needs of our clients and contribute to their success.',
         'ctaButton' => 'Learn More About Us',
         'ourServicesButton' => 'Explore Our Services',
         'stats' => [
@@ -31,7 +31,7 @@ return [
                 'label' => 'European Partners',
             ],
             [
-                'number' => '20+',
+                'number' => '30+',
                 'label' => 'Years of Experience',
             ],
         ],
@@ -95,7 +95,7 @@ return [
             'src' => '/storage/images/kosev/kosev-front.jpg',
             'alt' => 'Why Choose KOSEV',
             'info' => [
-                'number' => '20+',
+                'number' => '30+',
                 'label' => 'years of experience',
             ]
         ],
@@ -212,7 +212,7 @@ return [
         'description' => 'Contact us today to discuss your metalworking needs and provide you with a customized solution that will help your business grow.',
         'phone' => [
             'label' => 'Phone',
-            'value' => '+359 88 123 4567',
+            'value' => '+359 895 573 233',
         ],
         'email' => [
             'label' => 'Email',

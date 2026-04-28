@@ -2,7 +2,7 @@
 
 return [
     'home' => 'Home',
-    'services' => 'Services',
+    'services' => 'Technological Equipment',
     'projects' => 'Projects',
     'products' => 'Products',
     'about' => 'About Us',

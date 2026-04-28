@@ -3,12 +3,12 @@
 return [
     'logoText' => 'KOSEV',
     'logoAlt' => 'World of Steel',
-    'description' => 'High-quality production of metal products and laser cutting for European partners. Over 20 years of experience in metalworking.',
+    'description' => 'High-quality production of metal products and laser cutting for European partners. Over 30 years of experience in metalworking.',
     'links' => [
         'title' => 'Useful Links',
         'home' => 'Home',
         'products' => 'Products',
-        'services' => 'Services',
+        'services' => 'Technological Equipment',
         'projects' => 'Projects',
         'contact' => 'Contact',
         'about' => 'About Us',

@@ -2,15 +2,15 @@
 
 return [
     'heroSection' => [
-        'title' => 'Over 20 Years of Tradition in Metalworking',
+        'title' => 'Over 30 Years of Tradition in Metalworking',
         'badge' => 'About Us',
-        'description' => 'Kosev EOOD is a leading manufacturer of metal products in Bulgaria, serving European partners since 2003.',
+        'description' => 'Kosev EOOD is a leading manufacturer of metal products in Bulgaria, serving European partners since 1994.',
         'image' => '/storage/images/kosev/kosev-back.jpg',
     ],
     'storySection' => [
         'title' => 'From Family Business to European Partner',
         'badge' => 'Our Story',
-        'description' => 'Kosev EOOD was founded in 2003 as a family business with a vision for high-quality metalworking. Over the years, we have grown from a small workshop to a modern manufacturing facility with over 5000 sq.m. of production space. Today, we are a trusted partner for over 50 companies across Europe, including Germany, France, Italy, Austria, and the Netherlands. Our success is due to continuous investments in modern equipment, skilled personnel, and strict quality control.',
+        'description' => 'Kosev EOOD was founded in 1994 as a family business with a vision for high-quality metalworking. Over the years, we have grown from a small workshop to a modern manufacturing facility with over 5000 sq.m. of production space. Today, we are a trusted partner for over 50 companies across Europe, including Germany, France, Italy, Austria, and the Netherlands. Our success is due to continuous investments in modern equipment, skilled personnel, and strict quality control.',
         'image' => '/storage/images/kosev/kosev-front.jpg',
     ],
     'valuesSection' => [
@@ -43,7 +43,7 @@ return [
     'teamSection' => [
         'title' => 'The People Behind Our Success',
         'badge' => 'Our Team',
-        'description' => 'Behind the success of Kosev EOOD is our dedicated and qualified team of over 100 employees. Our engineers, technicians, and production specialists work tirelessly to provide the best solutions for our clients. We value our team and invest in their professional development and well-being.',
+        'description' => 'Behind the success of Kosev EOOD is our dedicated and qualified team of over 50 employees. Our engineers, technicians, and production specialists work tirelessly to provide the best solutions for our clients. We value our team and invest in their professional development and well-being.',
         'team' => [
             'ceo' => [
                 'name' => 'Milen Kosev',
@@ -51,19 +51,19 @@ return [
                 'description' => 'Milen is the founder and CEO of Kosev EOOD. With over 30 years of experience in metalworking, he is the driving force behind the company\'s success.',
             ],
             'production_manager' => [
-                'name' => 'Maria Petrova',
+                'name' => 'Svetoslav Stoykov',
                 'position' => 'Production Manager',
-                'description' => 'Maria is responsible for coordinating and managing the production process, ensuring efficiency and quality at every stage.',
+                'description' => 'Svetoslav is responsible for coordinating and managing the production process, ensuring efficiency and quality at every stage.',
             ],
             'quality_manager' => [
-                'name' => 'Georgi Ivanov',
+                'name' => 'Stoyan Stoyanov',
                 'position' => 'Quality Manager',
-                'description' => 'Georgi leads our quality control department, ensuring that all our products meet the highest standards.',
+                'description' => 'Stoyan leads our quality control department, ensuring that all our products meet the highest standards.',
             ],
             'sales_manager' => [
-                'name' => 'Anna Dimitrova',
+                'name' => 'Iva Dakova',
                 'position' => 'Sales Manager',
-                'description' => 'Anna is responsible for developing our client relationships and expanding our market in Europe.',
+                'description' => 'Iva is responsible for developing our client relationships and expanding our market in Europe.',
             ],
         ],
     ],
@@ -88,7 +88,7 @@ return [
     ],
     'statsSection' => [
         [
-            'number' => '20+',
+            'number' => '30+',
             'label' => 'years of experience'
         ],
         [
