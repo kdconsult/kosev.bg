@@ -24,7 +24,7 @@ return [
             ],
             'address' => [
                 'label' => 'Address',
-                'value' => 'ул. Тракция №2, 7003 гр. Русе, България',
+                'value' => 'Traction Street #2, 7003 Ruse, Bulgaria',
                 'icon' => 'pin',
             ],
             'workingHours' => [
