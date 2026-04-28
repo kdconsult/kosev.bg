@@ -41,12 +41,4 @@ class StoreServiceRequest extends FormRequest
             'specs.*.value.en' => ['nullable', 'string', 'max:255'],
         ];
     }
-
-    public function messages(): array
-    {
-        return [
-            'name.required' => 'The name field is required.',
-            'name.bg.required' => 'The name in Bulgarian is required.',
-        ];
-    }
 }

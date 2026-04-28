@@ -54,6 +54,8 @@ class UpdateServiceRequest extends FormRequest
             'description.en.string' => 'The description in English must be a string.',
             'cover_image.image' => 'The cover image must be an image file.',
             'cover_image.max' => 'The cover image must not exceed 2MB.',
+            'images.*.image' => 'Each image must be an image file.',
+            'images.*.max' => 'Each image must not exceed 5MB.',
             'products.*.string' => 'Each product must be a string.',
             'products.*.max' => 'Each product must not exceed 255 characters.',
             'tags.*.string' => 'Each tag must be a string.',

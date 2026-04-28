@@ -123,7 +123,7 @@ export default function ServiceDetail({ service, translations }: { service: Serv
                                 />
                             </div>
                             {service.images?.length > 0 && (
-                                <div className="flex gap-3">
+                                <div className="flex gap-3 flex-wrap ">
                                     <button
                                         className={cn('thumb', activeImageIndex === -1 && 'active')}
                                         onClick={() => setActiveImageIndex(-1)}

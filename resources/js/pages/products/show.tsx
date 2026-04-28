@@ -196,7 +196,7 @@ export default function ProductDetail({
                                         className="aspect-4/3 h-full w-full object-cover"
                                     />
                                 </div>
-                                <div className="flex gap-3">
+                                <div className="flex gap-3 flex-wrap">
                                     <button
                                         className={cn(
                                             'thumb',

@@ -19,17 +19,14 @@ const recaptchaSiteKey = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
 export default function Welcome({
     featuredProducts,
     services,
-    translations
+    translations,
 }: {
     featuredProducts: Product[];
     services: Service[];
     translations: Translations;
 }) {
-    const { appUrl, seo } = usePage().props as {
-        appUrl: string;
-        seo: { home: { title: string; description: string } };
-        translations: Translations;
-    };
+    const { appUrl, seo } = usePage().props;
+
     const hasMounted = useSyncExternalStore(
         () => () => {},
         () => true,
@@ -50,18 +47,30 @@ export default function Welcome({
                 <JsonLd headKey="website-jsonld" data={websiteData} />
             </SeoHead>
             <HeroSection translations={translations.heroSection} />
-            <CapabilitiesSection services={services} translations={translations.capabilitiesSection} />
-            <ProductsTeaserSection featuredProducts={featuredProducts} translations={translations.productsTeaserSection} />
-            <WhyChooseUsSection translations={translations.whyChooseUsSection} />
+            <CapabilitiesSection
+                services={services}
+                translations={translations.capabilitiesSection}
+            />
+            <ProductsTeaserSection
+                featuredProducts={featuredProducts}
+                translations={translations.productsTeaserSection}
+            />
+            <WhyChooseUsSection
+                translations={translations.whyChooseUsSection}
+            />
             <IndustriesSection translations={translations.industriesSection} />
             <QualitySection translations={translations.qualitySection} />
-            <TestimonialsSection translations={translations.testimonialsSection} />
+            <TestimonialsSection
+                translations={translations.testimonialsSection}
+            />
             {hasMounted ? (
                 <GoogleReCaptchaProvider reCaptchaKey={recaptchaSiteKey}>
-                    <CtaFormSection />
+                    <CtaFormSection
+                        translations={translations.ctaFormSection}
+                    />
                 </GoogleReCaptchaProvider>
             ) : (
-                <CtaFormSection />
+                <CtaFormSection translations={translations.ctaFormSection} />
             )}
         </>
     );

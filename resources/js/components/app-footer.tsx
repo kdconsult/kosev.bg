@@ -5,7 +5,7 @@ import { index as services } from '@/routes/services';
 import { MailIcon, MapPinIcon, PhoneIcon } from 'lucide-react';
 
 export function AppFooter() {
-    const { currentYear } = usePage().props;
+    const { currentYear, footer } = usePage().props;
 
     return (
         <>
@@ -183,16 +183,14 @@ export function AppFooter() {
                                 href={home()}
                                 className="flex w-fit items-center gap-4 rounded bg-muted px-4"
                             >
-                                <span className="logo-text">KOSEV</span>
+                                <span className="logo-text">{footer.logoText}</span>
                                 <span className="logo-divider"></span>
                                 <span className="logo-tagline">
-                                    World of steel
+                                    {footer.logoAlt}
                                 </span>
                             </Link>
                             <p className="footer-description">
-                                Висококачествено производство на метални изделия
-                                и лазерно рязане за европейски партньори. Над 20
-                                години опит в металообработката.
+                                {footer.description}
                             </p>
                             <div className="social-links">
                                 <a
@@ -277,69 +275,67 @@ export function AppFooter() {
                         </div>
 
                         <div className="footer-links">
-                            <h4>Навигация</h4>
+                            <h4>{footer.links.title}</h4>
                             <ul>
                                 <li>
-                                    <Link href={home()}>Начало</Link>
+                                    <Link href={home()}>{footer.links.home}</Link>
                                 </li>
                                 <li>
-                                    <Link href={services()}>Услуги</Link>
+                                    <Link href={services()}>{footer.links.services}</Link>
                                 </li>
                                 <li>
-                                    <Link href={about()}>За нас</Link>
+                                    <Link href={about()}>{footer.links.about}</Link>
                                 </li>
                                 <li>
-                                    <Link href={index()}>Проекти</Link>
+                                    <Link href={index()}>{footer.links.projects}</Link>
                                 </li>
                                 <li>
-                                    <Link href={contacts()}>Контакти</Link>
+                                    <Link href={contacts()}>{footer.links.contact}</Link>
                                 </li>
                             </ul>
                         </div>
 
                         <div className="footer-links">
-                            <h4>Услуги</h4>
+                            <h4>{footer.services.title}</h4>
                             <ul>
                                 <li>
                                     <Link href={services()}>
-                                        Лазерно рязане
+                                        {footer.services.laserCutting}
                                     </Link>
                                 </li>
                                 <li>
                                     <Link href={services()}>
-                                        Огъване на метал
+                                        {footer.services.metalBending}
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href={services()}>Заваряване</Link>
+                                    <Link href={services()}>{footer.services.welding}</Link>
                                 </li>
                                 <li>
-                                    <Link href={services()}>Монтаж</Link>
+                                    <Link href={services()}>{footer.services.assembly}</Link>
                                 </li>
                                 <li>
-                                    <Link href={services()}>CNC обработка</Link>
+                                    <Link href={services()}>{footer.services.cncMachining}</Link>
                                 </li>
                             </ul>
                         </div>
 
                         <div className="footer-contact">
-                            <h4>Контакти</h4>
+                            <h4>{footer.contact.title}</h4>
                             <ul>
                                 <li>
                                     <MapPinIcon size={18} />                                    
                                     <span>
-                                        гр. Русе, България
-                                        <br />
-                                        ул. Тракция №2
+                                        {footer.contact.address}, <br /> {footer.contact.street}
                                     </span>
                                 </li>
                                 <li>
                                     <PhoneIcon size={18} />                                    
-                                    <span>+359 895 573 233</span>
+                                    <span>{footer.contact.phone}</span>
                                 </li>
                                 <li>
                                     <MailIcon size={18} />                                    
-                                    <span>marketing&#64;kosev.bg</span>
+                                    <span>{footer.contact.email}</span>
                                 </li>
                             </ul>
                         </div>
@@ -347,16 +343,15 @@ export function AppFooter() {
 
                     <div className="footer-bottom">
                         <p>
-                            &copy; {currentYear} KOSEV LTD. Всички права
-                            запазени.
+                            &copy; {currentYear} {footer.copyright}.
                         </p>
                         <div className="footer-bottom-links">
                             {/* ToDo add pages and links */}
-                            <Link href="{privacyPolicy()}">
-                                Политика за поверителност
+                            <Link href="#">
+                                {footer.links.privacyPolicy}
                             </Link>
-                            <Link href="{termsAndConditions()}">
-                                Общи условия
+                            <Link href="#">
+                                {footer.links.termsOfService}
                             </Link>
                         </div>
                     </div>

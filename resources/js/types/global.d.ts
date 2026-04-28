@@ -29,7 +29,38 @@ declare module '@inertiajs/core' {
                 certificates: { title: string; description: string };
                 contacts: { title: string; description: string };
             };
-            translations: Translations
+            footer: {
+                logoText: string;
+                logoAlt: string;
+                description: string;
+                links: {
+                    title: string;
+                    home: string;
+                    products: string;
+                    services: string;
+                    projects: string;
+                    about: string;
+                    contact: string;
+                    privacyPolicy: string;
+                    termsOfService: string;
+                };
+                services: {
+                    title: string;
+                    laserCutting: string;
+                    metalBending: string;
+                    welding: string;
+                    assembly: string;
+                    cncMachining: string;
+                };
+                contact: {
+                    title: string;
+                    address: string;
+                    street: string;
+                    phone: string;
+                    email: string;
+                };
+                copyright: string;
+            };
             [key: string]: unknown;
         };
     }
