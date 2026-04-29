@@ -3,7 +3,7 @@
 return [
     'heroSection' => [
         'title' => 'Showcasing Our Expertise: Selected Projects from Kosev EOOD',
-        'badge' => 'Certificates',
+        'badge' => 'Projects',
         'description' => 'Explore selected projects from our portfolio - from automotive industry details to complex metal structures.',
         'image' => '/storage/images/kosev/top-banner-2.jpg',
     ],
