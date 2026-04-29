@@ -45,6 +45,7 @@ it('filters tags by search term', function () {
 
 it('creates a tag and redirects to index', function () {
     $this->actingAs($this->user)
+        ->withHeader('Referer', '/admin/tags')
         ->post('/admin/tags', [
             'name' => ['bg' => 'Нов таг', 'en' => 'New Tag'],
         ])
@@ -77,6 +78,7 @@ it('updates a tag', function () {
     $tag = Tag::factory()->create(['name' => ['bg' => 'Стар таг', 'en' => 'Old Tag']]);
 
     $this->actingAs($this->user)
+        ->withHeader('Referer', '/admin/tags')
         ->put("/admin/tags/{$tag->slug}", [
             'name' => ['bg' => 'Обновен таг', 'en' => 'Updated Tag'],
         ])
@@ -91,6 +93,7 @@ it('deletes a tag with no relations', function () {
     $tag = Tag::factory()->create();
 
     $this->actingAs($this->user)
+        ->withHeader('Referer', '/admin/tags')
         ->delete("/admin/tags/{$tag->slug}")
         ->assertRedirect('/admin/tags')
         ->assertSessionHas('success', 'Tag deleted.');

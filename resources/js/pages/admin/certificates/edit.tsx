@@ -17,10 +17,12 @@ export default function CertificateEdit({
     certificate,
     locales,
     imagePath,
+    from,
 }: {
     certificate: Certificate;
     locales: string[];
     imagePath: string;
+    from?: string;
 }) {
     const { locale } = usePage().props as { locale: 'bg' | 'en' };
     const { data, setData, put, processing, errors } = useForm({
@@ -36,7 +38,11 @@ export default function CertificateEdit({
     const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        put(CertificatesController.update.url(certificate.slug), {
+        const updateUrl = from
+            ? `${CertificatesController.update.url(certificate.slug)}?from=${encodeURIComponent(from)}`
+            : CertificatesController.update.url(certificate.slug);
+
+        put(updateUrl, {
             onSuccess: () => {
                 console.log('Certificate updated successfully');
             },

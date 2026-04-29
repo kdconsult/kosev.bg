@@ -94,11 +94,12 @@ class ProductsController extends Controller
         return redirect()->route('products.show', $product);
     }
 
-    public function edit(Product $product): Response
+    public function edit(Request $request, Product $product): Response
     {
         $cover = $product->getFirstMedia('cover_image');
 
         return Inertia::render('admin/products/edit', [
+            'from' => $request->query('from'),
             'product' => new AdminProductResource($product->load(['category', 'services', 'tags', 'specs'])),
             'categories' => CategoryResource::collection(Category::forProducts()->get()),
             'coverImageUrl' => $cover?->getUrl() ?? null,
@@ -153,7 +154,9 @@ class ProductsController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.products.index')
+        $from = $request->query('from');
+
+        return redirect($from && str_starts_with($from, '/') ? $from : route('admin.products.index'))
             ->with('success', 'Product updated.');
     }
 
@@ -164,7 +167,7 @@ class ProductsController extends Controller
         $product->specs()->delete();
         $product->delete();
 
-        return redirect()->route('admin.products.index')
+        return redirect()->back()
             ->with('success', 'Product deleted.');
     }
 }

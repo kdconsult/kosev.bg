@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCertificateRequest;
 use App\Http\Requests\UpdateCertificateRequest;
 use App\Http\Resources\CertificateResource;
 use App\Models\Certificate;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CertificatesController extends Controller
@@ -60,12 +61,13 @@ class CertificatesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Certificate $certificate)
+    public function edit(Request $request, Certificate $certificate)
     {
         return Inertia::render('admin/certificates/edit', [
             'certificate' => $certificate,
             'imagePath' => $certificate->getFirstMediaUrl('pdfs', 'thumb') ?: 'https://placehold.co/600x400',
             'locales' => config('app.locales'),
+            'from' => $request->query('from'),
         ]);
     }
 
@@ -82,7 +84,10 @@ class CertificatesController extends Controller
                 ->toMediaCollection('pdfs');
         }
 
-        return redirect()->route('admin.certificates.index')->with('success', 'Certificate updated successfully.');
+        $from = $request->query('from');
+
+        return redirect($from && str_starts_with($from, '/') ? $from : route('admin.certificates.index'))
+            ->with('success', 'Certificate updated successfully.');
     }
 
     /**
@@ -92,6 +97,6 @@ class CertificatesController extends Controller
     {
         $certificate->delete();
 
-        return redirect()->route('admin.certificates.index')->with('success', 'Certificate deleted successfully.');
+        return redirect()->back()->with('success', 'Certificate deleted successfully.');
     }
 }

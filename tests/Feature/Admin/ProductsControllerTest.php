@@ -376,6 +376,7 @@ it('deletes specs when destroying a product', function () {
     $product->specs()->create(['label' => ['bg' => 'Тегло', 'en' => 'Weight'], 'value' => ['bg' => '5 кг', 'en' => '5 kg'], 'sort_order' => 0]);
 
     $this->actingAs($this->user)
+        ->withHeader('Referer', '/admin/products')
         ->delete("/admin/products/{$product->slug}")
         ->assertRedirect('/admin/products');
 
@@ -388,6 +389,7 @@ it('deletes a product and redirects to index', function () {
     $product = Product::factory()->create();
 
     $this->actingAs($this->user)
+        ->withHeader('Referer', '/admin/products')
         ->delete("/admin/products/{$product->slug}")
         ->assertRedirect('/admin/products');
 

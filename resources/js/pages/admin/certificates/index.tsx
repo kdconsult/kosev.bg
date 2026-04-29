@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { Plus } from 'lucide-react';
 import Heading from '@/components/heading';
 import { Badge } from '@/components/ui/badge';
@@ -19,6 +19,8 @@ export default function CertificatesIndex({
 }: {
     certificates: Certificate[];
 }) {
+    const { url } = usePage();
+
     return (
         <>
             <Head title="Certificates" />
@@ -64,7 +66,7 @@ export default function CertificatesIndex({
                                     className="w-full"
                                     asChild
                                 >
-                                    <Link href={edit(certificate.slug)}>
+                                    <Link href={`${edit(certificate.slug)}?from=${encodeURIComponent(url)}`}>
                                         Edit
                                     </Link>
                                 </Button>

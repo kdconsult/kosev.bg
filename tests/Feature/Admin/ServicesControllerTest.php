@@ -132,6 +132,7 @@ it('deletes a service and redirects to index', function () {
     $service = Service::factory()->create();
 
     $this->actingAs($this->user)
+        ->withHeader('Referer', '/admin/services')
         ->delete("/admin/services/{$service->slug}")
         ->assertRedirect('/admin/services');
 
@@ -144,6 +145,7 @@ it('detaches products when deleting a service', function () {
     $product->services()->attach($service->id);
 
     $this->actingAs($this->user)
+        ->withHeader('Referer', '/admin/services')
         ->delete("/admin/services/{$service->slug}")
         ->assertRedirect('/admin/services');
 

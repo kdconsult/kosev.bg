@@ -38,6 +38,7 @@ interface Props {
         id: number;
     }[];
     availableTags: TagSuggestion[];
+    from?: string;
 }
 
 export default function Edit({
@@ -47,6 +48,7 @@ export default function Edit({
     coverImageAlt,
     images,
     availableTags,
+    from,
 }: Props) {
     const { post } = useHttp();
 
@@ -68,7 +70,10 @@ export default function Edit({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        put(ProjectsController.update.url(project.slug));
+        const updateUrl = from
+            ? `${ProjectsController.update.url(project.slug)}?from=${encodeURIComponent(from)}`
+            : ProjectsController.update.url(project.slug);
+        put(updateUrl);
     };
 
     const removeImage = (index: number) => {

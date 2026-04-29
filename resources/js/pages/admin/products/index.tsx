@@ -72,6 +72,7 @@ export default function Index({ products, filters }: Props) {
     const [pendingDelete, setPendingDelete] = useState<AdminProduct | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const { url } = usePage();
     const {locale} = usePage().props as {locale: 'bg' | 'en'};
 
     const navigate = (url: string | null) => {
@@ -225,7 +226,7 @@ export default function Index({ products, filters }: Props) {
                                         <TableCell className="text-right">
                                             <div className="flex justify-end gap-1">
                                                 <Button variant="ghost" size="icon-sm" asChild>
-                                                    <Link href={ProductsController.edit.url(product)}>
+                                                    <Link href={`${ProductsController.edit.url(product)}?from=${encodeURIComponent(url)}`}>
                                                         <Pencil className="h-4 w-4" />
                                                         <span className="sr-only">Edit</span>
                                                     </Link>

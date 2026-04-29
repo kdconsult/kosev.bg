@@ -25,25 +25,12 @@ class StoreCertificateRequest extends FormRequest
         return [
             'name' => ['required', 'array'],
             'name.bg' => ['required', 'string'],
+            'name.en' => ['string'],
             'description' => ['required', 'array'],
             'description.bg' => ['required', 'string'],
+            'description.en' => ['string'],
             'active' => ['required', 'boolean'],
             'pdf' => ['required', 'file', 'mimes:pdf'],
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'name.required' => 'The name field is required.',
-            'name.bg.required' => 'The name in Bulgarian is required.',
-            'description.required' => 'The description field is required.',
-            'description.bg.required' => 'The description in Bulgarian is required.',
-            'active.required' => 'The active field is required.',
-            'active.boolean' => 'The active field must be true or false.',
-            'pdf.required' => 'The PDF field is required.',
-            'pdf.file' => 'The PDF field must be a file.',
-            'pdf.mimes' => 'The PDF field must be a PDF file.',
         ];
     }
 }

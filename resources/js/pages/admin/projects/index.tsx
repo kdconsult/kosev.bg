@@ -1,4 +1,4 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { Pencil, Plus, Search, Trash2 } from 'lucide-react';
 import { useRef, useState } from 'react';
 import ProjectsController from '@/actions/App/Http/Controllers/Admin/ProjectsController';
@@ -82,6 +82,7 @@ interface Props {
 const PER_PAGE_OPTIONS = [5, 10, 15, 25, 50];
 
 export default function ProjectsIndex({ projects, filters }: Props) {
+    const { url } = usePage();
     const [search, setSearch] = useState(filters.search ?? '');
     const [pendingDelete, setPendingDelete] = useState<AdminProject | null>(
         null,
@@ -277,9 +278,7 @@ export default function ProjectsIndex({ projects, filters }: Props) {
                                                     asChild
                                                 >
                                                     <Link
-                                                        href={ProjectsController.edit.url(
-                                                            project,
-                                                        )}
+                                                        href={`${ProjectsController.edit.url(project)}?from=${encodeURIComponent(url)}`}
                                                     >
                                                         <Pencil className="h-4 w-4" />
                                                         <span className="sr-only">

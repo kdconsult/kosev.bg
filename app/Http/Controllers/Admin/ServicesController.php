@@ -85,10 +85,11 @@ class ServicesController extends Controller
         return redirect()->route('services.show', $service);
     }
 
-    public function edit(Service $service): Response
+    public function edit(Request $request, Service $service): Response
     {
         return Inertia::render('admin/services/edit', [
             'service' => new AdminServiceResource($service->load(['products', 'tags', 'specs'])),
+            'from' => $request->query('from'),
             'coverImageUrl' => $service->coverImage()?->getUrl() ?? null,
             'images' => $service->getMedia('images')->map(fn ($media) => ['url' => $media->getUrl('thumb'), 'alt' => $service->name, 'id' => $media->id]),
             'availableProducts' => Product::all()->map(fn ($product) => [
@@ -134,7 +135,9 @@ class ServicesController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.services.index')
+        $from = $request->query('from');
+
+        return redirect($from && str_starts_with($from, '/') ? $from : route('admin.services.index'))
             ->with('success', 'Service updated.');
     }
 
@@ -145,7 +148,7 @@ class ServicesController extends Controller
         $service->specs()->delete();
         $service->delete();
 
-        return redirect()->route('admin.services.index')
+        return redirect()->back()
             ->with('success', 'Service deleted.');
     }
 }

@@ -67,6 +67,7 @@ it('filters categories by type', function () {
 
 it('creates a category and redirects to index', function () {
     $this->actingAs($this->user)
+        ->withHeader('Referer', '/admin/categories')
         ->post('/admin/categories', [
             'name' => ['bg' => 'Нова категория', 'en' => 'New Category'],
             'type' => 'project',
@@ -107,6 +108,7 @@ it('updates a category', function () {
     ]);
 
     $this->actingAs($this->user)
+        ->withHeader('Referer', '/admin/categories')
         ->put("/admin/categories/{$category->slug}", [
             'name' => ['bg' => 'Обновена категория', 'en' => 'Updated Category'],
             'type' => 'product',
@@ -122,6 +124,7 @@ it('deletes a category with no relations', function () {
     $category = Category::factory()->create();
 
     $this->actingAs($this->user)
+        ->withHeader('Referer', '/admin/categories')
         ->delete("/admin/categories/{$category->slug}")
         ->assertRedirect('/admin/categories')
         ->assertSessionHas('success', 'Category deleted.');

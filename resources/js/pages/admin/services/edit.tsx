@@ -34,6 +34,7 @@ interface Props {
     availableTags: { slug: string; name: string }[];
     coverImageUrl: string | null;
     images: { url: string; alt: string; id: number }[];
+    from?: string;
 }
 
 export default function Edit({
@@ -42,6 +43,7 @@ export default function Edit({
     images,
     availableProducts,
     availableTags,
+    from,
 }: Props) {
     const { post } = useHttp();
     const [imagesState, setImagesState] = useState(images);
@@ -60,7 +62,10 @@ export default function Edit({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        put(ServicesController.update.url(service));
+        const updateUrl = from
+            ? `${ServicesController.update.url(service)}?from=${encodeURIComponent(from)}`
+            : ServicesController.update.url(service);
+        put(updateUrl);
     };
 
     const removeImage = (index: number) => {

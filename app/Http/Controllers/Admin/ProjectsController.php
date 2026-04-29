@@ -80,11 +80,12 @@ class ProjectsController extends Controller
         return redirect()->route('projects.show', $project);
     }
 
-    public function edit(Project $project): Response
+    public function edit(Request $request, Project $project): Response
     {
         $coverImage = $project->getFirstMedia('cover_image');
 
         return Inertia::render('admin/projects/edit', [
+            'from' => $request->query('from'),
             'project' => new AdminProjectResource($project->load(['category', 'tags', 'specs'])),
             'categories' => CategoryResource::collection(Category::forProjects()->get()),
             'availableTags' => Tag::all()->map(fn ($tag) => [
@@ -127,7 +128,10 @@ class ProjectsController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.projects.index')->with('success', 'Project updated successfully.');
+        $from = $request->query('from');
+
+        return redirect($from && str_starts_with($from, '/') ? $from : route('admin.projects.index'))
+            ->with('success', 'Project updated successfully.');
     }
 
     public function destroy(Project $project): RedirectResponse
@@ -136,6 +140,6 @@ class ProjectsController extends Controller
         $project->specs()->delete();
         $project->delete();
 
-        return redirect()->route('admin.projects.index')->with('success', 'Project deleted successfully.');
+        return redirect()->back()->with('success', 'Project deleted successfully.');
     }
 }

@@ -1,4 +1,4 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { Pencil, Plus, Search, Trash2 } from 'lucide-react';
 import { useRef, useState } from 'react';
 import ServicesController from '@/actions/App/Http/Controllers/Admin/ServicesController';
@@ -59,6 +59,7 @@ interface Props {
 const PER_PAGE_OPTIONS = [5, 10, 15, 25, 50];
 
 export default function Index({ services, filters }: Props) {
+    const { url } = usePage();
     const [search, setSearch] = useState(filters.search ?? '');
     const [pendingDelete, setPendingDelete] = useState<AdminService | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -196,7 +197,7 @@ export default function Index({ services, filters }: Props) {
                                         <TableCell className="text-right">
                                             <div className="flex justify-end gap-1">
                                                 <Button variant="ghost" size="icon-sm" asChild>
-                                                    <Link href={ServicesController.edit.url(service)}>
+                                                    <Link href={`${ServicesController.edit.url(service)}?from=${encodeURIComponent(url)}`}>
                                                         <Pencil className="h-4 w-4" />
                                                         <span className="sr-only">Edit</span>
                                                     </Link>
