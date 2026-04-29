@@ -411,6 +411,7 @@ export default function AboutUs({
                                 <div className="flex items-center justify-center gap-4 mb-8">
                                     {(() => {
                                         const Icon = iconMap[value.icon];
+
                                         return Icon ? (
                                             <Icon className="h-10 w-10 min-w-10" />
                                         ) : null;

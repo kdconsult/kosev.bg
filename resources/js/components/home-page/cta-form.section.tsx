@@ -1,6 +1,6 @@
 import { MailIcon, PhoneIcon } from 'lucide-react';
+import type { Translations } from '@/types/translations';
 import ContactForm from '../contact-form';
-import { Translations } from '@/types/translations';
 
 export default function CtaFormSection({translations}: { translations?: Translations['ctaFormSection'] }) {
     return (

@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/react';
-import { index as certificates } from '@/routes/certificates/index';
-import { Translations } from '@/types/translations';
 import { MoveRight, ShieldCheckIcon } from 'lucide-react';
+import { index as certificates } from '@/routes/certificates/index';
+import type { Translations } from '@/types/translations';
 
 export default function QualitySection({ translations }: { translations: Translations['qualitySection'] }) {
     return (

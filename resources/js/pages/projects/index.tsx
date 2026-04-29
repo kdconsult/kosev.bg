@@ -1,4 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
+import { MoveRight } from 'lucide-react';
 import { useState } from 'react';
 import { JsonLd } from '@/components/json-ld';
 import { SeoHead } from '@/components/seo-head';
@@ -6,7 +7,6 @@ import { cn } from '@/lib/utils';
 import { contacts } from '@/routes';
 import { index, show } from '@/routes/projects';
 import type { Category, Project } from '@/types';
-import { MoveRight } from 'lucide-react';
 
 type ProjectsTranslations = {
     heroSection: {

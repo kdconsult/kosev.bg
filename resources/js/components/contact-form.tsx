@@ -6,6 +6,7 @@ import {
     useGoogleReCaptcha,
 } from 'react-google-recaptcha-v3';
 import MailController from '@/actions/App/Http/Controllers/MailController';
+import type { ContactForm as ContactFormTranslation } from '@/types/translations';
 import { Button } from './ui/button';
 import {
     Field,
@@ -18,7 +19,6 @@ import {
 } from './ui/field';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
-import { ContactForm as ContactFormTranslation } from '@/types/translations';
 
 const initialFormData = {
     email: '',

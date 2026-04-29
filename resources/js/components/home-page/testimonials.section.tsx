@@ -1,4 +1,4 @@
-import { Translations } from "@/types/translations";
+import type { Translations } from "@/types/translations";
 
 export default function TestimonialsSection({translations}: {translations: Translations['testimonialsSection']}) {
     return (

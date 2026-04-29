@@ -1,8 +1,8 @@
 import { Link, usePage } from '@inertiajs/react';
+import { MailIcon, MapPinIcon, PhoneIcon } from 'lucide-react';
 import { about, contacts, home } from '@/routes';
 import { index } from '@/routes/projects';
 import { index as services } from '@/routes/services';
-import { MailIcon, MapPinIcon, PhoneIcon } from 'lucide-react';
 
 export function AppFooter() {
     const { currentYear, footer } = usePage().props;

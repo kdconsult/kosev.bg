@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Translations } from '@/types/translations';
+import type { Translations } from '@/types/translations';
 
 export default function IndustriesSection({translations}: {translations: Translations['industriesSection']}) {
     return (

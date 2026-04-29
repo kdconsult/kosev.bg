@@ -1,14 +1,15 @@
 import { Link } from '@inertiajs/react';
+import type {
+    LucideIcon} from 'lucide-react';
 import {
     ChevronRight,
     ClockIcon,
     GlobeIcon,
-    LucideIcon,
     ShieldCheck,
 } from 'lucide-react';
 import { about } from '@/routes';
 import { index as services } from '@/routes/services';
-import { Translations } from '@/types/translations';
+import type { Translations } from '@/types/translations';
 
 export default function HeroSection({
     translations,
@@ -357,6 +358,7 @@ export default function HeroSection({
                             {translations.trustBar.map((item, index) => {
                                 const IconComponent =
                                     iconMap[item.icon] || GlobeIcon; // Default to GlobeIcon if not found
+
                                 return (
                                     <div
                                         key={'trust-' + index}

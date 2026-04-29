@@ -1,7 +1,8 @@
 import { usePage } from '@inertiajs/react';
+import type {
+    LucideIcon} from 'lucide-react';
 import {
     ClockIcon,
-    LucideIcon,
     MailIcon,
     MapPin,
     PhoneIcon,
@@ -13,7 +14,7 @@ import GMaps from '@/components/g-maps';
 import { JsonLd } from '@/components/json-ld';
 import { SeoHead } from '@/components/seo-head';
 import { contacts } from '@/routes';
-import { ContactForm as ContactFormTranslation } from '@/types/translations';
+import type { ContactForm as ContactFormTranslation } from '@/types/translations';
 
 const recaptchaSiteKey = import.meta.env.VITE_GOOGLE_RECAPTCHA_SITE_KEY;
 
@@ -238,6 +239,7 @@ export default function Contacts({
                                             {(() => {
                                                 const Icon =
                                                     iconMap[method.icon];
+
                                                 return Icon ? (
                                                     <Icon width={24} />
                                                 ) : null;

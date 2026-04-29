@@ -1,5 +1,4 @@
 import type { Auth } from '@/types/auth';
-import type { Translations } from '@/types/translations';
 
 declare module '@inertiajs/core' {
     export interface InertiaConfig {
