@@ -1,10 +1,10 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import type { InertiaLinkProps } from '@inertiajs/react';
-import type { SubmitEvent} from 'react';
 import { useState } from 'react';
+import type { SubmitEvent } from 'react';
 import InputError from '@/components/input-error';
-import { SpecFields  } from '@/components/spec-fields';
-import type {SpecData} from '@/components/spec-fields';
+import { SpecFields } from '@/components/spec-fields';
+import type { SpecData } from '@/components/spec-fields';
 import { TagInput } from '@/components/tag-input';
 import { Button } from '@/components/ui/button';
 import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
@@ -21,18 +21,14 @@ import { cn } from '@/lib/utils';
 import type { Category } from '@/types/models';
 
 interface ProjectFormData {
-    title: { bg: string; en: string };
-    description: { bg: string; en: string };
+    title: Record<string, string>;
+    description: Record<string, string>;
     category_id: string;
     tags: string[];
     specs: SpecData[];
 }
 
 interface ProjectFormErrors {
-    'title.bg'?: string;
-    'title.en'?: string;
-    'description.bg'?: string;
-    'description.en'?: string;
     category_id?: string;
     tags?: string;
     [key: string]: string | undefined;
@@ -56,13 +52,6 @@ interface ProjectFormProps {
     cancelHref: NonNullable<InertiaLinkProps['href']>;
 }
 
-const LOCALES = [
-    { key: 'bg', label: 'БГ' },
-    { key: 'en', label: 'EN' },
-] as const;
-
-type Locale = (typeof LOCALES)[number]['key'];
-
 export function ProjectForm({
     data,
     setData,
@@ -75,22 +64,15 @@ export function ProjectForm({
     submitLabel,
     cancelHref,
 }: ProjectFormProps) {
-    const [activeLocale, setActiveLocale] = useState<Locale>('bg');    
+    const { locales, primaryLocale } = usePage().props;
+    const [activeLocale, setActiveLocale] = useState(primaryLocale);
 
     return (
-        <form
-            onSubmit={onSubmit}
-            className="space-y-6"
-            encType="multipart/form-data"
-        >
+        <form onSubmit={onSubmit} className="space-y-6" encType="multipart/form-data">
             {slug && (
                 <div className="grid gap-2">
                     <Label>Slug</Label>
-                    <Input
-                        value={slug}
-                        readOnly
-                        className="cursor-default bg-muted text-muted-foreground"
-                    />
+                    <Input value={slug} readOnly className="cursor-default bg-muted text-muted-foreground" />
                 </div>
             )}
 
@@ -100,94 +82,42 @@ export function ProjectForm({
                         Title <span className="text-destructive">*</span>
                     </Label>
                     <div className="flex rounded-md border">
-                        {LOCALES.map((locale) => (
+                        {locales.map((locale) => (
                             <button
-                                key={locale.key}
+                                key={locale}
                                 type="button"
-                                onClick={() => setActiveLocale(locale.key)}
+                                onClick={() => setActiveLocale(locale)}
                                 className={cn(
                                     'px-3 py-1 text-xs font-medium transition-colors first:rounded-l-md last:rounded-r-md',
-                                    activeLocale === locale.key
+                                    activeLocale === locale
                                         ? 'bg-primary text-primary-foreground'
                                         : 'text-muted-foreground hover:text-foreground',
                                 )}
                             >
-                                {locale.label}
+                                {locale.toUpperCase()}
                             </button>
                         ))}
                     </div>
                 </div>
-
-                {activeLocale === 'bg' && (
-                    <>
-                        <Input
-                            value={data.title.bg}
-                            onChange={(e) =>
-                                setData('title', {
-                                    ...data.title,
-                                    bg: e.target.value,
-                                })
-                            }
-                            placeholder="Заглавие (БГ)"
-                        />
-                        <InputError message={errors['title.bg']} />
-                    </>
-                )}
-                {activeLocale === 'en' && (
-                    <>
-                        <Input
-                            value={data.title.en}
-                            onChange={(e) =>
-                                setData('title', {
-                                    ...data.title,
-                                    en: e.target.value,
-                                })
-                            }
-                            placeholder="Title (EN)"
-                        />
-                        <InputError message={errors['title.en']} />
-                    </>
-                )}
+                <Input
+                    value={data.title[activeLocale] ?? ''}
+                    onChange={(e) => setData('title', { ...data.title, [activeLocale]: e.target.value })}
+                />
+                <InputError message={errors[`title.${activeLocale}`]} />
             </div>
 
             <div className="grid gap-2">
                 <Label>
-                    Description <span className="text-destructive">*</span>
+                    Description{' '}
+                    {activeLocale === primaryLocale && <span className="text-destructive">*</span>}
                 </Label>
-                {activeLocale === 'bg' && (
-                    <>
-                        <textarea
-                            value={data.description.bg}
-                            onChange={(e) =>
-                                setData('description', {
-                                    ...data.description,
-                                    bg: e.target.value,
-                                })
-                            }
-                            placeholder="Описание (БГ)"
-                            rows={5}
-                            className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
-                        />
-                        <InputError message={errors['description.bg']} />
-                    </>
-                )}
-                {activeLocale === 'en' && (
-                    <>
-                        <textarea
-                            value={data.description.en}
-                            onChange={(e) =>
-                                setData('description', {
-                                    ...data.description,
-                                    en: e.target.value,
-                                })
-                            }
-                            placeholder="Description (EN)"
-                            rows={5}
-                            className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
-                        />
-                        <InputError message={errors['description.en']} />
-                    </>
-                )}
+                <textarea
+                    value={data.description[activeLocale] ?? ''}
+                    onChange={(e) => setData('description', { ...data.description, [activeLocale]: e.target.value })}
+                    rows={5}
+                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
+                />
+                <InputError message={errors[`description.${activeLocale}`]} />
             </div>
 
             <div className="grid gap-2">
@@ -231,30 +161,33 @@ export function ProjectForm({
                     placeholder="Add tags..."
                 />
                 <InputError message={errors.tags} />
-            </div>        
+            </div>
 
             <div className="grid gap-2">
                 <Field>
                     <FieldLabel htmlFor="coverImage">Cover Image</FieldLabel>
-                    <Input onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        setData('coverImage', file || null);
-                    }} type="file" />
-                    <FieldDescription>
-                        Select a cover_image to upload.
-                    </FieldDescription>
+                    <Input
+                        onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            setData('coverImage', file || null);
+                        }}
+                        type="file"
+                    />
+                    <FieldDescription>Select a cover image to upload.</FieldDescription>
                     <InputError message={errors.coverImage} />
                 </Field>
 
                 <Field>
                     <FieldLabel htmlFor="images">Images</FieldLabel>
-                    <Input onChange={(e) => {
-                        const file = e.target.files;
-                        setData('images', file || null);
-                    }} type="file" multiple />
-                    <FieldDescription>
-                        Select images to upload.
-                    </FieldDescription>
+                    <Input
+                        onChange={(e) => {
+                            const file = e.target.files;
+                            setData('images', file || null);
+                        }}
+                        type="file"
+                        multiple
+                    />
+                    <FieldDescription>Select images to upload.</FieldDescription>
                     <InputError message={errors.images} />
                 </Field>
             </div>

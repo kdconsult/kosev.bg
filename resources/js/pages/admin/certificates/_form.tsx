@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import type { MouseEventHandler, SubmitEventHandler } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -24,7 +24,6 @@ export default function CertificateForm({
     onSubmit,
     submitLabel,
     cancelHref,
-    locales,
     onDelete,
 }: {
     data: any;
@@ -34,18 +33,20 @@ export default function CertificateForm({
     onSubmit: SubmitEventHandler<HTMLFormElement>;
     submitLabel: string;
     cancelHref: RouteDefinition<'get'>;
-    locales: string[];
     onDelete?: MouseEventHandler<HTMLButtonElement>;
 }) {
+    const { locales, primaryLocale } = usePage().props;
+
     return (
         <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
                 <form onSubmit={onSubmit} className="grid w-full gap-6">
-                    <Tabs defaultValue={locales[0]} className="w-full">
+                    <Tabs defaultValue={primaryLocale} className="w-full">
                         <TabsList className="ml-auto">
                             {locales.map((locale) => (
                                 <TabsTrigger key={locale} value={locale}>
                                     {locale.toUpperCase()}
+                                    {locale === primaryLocale && ' *'}
                                 </TabsTrigger>
                             ))}
                         </TabsList>
@@ -53,92 +54,47 @@ export default function CertificateForm({
                             <TabsContent key={locale} value={locale}>
                                 <FieldSet>
                                     <FieldLegend>Profile</FieldLegend>
-                                    <FieldDescription>
-                                        This appears on invoices and emails.
-                                    </FieldDescription>
+                                    <FieldDescription>This appears on invoices and emails.</FieldDescription>
                                     <FieldGroup>
                                         <Field>
                                             <FieldLabel htmlFor="name">
-                                                Name ({locale})
+                                                Name ({locale.toUpperCase()})
                                             </FieldLabel>
                                             <Input
                                                 autoComplete="off"
                                                 placeholder="ISO 9001:2015"
-                                                value={data.name?.[locale]}
-                                                onChange={(e) =>
-                                                    setData(
-                                                        `name.${locale}`,
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                aria-invalid={
-                                                    errors['name.' + locale]
-                                                        ? 'true'
-                                                        : 'false'
-                                                }
+                                                value={data.name?.[locale] ?? ''}
+                                                onChange={(e) => setData(`name.${locale}`, e.target.value)}
+                                                aria-invalid={errors['name.' + locale] ? 'true' : 'false'}
                                             />
-                                            <FieldDescription>
-                                                This is the name of the
-                                                certificate.
-                                            </FieldDescription>
+                                            <FieldDescription>This is the name of the certificate.</FieldDescription>
                                             {errors['name.' + locale] && (
-                                                <FieldError>
-                                                    {errors['name.' + locale]}
-                                                </FieldError>
+                                                <FieldError>{errors['name.' + locale]}</FieldError>
                                             )}
                                         </Field>
                                         <Field>
                                             <FieldLabel htmlFor="description">
-                                                Description ({locale})
+                                                Description ({locale.toUpperCase()})
                                             </FieldLabel>
                                             <Textarea
                                                 autoComplete="off"
                                                 placeholder="Description of the certificate"
-                                                value={
-                                                    data.description?.[locale]
-                                                }
-                                                onChange={(e) =>
-                                                    setData(
-                                                        `description.${locale}`,
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                aria-invalid={
-                                                    errors[
-                                                        'description.' + locale
-                                                    ]
-                                                        ? 'true'
-                                                        : 'false'
-                                                }
-                                            ></Textarea>
-                                            <FieldDescription>
-                                                This is the description of the
-                                                certificate.
-                                            </FieldDescription>
-                                            {errors[
-                                                'description.' + locale
-                                            ] && (
-                                                <FieldError>
-                                                    {
-                                                        errors[
-                                                            'description.' +
-                                                                locale
-                                                        ]
-                                                    }
-                                                </FieldError>
+                                                value={data.description?.[locale] ?? ''}
+                                                onChange={(e) => setData(`description.${locale}`, e.target.value)}
+                                                aria-invalid={errors['description.' + locale] ? 'true' : 'false'}
+                                            />
+                                            <FieldDescription>This is the description of the certificate.</FieldDescription>
+                                            {errors['description.' + locale] && (
+                                                <FieldError>{errors['description.' + locale]}</FieldError>
                                             )}
                                         </Field>
                                         <Field orientation="horizontal">
                                             <Switch
                                                 id="active"
                                                 checked={data.active}
-                                                onCheckedChange={(checked) =>
-                                                    setData('active', checked)
-                                                }
+                                                onCheckedChange={(checked) => setData('active', checked)}
                                             />
-                                            <FieldLabel htmlFor="active">
-                                                Active
-                                            </FieldLabel>
+                                            <FieldLabel htmlFor="active">Active</FieldLabel>
                                         </Field>
                                     </FieldGroup>
                                 </FieldSet>
@@ -147,35 +103,34 @@ export default function CertificateForm({
                     </Tabs>
                     <Field>
                         <FieldLabel htmlFor="pdf">PDF</FieldLabel>
-                        <Input id="pdf" type="file" 
+                        <Input
+                            id="pdf"
+                            type="file"
                             onChange={(e) => {
                                 const file = e.target.files?.[0];
                                 setData('pdf', file);
-                            }} 
-                            aria-invalid={errors.pdf ? 'true' : 'false'} 
+                            }}
+                            aria-invalid={errors.pdf ? 'true' : 'false'}
                         />
-                        <FieldDescription>
-                            Select a PDF to upload.
-                        </FieldDescription>
+                        <FieldDescription>Select a PDF to upload.</FieldDescription>
                         {errors.pdf && <FieldError>{errors.pdf}</FieldError>}
                     </Field>
                     <div className="flex items-center justify-between">
-                        <Button variant="destructive" onClick={onDelete} >
+                        <Button variant="destructive" onClick={onDelete}>
                             Delete Certificate
                         </Button>
-                        <div className='grid grid-cols-2 gap-4'>
-
-                        <Button variant="outline" asChild>
-                            <Link href={cancelHref}>Cancel</Link>
-                        </Button>
-                        <Button
-                            variant='default'
-                            type="submit"
-                            disabled={processing}
-                            className='bg-green-400/30 hover:bg-green-400/40 text-green-600 dark:hover:text-green-600'
-                        >
-                            {submitLabel}
-                        </Button>
+                        <div className="grid grid-cols-2 gap-4">
+                            <Button variant="outline" asChild>
+                                <Link href={cancelHref}>Cancel</Link>
+                            </Button>
+                            <Button
+                                variant="default"
+                                type="submit"
+                                disabled={processing}
+                                className="bg-green-400/30 text-green-600 hover:bg-green-400/40 dark:hover:text-green-600"
+                            >
+                                {submitLabel}
+                            </Button>
                         </div>
                     </div>
                 </form>

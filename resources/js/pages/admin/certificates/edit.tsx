@@ -8,29 +8,24 @@ import CertificateForm from './_form';
 interface Certificate {
     id: number;
     slug: string;
-    name: { bg: string; en: string };
-    description: { bg: string; en: string };
+    name: Record<string, string>;
+    description: Record<string, string>;
     active: boolean;
 }
 
 export default function CertificateEdit({
     certificate,
-    locales,
     imagePath,
     from,
 }: {
     certificate: Certificate;
-    locales: string[];
     imagePath: string;
     from?: string;
 }) {
-    const { locale } = usePage().props as { locale: 'bg' | 'en' };
+    const { locales, primaryLocale } = usePage().props;
     const { data, setData, put, processing, errors } = useForm({
-        name: { bg: certificate.name.bg, en: certificate.name.en },
-        description: {
-            bg: certificate.description.bg,
-            en: certificate.description.en,
-        },
+        name: Object.fromEntries(locales.map((l) => [l, certificate.name[l] ?? ''])),
+        description: Object.fromEntries(locales.map((l) => [l, certificate.description[l] ?? ''])),
         active: certificate.active,
         pdf: null,
     });
@@ -42,43 +37,30 @@ export default function CertificateEdit({
             ? `${CertificatesController.update.url(certificate.slug)}?from=${encodeURIComponent(from)}`
             : CertificatesController.update.url(certificate.slug);
 
-        put(updateUrl, {
-            onSuccess: () => {
-                console.log('Certificate updated successfully');
-            },
-            onError: (errors) => {
-                console.error('Error updating certificate:', errors);
-            },
-        });
+        put(updateUrl);
     };
 
     const onDelete = () => {
-        if (
-            !confirm(
-                'Are you sure you want to delete this certificate? This action cannot be undone.',
-            )
-        ) {
+        if (!confirm('Are you sure you want to delete this certificate? This action cannot be undone.')) {
             return;
         }
 
         router.delete(CertificatesController.destroy.url(certificate.slug), {
             onSuccess: () => {
-                console.log('Certificate deleted successfully');
                 router.visit(index());
-            },
-            onError: (errors) => {
-                console.error('Error deleting certificate:', errors);
             },
         });
     };
 
+    const displayName = certificate.name[primaryLocale] || certificate.name[locales[0]] || certificate.slug;
+
     return (
         <>
-            <Head title={`Edit Certificate - ${certificate.name[locale]}`} />
+            <Head title={`Edit Certificate - ${displayName}`} />
 
             <div className="flex h-full flex-1 flex-col gap-6 p-6">
                 <Heading
-                    title={`Edit Certificate - ${certificate.name[locale]}`}
+                    title={`Edit Certificate - ${displayName}`}
                     description="Update the details of your certificate"
                 />
 
@@ -92,16 +74,11 @@ export default function CertificateEdit({
                             onSubmit={handleSubmit}
                             submitLabel="Update Certificate"
                             cancelHref={index()}
-                            locales={locales}
                             onDelete={onDelete}
                         />
                     </div>
                     <div className="w-full max-w-xs">
-                        <img
-                            src={imagePath}
-                            alt={certificate.name.bg}
-                            className="rounded-md"
-                        />
+                        <img src={imagePath} alt={displayName} className="rounded-md" />
                     </div>
                 </div>
             </div>

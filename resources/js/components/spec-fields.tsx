@@ -1,3 +1,4 @@
+import { usePage } from '@inertiajs/react';
 import { Plus, Trash2 } from 'lucide-react';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
@@ -5,20 +6,28 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export interface SpecData {
-    label: { bg: string; en: string };
-    value: { bg: string; en: string };
+    label: Record<string, string>;
+    value: Record<string, string>;
 }
 
 interface SpecFieldsProps {
     specs: SpecData[];
     onChange: (specs: SpecData[]) => void;
-    activeLocale: 'bg' | 'en';
+    activeLocale: string;
     errors?: Record<string, string | undefined>;
 }
 
 export function SpecFields({ specs, onChange, activeLocale, errors = {} }: SpecFieldsProps) {
+    const { locales } = usePage().props;
+
     const addSpec = () => {
-        onChange([...specs, { label: { bg: '', en: '' }, value: { bg: '', en: '' } }]);
+        onChange([
+            ...specs,
+            {
+                label: Object.fromEntries(locales.map((l) => [l, ''])),
+                value: Object.fromEntries(locales.map((l) => [l, ''])),
+            },
+        ]);
     };
 
     const removeSpec = (index: number) => {
@@ -51,18 +60,18 @@ export function SpecFields({ specs, onChange, activeLocale, errors = {} }: SpecF
                         <div key={index} className="grid grid-cols-[1fr_1fr_auto] items-start gap-2">
                             <div>
                                 <Input
-                                    value={spec.label[activeLocale]}
+                                    value={spec.label[activeLocale] ?? ''}
                                     onChange={(e) => updateSpec(index, 'label', e.target.value)}
-                                    placeholder={activeLocale === 'bg' ? 'Характеристика' : 'Specification'}
+                                    placeholder="Label"
                                 />
                                 <InputError message={errors[`specs.${index}.label.${activeLocale}`]} />
                                 <InputError message={errors[`specs.${index}.label.bg`]} />
                             </div>
                             <div>
                                 <Input
-                                    value={spec.value[activeLocale]}
+                                    value={spec.value[activeLocale] ?? ''}
                                     onChange={(e) => updateSpec(index, 'value', e.target.value)}
-                                    placeholder={activeLocale === 'bg' ? 'Стойност' : 'Value'}
+                                    placeholder="Value"
                                 />
                                 <InputError message={errors[`specs.${index}.value.${activeLocale}`]} />
                                 <InputError message={errors[`specs.${index}.value.bg`]} />

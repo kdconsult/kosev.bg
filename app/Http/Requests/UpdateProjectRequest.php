@@ -17,13 +17,37 @@ class UpdateProjectRequest extends FormRequest
      */
     public function rules(): array
     {
+        $primaryLocale = config('app.fallback_locale');
+
+        $titleRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "title.{$locale}" => $locale === $primaryLocale
+                ? ['required', 'string', 'max:255']
+                : ['nullable', 'string', 'max:255'],
+        ])->all();
+
+        $descriptionRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "description.{$locale}" => $locale === $primaryLocale
+                ? ['required', 'string']
+                : ['nullable', 'string'],
+        ])->all();
+
+        $specLabelRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "specs.*.label.{$locale}" => $locale === $primaryLocale
+                ? ['required', 'string', 'max:255']
+                : ['nullable', 'string', 'max:255'],
+        ])->all();
+
+        $specValueRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "specs.*.value.{$locale}" => $locale === $primaryLocale
+                ? ['required', 'string', 'max:255']
+                : ['nullable', 'string', 'max:255'],
+        ])->all();
+
         return [
             'title' => ['required', 'array'],
-            'title.bg' => ['required', 'string', 'max:255'],
-            'title.en' => ['nullable', 'string', 'max:255'],
+            ...$titleRules,
             'description' => ['required', 'array'],
-            'description.bg' => ['required', 'string'],
-            'description.en' => ['nullable', 'string'],
+            ...$descriptionRules,
             'category_id' => ['nullable', 'exists:categories,id'],
             'coverImage' => ['nullable', 'image', 'max:2048'],
             'images' => ['nullable', 'array'],
@@ -32,11 +56,9 @@ class UpdateProjectRequest extends FormRequest
             'tags.*' => ['string', 'max:100'],
             'specs' => ['nullable', 'array'],
             'specs.*.label' => ['required', 'array'],
-            'specs.*.label.bg' => ['required', 'string', 'max:255'],
-            'specs.*.label.en' => ['nullable', 'string', 'max:255'],
+            ...$specLabelRules,
             'specs.*.value' => ['required', 'array'],
-            'specs.*.value.bg' => ['required', 'string', 'max:255'],
-            'specs.*.value.en' => ['nullable', 'string', 'max:255'],
+            ...$specValueRules,
         ];
     }
 }

@@ -1,4 +1,4 @@
-import { Head, router, useForm } from '@inertiajs/react';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { Pencil, Plus, Search, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import TagsController from '@/actions/App/Http/Controllers/Admin/TagsController';
@@ -22,7 +22,7 @@ import { index } from '@/routes/admin/tags';
 
 interface AdminTag {
     slug: string;
-    name: { bg?: string; en?: string };
+    name: Record<string, string | undefined>;
     projects_count: number;
     products_count: number;
 }
@@ -63,23 +63,17 @@ interface Props {
 }
 
 interface TagFormData {
-    name: {
-        bg: string;
-        en: string;
-    };
+    name: Record<string, string>;
 }
 
 const PER_PAGE_OPTIONS = [5, 10, 15, 25, 50];
 
-const getEmptyFormData = (): TagFormData => ({
-    name: { bg: '', en: '' },
+const getEmptyFormData = (locales: string[]): TagFormData => ({
+    name: Object.fromEntries(locales.map((locale) => [locale, ''])),
 });
 
-const getTagFormData = (tag: AdminTag): TagFormData => ({
-    name: {
-        bg: tag.name.bg ?? '',
-        en: tag.name.en ?? '',
-    },
+const getTagFormData = (tag: AdminTag, locales: string[]): TagFormData => ({
+    name: Object.fromEntries(locales.map((locale) => [locale, tag.name[locale] ?? ''])),
 });
 
 const getUsedCount = (tag: AdminTag): number => (tag.projects_count ?? 0) + (tag.products_count ?? 0);
@@ -94,47 +88,43 @@ interface TagFormFieldsProps {
     data: TagFormData;
     setData: (key: 'name', value: TagFormData['name']) => void;
     errors: Record<string, string | undefined>;
+    locales: string[];
+    primaryLocale: string;
 }
 
-function TagFormFields({ data, setData, errors }: TagFormFieldsProps) {
+function TagFormFields({ data, setData, errors, locales, primaryLocale }: TagFormFieldsProps) {
     return (
         <div className="space-y-4">
-            <div className="space-y-2">
-                <Label>
-                    Name (BG) <span className="text-destructive">*</span>
-                </Label>
-                <Input
-                    value={data.name.bg}
-                    onChange={(e) => setData('name', { ...data.name, bg: e.target.value })}
-                    placeholder="Име на таг"
-                />
-                <InputError message={errors['name.bg']} />
-            </div>
-            <div className="space-y-2">
-                <Label>Name (EN)</Label>
-                <Input
-                    value={data.name.en}
-                    onChange={(e) => setData('name', { ...data.name, en: e.target.value })}
-                    placeholder="Tag name"
-                />
-                <InputError message={errors['name.en']} />
-            </div>
+            {locales.map((locale) => (
+                <div key={locale} className="space-y-2">
+                    <Label>
+                        Name ({locale.toUpperCase()}){' '}
+                        {locale === primaryLocale && <span className="text-destructive">*</span>}
+                    </Label>
+                    <Input
+                        value={data.name[locale] ?? ''}
+                        onChange={(e) => setData('name', { ...data.name, [locale]: e.target.value })}
+                    />
+                    <InputError message={errors[`name.${locale}`]} />
+                </div>
+            ))}
         </div>
     );
 }
 
 export default function Index({ tags, filters }: Props) {
+    const { locales, primaryLocale } = usePage().props;
     const [search, setSearch] = useState(filters.search ?? '');
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [editingTag, setEditingTag] = useState<AdminTag | null>(null);
     const [pendingDelete, setPendingDelete] = useState<AdminTag | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
 
-    const createForm = useForm<TagFormData>(getEmptyFormData());
-    const editForm = useForm<TagFormData>(getEmptyFormData());
+    const createForm = useForm<TagFormData>(getEmptyFormData(locales));
+    const editForm = useForm<TagFormData>(getEmptyFormData(locales));
 
     const openEditModal = (tag: AdminTag) => {
-        editForm.setData(getTagFormData(tag));
+        editForm.setData(getTagFormData(tag, locales));
         editForm.clearErrors();
         setEditingTag(tag);
     };
@@ -401,6 +391,8 @@ export default function Index({ tags, filters }: Props) {
                             data={createForm.data}
                             setData={createForm.setData}
                             errors={createForm.errors}
+                            locales={locales}
+                            primaryLocale={primaryLocale}
                         />
 
                         <DialogFooter>
@@ -429,6 +421,8 @@ export default function Index({ tags, filters }: Props) {
                             data={editForm.data}
                             setData={editForm.setData}
                             errors={editForm.errors}
+                            locales={locales}
+                            primaryLocale={primaryLocale}
                         />
 
                         <DialogFooter>

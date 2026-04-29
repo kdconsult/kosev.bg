@@ -1,4 +1,4 @@
-import { Head, router, useForm } from '@inertiajs/react';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { Pencil, Plus, Search, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import CategoriesController from '@/actions/App/Http/Controllers/Admin/CategoriesController';
@@ -23,7 +23,7 @@ import { index } from '@/routes/admin/categories';
 
 interface AdminCategory {
     slug: string;
-    name: { bg?: string; en?: string };
+    name: Record<string, string | undefined>;
     type: 'project' | 'product';
     type_label: string;
     projects_count: number;
@@ -73,10 +73,7 @@ interface Props {
 }
 
 interface CategoryFormData {
-    name: {
-        bg: string;
-        en: string;
-    };
+    name: Record<string, string>;
     type: '' | AdminCategory['type'];
 }
 
@@ -85,20 +82,19 @@ interface CategoryFormFieldsProps {
     setData: (key: 'name' | 'type', value: CategoryFormData['name'] | CategoryFormData['type']) => void;
     errors: Record<string, string | undefined>;
     types: CategoryTypeOption[];
+    locales: string[];
+    primaryLocale: string;
 }
 
 const PER_PAGE_OPTIONS = [5, 10, 15, 25, 50];
 
-const getEmptyFormData = (): CategoryFormData => ({
-    name: { bg: '', en: '' },
+const getEmptyFormData = (locales: string[]): CategoryFormData => ({
+    name: Object.fromEntries(locales.map((locale) => [locale, ''])),
     type: '',
 });
 
-const getCategoryFormData = (category: AdminCategory): CategoryFormData => ({
-    name: {
-        bg: category.name.bg ?? '',
-        en: category.name.en ?? '',
-    },
+const getCategoryFormData = (category: AdminCategory, locales: string[]): CategoryFormData => ({
+    name: Object.fromEntries(locales.map((locale) => [locale, category.name[locale] ?? ''])),
     type: category.type,
 });
 
@@ -113,29 +109,22 @@ const formatRelatedCount = (category: AdminCategory): string => {
     return `${count} ${count === 1 ? noun : `${noun}s`}`;
 };
 
-function CategoryFormFields({ data, setData, errors, types }: CategoryFormFieldsProps) {
+function CategoryFormFields({ data, setData, errors, types, locales, primaryLocale }: CategoryFormFieldsProps) {
     return (
         <div className="space-y-4">
-            <div className="space-y-2">
-                <Label>
-                    Name (BG) <span className="text-destructive">*</span>
-                </Label>
-                <Input
-                    value={data.name.bg}
-                    onChange={(e) => setData('name', { ...data.name, bg: e.target.value })}
-                    placeholder="Име на категория (БГ)"
-                />
-                <InputError message={errors['name.bg']} />
-            </div>
-            <div className="space-y-2">
-                <Label>Name (EN)</Label>
-                <Input
-                    value={data.name.en}
-                    onChange={(e) => setData('name', { ...data.name, en: e.target.value })}
-                    placeholder="Category name (EN)"
-                />
-                <InputError message={errors['name.en']} />
-            </div>
+            {locales.map((locale) => (
+                <div key={locale} className="space-y-2">
+                    <Label>
+                        Name ({locale.toUpperCase()}){' '}
+                        {locale === primaryLocale && <span className="text-destructive">*</span>}
+                    </Label>
+                    <Input
+                        value={data.name[locale] ?? ''}
+                        onChange={(e) => setData('name', { ...data.name, [locale]: e.target.value })}
+                    />
+                    <InputError message={errors[`name.${locale}`]} />
+                </div>
+            ))}
 
             <div className="space-y-2">
                 <Label>
@@ -160,17 +149,18 @@ function CategoryFormFields({ data, setData, errors, types }: CategoryFormFields
 }
 
 export default function Index({ categories, filters, types }: Props) {
+    const { locales, primaryLocale } = usePage().props;
     const [search, setSearch] = useState(filters.search ?? '');
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [editingCategory, setEditingCategory] = useState<AdminCategory | null>(null);
     const [pendingDelete, setPendingDelete] = useState<AdminCategory | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
 
-    const createForm = useForm<CategoryFormData>(getEmptyFormData());
-    const editForm = useForm<CategoryFormData>(getEmptyFormData());
+    const createForm = useForm<CategoryFormData>(getEmptyFormData(locales));
+    const editForm = useForm<CategoryFormData>(getEmptyFormData(locales));
 
     const openEditModal = (category: AdminCategory) => {
-        editForm.setData(getCategoryFormData(category));
+        editForm.setData(getCategoryFormData(category, locales));
         editForm.clearErrors();
         setEditingCategory(category);
     };
@@ -464,6 +454,8 @@ export default function Index({ categories, filters, types }: Props) {
                             setData={createForm.setData}
                             errors={createForm.errors}
                             types={types}
+                            locales={locales}
+                            primaryLocale={primaryLocale}
                         />
 
                         <DialogFooter>
@@ -494,6 +486,8 @@ export default function Index({ categories, filters, types }: Props) {
                             setData={editForm.setData}
                             errors={editForm.errors}
                             types={types}
+                            locales={locales}
+                            primaryLocale={primaryLocale}
                         />
 
                         <DialogFooter>

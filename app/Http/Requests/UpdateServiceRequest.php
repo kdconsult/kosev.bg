@@ -20,13 +20,35 @@ class UpdateServiceRequest extends FormRequest
      */
     public function rules(): array
     {
+        $primaryLocale = config('app.fallback_locale');
+
+        $nameRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "name.{$locale}" => $locale === $primaryLocale
+                ? ['required', 'string', 'max:255']
+                : ['nullable', 'string', 'max:255'],
+        ])->all();
+
+        $descriptionRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "description.{$locale}" => ['nullable', 'string'],
+        ])->all();
+
+        $specLabelRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "specs.*.label.{$locale}" => $locale === $primaryLocale
+                ? ['required', 'string', 'max:255']
+                : ['nullable', 'string', 'max:255'],
+        ])->all();
+
+        $specValueRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "specs.*.value.{$locale}" => $locale === $primaryLocale
+                ? ['required', 'string', 'max:255']
+                : ['nullable', 'string', 'max:255'],
+        ])->all();
+
         return [
             'name' => ['required', 'array'],
-            'name.bg' => ['required', 'string', 'max:255'],
-            'name.en' => ['nullable', 'string', 'max:255'],
+            ...$nameRules,
             'description' => ['nullable', 'array'],
-            'description.bg' => ['nullable', 'string'],
-            'description.en' => ['nullable', 'string'],
+            ...$descriptionRules,
             'is_active' => ['boolean'],
             'cover_image' => ['nullable', 'image', 'max:2048'],
             'images' => ['nullable', 'array'],
@@ -37,35 +59,9 @@ class UpdateServiceRequest extends FormRequest
             'tags.*' => ['string', 'max:100'],
             'specs' => ['nullable', 'array'],
             'specs.*.label' => ['required', 'array'],
-            'specs.*.label.bg' => ['required', 'string', 'max:255'],
-            'specs.*.label.en' => ['nullable', 'string', 'max:255'],
+            ...$specLabelRules,
             'specs.*.value' => ['required', 'array'],
-            'specs.*.value.bg' => ['required', 'string', 'max:255'],
-            'specs.*.value.en' => ['nullable', 'string', 'max:255'],
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'name.required' => 'The name field is required.',
-            'name.bg.required' => 'The name in Bulgarian is required.',
-            'description.bg.string' => 'The description in Bulgarian must be a string.',
-            'description.en.string' => 'The description in English must be a string.',
-            'cover_image.image' => 'The cover image must be an image file.',
-            'cover_image.max' => 'The cover image must not exceed 2MB.',
-            'images.*.image' => 'Each image must be an image file.',
-            'images.*.max' => 'Each image must not exceed 5MB.',
-            'products.*.string' => 'Each product must be a string.',
-            'products.*.max' => 'Each product must not exceed 255 characters.',
-            'tags.*.string' => 'Each tag must be a string.',
-            'tags.*.max' => 'Each tag must not exceed 100 characters.',
-            'specs.*.label.required' => 'Each spec must have a label.',
-            'specs.*.label.bg.required' => 'Each spec label in Bulgarian is required.',
-            'specs.*.label.en.required' => 'Each spec label in English is required.',
-            'specs.*.value.required' => 'Each spec must have a value.',
-            'specs.*.value.bg.required' => 'Each spec value in Bulgarian is required.',
-            'specs.*.value.en.required' => 'Each spec value in English is required.',
+            ...$specValueRules,
         ];
     }
 }

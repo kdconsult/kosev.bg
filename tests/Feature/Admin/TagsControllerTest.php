@@ -113,6 +113,13 @@ it('prevents deleting a tag used by a product', function () {
     expect($tag->fresh())->not->toBeNull();
 });
 
+it('requires primary locale name even when UI locale cookie is set to a secondary locale', function () {
+    $this->actingAs($this->user)
+        ->withCookie('locale', 'en')
+        ->post('/admin/tags', ['name' => ['en' => 'Only English']])
+        ->assertInvalid(['name.bg']);
+});
+
 it('prevents deleting a tag used by a project', function () {
     $tag = Tag::factory()->create();
     $project = Project::factory()->create();

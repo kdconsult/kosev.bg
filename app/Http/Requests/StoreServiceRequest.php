@@ -17,13 +17,35 @@ class StoreServiceRequest extends FormRequest
      */
     public function rules(): array
     {
+        $primaryLocale = config('app.fallback_locale');
+
+        $nameRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "name.{$locale}" => $locale === $primaryLocale
+                ? ['required', 'string', 'max:255']
+                : ['nullable', 'string', 'max:255'],
+        ])->all();
+
+        $descriptionRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "description.{$locale}" => ['nullable', 'string'],
+        ])->all();
+
+        $specLabelRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "specs.*.label.{$locale}" => $locale === $primaryLocale
+                ? ['required', 'string', 'max:255']
+                : ['nullable', 'string', 'max:255'],
+        ])->all();
+
+        $specValueRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "specs.*.value.{$locale}" => $locale === $primaryLocale
+                ? ['required', 'string', 'max:255']
+                : ['nullable', 'string', 'max:255'],
+        ])->all();
+
         return [
             'name' => ['required', 'array'],
-            'name.bg' => ['required', 'string', 'max:255'],
-            'name.en' => ['nullable', 'string', 'max:255'],
+            ...$nameRules,
             'description' => ['nullable', 'array'],
-            'description.bg' => ['nullable', 'string'],
-            'description.en' => ['nullable', 'string'],
+            ...$descriptionRules,
             'is_active' => ['boolean'],
             'cover_image' => ['nullable', 'image', 'max:2048'],
             'images' => ['nullable', 'array'],
@@ -34,11 +56,9 @@ class StoreServiceRequest extends FormRequest
             'tags.*' => ['string', 'max:100'],
             'specs' => ['nullable', 'array'],
             'specs.*.label' => ['required', 'array'],
-            'specs.*.label.bg' => ['required', 'string', 'max:255'],
-            'specs.*.label.en' => ['nullable', 'string', 'max:255'],
+            ...$specLabelRules,
             'specs.*.value' => ['required', 'array'],
-            'specs.*.value.bg' => ['required', 'string', 'max:255'],
-            'specs.*.value.en' => ['nullable', 'string', 'max:255'],
+            ...$specValueRules,
         ];
     }
 }

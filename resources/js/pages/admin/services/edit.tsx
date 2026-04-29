@@ -1,4 +1,4 @@
-import { Head, router, useForm, useHttp } from '@inertiajs/react';
+import { Head, router, useForm, useHttp, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import ServicesController from '@/actions/App/Http/Controllers/Admin/ServicesController';
 import Heading from '@/components/heading';
@@ -10,21 +10,21 @@ import { ServiceForm } from './_form';
 
 interface AdminService {
     slug: string;
-    name: { bg: string; en: string };
-    description: { bg: string; en: string };
+    name: Record<string, string>;
+    description: Record<string, string>;
     is_active: boolean;
     cover_image: string | null;
     products: {
         slug: string;
-        title: { bg: string; en: string };
+        title: Record<string, string>;
     }[];
     tags: {
         slug: string;
         name: string;
     }[];
     specs: {
-        label: { bg: string; en: string };
-        value: { bg: string; en: string };
+        label: Record<string, string>;
+        value: Record<string, string>;
     }[];
 }
 
@@ -46,19 +46,17 @@ export default function Edit({
     from,
 }: Props) {
     const { post } = useHttp();
+    const { locales, primaryLocale } = usePage().props;
     const [imagesState, setImagesState] = useState(images);
 
     const { data, setData, put, processing, errors } = useForm({
-        name: { bg: service.name.bg ?? '', en: service.name.en ?? '' },
-        description: {
-            bg: service.description.bg ?? '',
-            en: service.description.en ?? '',
-        },
+        name: Object.fromEntries(locales.map((l) => [l, service.name[l] ?? ''])),
+        description: Object.fromEntries(locales.map((l) => [l, service.description[l] ?? ''])),
         is_active: service.is_active,
-        products: service.products.map(p => p.title.bg),
-        tags: service.tags.map(t => t.name),
+        products: service.products.map((p) => p.title[primaryLocale] ?? p.title[locales[0]] ?? ''),
+        tags: service.tags.map((t) => t.name),
         specs: service.specs ?? [],
-    });    
+    });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -82,34 +80,25 @@ export default function Edit({
     };
 
     const onDelete = () => {
-        if (
-            !confirm(
-                'Are you sure you want to delete this service? This action cannot be undone.',
-            )
-        ) {
+        if (!confirm('Are you sure you want to delete this service? This action cannot be undone.')) {
             return;
         }
 
         router.delete(ServicesController.destroy.url(service.slug), {
             onSuccess: () => {
-                console.log('Service deleted successfully');
                 router.visit(index());
-            },
-            onError: (errors) => {
-                console.error('Error deleting service:', errors);
             },
         });
     };
 
+    const displayName = service.name[primaryLocale] || service.name[locales[0]] || service.slug;
+
     return (
         <>
-            <Head title={`Edit: ${service.name.bg || service.slug}`} />
+            <Head title={`Edit: ${displayName}`} />
 
             <div className="flex h-full flex-1 flex-col gap-6 p-6">
-                <Heading
-                    title="Edit Service"
-                    description={`Editing: ${service.name.bg || service.slug}`}
-                />
+                <Heading title="Edit Service" description={`Editing: ${displayName}`} />
 
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div className="max-w-2xl">
@@ -130,22 +119,16 @@ export default function Edit({
                         <h2 className="mb-2 text-lg font-semibold">Cover Image</h2>
                         <img
                             src={coverImageUrl ?? undefined}
-                            alt={data.name.bg}
+                            alt={displayName}
                             className="h-auto max-w-full rounded-xl"
                         />
 
                         {imagesState.length > 0 && (
                             <div>
-                                <h3 className="mb-2 text-lg font-semibold">
-                                    Additional Images
-                                </h3>
+                                <h3 className="mb-2 text-lg font-semibold">Additional Images</h3>
                                 <div className="flex flex-wrap gap-2">
                                     {imagesState.map((image, index) => (
-                                        <Card
-                                            className="relative w-full max-w-42 pt-0"
-                                            size="sm"
-                                            key={image.id}
-                                        >
+                                        <Card className="relative w-full max-w-42 pt-0" size="sm" key={image.id}>
                                             <img
                                                 src={image.url}
                                                 alt={image.alt || `Image ${index + 1}`}

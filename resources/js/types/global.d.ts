@@ -9,6 +9,7 @@ declare module '@inertiajs/core' {
             currentYear: number;
             sidebarOpen: boolean;
             locale: string;
+            primaryLocale: string;
             locales: string[];            
             nav: {
                 home: string;

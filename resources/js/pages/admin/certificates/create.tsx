@@ -1,32 +1,25 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import type { SubmitEvent } from 'react';
 import CertificatesController from '@/actions/App/Http/Controllers/Admin/CertificatesController';
 import Heading from '@/components/heading';
 import { index } from '@/routes/admin/certificates';
 import CertificateForm from './_form';
 
-export default function CertificatesIndex({ locales }: { locales: string[] }) {
+export default function CertificatesCreate() {
+    const { locales } = usePage().props;
+
     const { data, setData, post, processing, errors } = useForm({
-        name: { bg: '', en: '' },
-        description: { bg: '', en: '' },
+        name: Object.fromEntries(locales.map((l) => [l, ''])),
+        description: Object.fromEntries(locales.map((l) => [l, ''])),
         active: true,
         pdf: null as File | null,
     });
 
     const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('creating', data);
-        
-        post(CertificatesController.store.url(), {
-            onSuccess: () => {
-                console.log('Certificate created successfully');
-            },
-            onError: (errs: Record<string, string>) => {
-                console.error('Error creating certificate:', errs);
-            },
-        });
+        post(CertificatesController.store.url());
     };
-    
+
     return (
         <>
             <Head title="Create Certificate" />
@@ -46,7 +39,6 @@ export default function CertificatesIndex({ locales }: { locales: string[] }) {
                         onSubmit={handleSubmit}
                         submitLabel="Create Certificate"
                         cancelHref={index()}
-                        locales={locales}
                     />
                 </div>
             </div>

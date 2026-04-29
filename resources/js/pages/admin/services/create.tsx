@@ -1,4 +1,4 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import ServicesController from '@/actions/App/Http/Controllers/Admin/ServicesController';
 import Heading from '@/components/heading';
 import { index } from '@/routes/admin/services';
@@ -15,13 +15,15 @@ interface Props {
 }
 
 export default function Create({ availableProducts, availableTags }: Props) {
+    const { locales } = usePage().props;
+
     const { data, setData, post, processing, errors } = useForm({
-        name: { bg: '', en: '' },
-        description: { bg: '', en: '' },
+        name: Object.fromEntries(locales.map((l) => [l, ''])),
+        description: Object.fromEntries(locales.map((l) => [l, ''])),
         is_active: false,
-        products: [],
-        tags: [],
-        specs: [],
+        products: [] as string[],
+        tags: [] as string[],
+        specs: [] as { label: Record<string, string>; value: Record<string, string> }[],
     });
 
     const handleSubmit = (e: React.FormEvent) => {

@@ -22,13 +22,25 @@ class StoreCertificateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $primaryLocale = config('app.fallback_locale');
+
+        $nameRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "name.{$locale}" => $locale === $primaryLocale
+                ? ['required', 'string']
+                : ['nullable', 'string'],
+        ])->all();
+
+        $descriptionRules = collect(config('app.locales'))->mapWithKeys(fn ($locale) => [
+            "description.{$locale}" => $locale === $primaryLocale
+                ? ['required', 'string']
+                : ['nullable', 'string'],
+        ])->all();
+
         return [
             'name' => ['required', 'array'],
-            'name.bg' => ['required', 'string'],
-            'name.en' => ['string'],
+            ...$nameRules,
             'description' => ['required', 'array'],
-            'description.bg' => ['required', 'string'],
-            'description.en' => ['string'],
+            ...$descriptionRules,
             'active' => ['required', 'boolean'],
             'pdf' => ['required', 'file', 'mimes:pdf'],
         ];
