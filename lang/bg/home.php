@@ -25,7 +25,7 @@ return [
             [
                 'number' => '500+',
                 'label' => 'Завършени проекта',
-                ],
+            ],
             [
                 'number' => '50+',
                 'label' => 'Партньори в Европа',
@@ -49,7 +49,7 @@ return [
                 'title' => 'Навременна доставка',
                 'icon' => 'clock',
             ],
-        ]
+        ],
     ],
     'capabilitiesSection' => [
         'badge' => 'Нашите възможности',
@@ -97,7 +97,7 @@ return [
             'info' => [
                 'number' => '30+',
                 'label' => 'години опит',
-            ]
+            ],
         ],
     ],
     'industriesSection' => [
@@ -145,8 +145,8 @@ return [
             ],
             [
                 'src' => '/storage/images/kosev/modern-tech.jpg',
-                'alt' => 'Роботизирана заваръчна клетка',   
-            ]
+                'alt' => 'Роботизирана заваръчна клетка',
+            ],
         ],
         'certifications' => [
             [

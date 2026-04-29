@@ -19,7 +19,7 @@ return [
         'buttons' => [
             'seeDetails' => 'Виж детайли',
             'sendInquiry' => 'Изпрати запитване',
-        ]
+        ],
     ],
     'show' => [
         'seo' => [
@@ -34,5 +34,5 @@ return [
         'tags' => 'Предимства',
         'linkedProducts' => 'Продукти от нашето портфолио',
         'sendInquiryForService' => 'Изпрати запитване за тази услуга',
-    ]
+    ],
 ];

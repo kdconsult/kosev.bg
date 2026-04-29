@@ -1,4 +1,5 @@
 <?php
+
 return [
     'heroSection' => [
         'title' => 'Метални изделия по поръчка',

@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ServicesController as AdminServiceController;
 use App\Http\Controllers\Admin\TagsController as AdminTagController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\MailController;
@@ -29,7 +30,7 @@ Route::post('contact', [MailController::class, '__invoke'])->name('contact.send'
 Route::post('locale/{locale}', LocaleController::class)->name('locale.switch');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('projects', AdminProjectController::class);
         Route::resource('products', AdminProductController::class);

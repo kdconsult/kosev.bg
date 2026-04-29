@@ -25,7 +25,7 @@ return [
             [
                 'number' => '500+',
                 'label' => 'Completed Projects',
-                ],
+            ],
             [
                 'number' => '50+',
                 'label' => 'European Partners',
@@ -49,7 +49,7 @@ return [
                 'title' => 'Timely Delivery',
                 'icon' => 'clock',
             ],
-        ]
+        ],
     ],
     'capabilitiesSection' => [
         'badge' => 'Our Capabilities',
@@ -97,7 +97,7 @@ return [
             'info' => [
                 'number' => '30+',
                 'label' => 'years of experience',
-            ]
+            ],
         ],
     ],
     'industriesSection' => [
@@ -143,8 +143,8 @@ return [
             ],
             [
                 'src' => '/storage/images/kosev/modern-tech.jpg',
-                'alt' => 'Robotic welding cell',   
-            ]
+                'alt' => 'Robotic welding cell',
+            ],
         ],
         'certifications' => [
             [

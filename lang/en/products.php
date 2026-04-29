@@ -1,4 +1,5 @@
 <?php
+
 return [
     'heroSection' => [
         'title' => 'Precision Metal Products Tailored to Your Needs',

@@ -56,9 +56,9 @@ class Service extends Model implements HasMedia
     }
 
     #[Scope]
-    protected function active(Builder $query): void
+    protected function active(Builder $query): Builder
     {
-        $query->where('is_active', true);
+        return $query->where('is_active', true);
     }
 
     public function products(): BelongsToMany

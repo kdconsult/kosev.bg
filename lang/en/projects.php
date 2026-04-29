@@ -1,4 +1,5 @@
 <?php
+
 return [
     'heroSection' => [
         'title' => 'Showcasing Our Expertise: Selected Projects from Kosev EOOD',

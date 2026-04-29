@@ -1,4 +1,5 @@
 <?php
+
 return [
     'heroSection' => [
         'title' => 'Примери от нашето производство',

@@ -51,17 +51,17 @@ class Certificate extends Model implements HasMedia
      * Scope a query to order certificates by their sort order.
      */
     #[Scope]
-    protected function orderBySort(Builder $query): void
+    protected function orderBySort(Builder $query): Builder
     {
-        $query->orderBy('sort_order');
+        return $query->orderBy('sort_order');
     }
 
     /**
      * Scope a query to only include active certificates.
      */
     #[Scope]
-    protected function active(Builder $query): void
+    protected function active(Builder $query): Builder
     {
-        $query->where('active', true);
+        return $query->where('active', true);
     }
 }

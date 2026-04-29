@@ -52,8 +52,8 @@ return [
         'description' => 'Find answers to the most frequently asked questions about our services, processes, and partnerships.',
         'faqs' => [
             [
-            'question' => 'What are the lead times?',
-            'answer' => 'Lead times depend on the complexity and volume of the order. Standard orders are usually completed within 2-4 weeks. For urgent orders, we can offer expedited processing.',
+                'question' => 'What are the lead times?',
+                'answer' => 'Lead times depend on the complexity and volume of the order. Standard orders are usually completed within 2-4 weeks. For urgent orders, we can offer expedited processing.',
             ],
             [
                 'question' => 'Do you have a minimum order?',

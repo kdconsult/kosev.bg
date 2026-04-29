@@ -19,7 +19,7 @@ return [
         'buttons' => [
             'seeDetails' => 'See Details',
             'sendInquiry' => 'Send Inquiry',
-        ]
+        ],
     ],
     'show' => [
         'seo' => [
@@ -34,5 +34,5 @@ return [
         'tags' => 'Advantages',
         'linkedProducts' => 'Products from Our Portfolio',
         'sendInquiryForService' => 'Send Inquiry for This Service',
-    ]
+    ],
 ];

@@ -1,4 +1,5 @@
 <?php
+
 return [
     'heroSection' => [
         'title' => 'Our Certificates of Quality and Compliance',
@@ -9,7 +10,7 @@ return [
     'infoSection' => [
         'badge' => 'World-Class Standards',
         'title' => 'Certified to International Standards',
-        'description' => 'We maintain all key international certificates required for deliveries to the European Union and global industries. Each certificate represents rigorous audit checks and continuous improvement of our processes.',         
+        'description' => 'We maintain all key international certificates required for deliveries to the European Union and global industries. Each certificate represents rigorous audit checks and continuous improvement of our processes.',
         'cards' => [
             [
                 'number' => '4',
@@ -27,7 +28,7 @@ return [
                 'number' => 'EU',
                 'label' => 'Recognized in the Entire EU',
             ],
-        ]
+        ],
     ],
     'certificatesSection' => [
         'buttonLabel' => 'Download PDF',
@@ -36,5 +37,5 @@ return [
         'title' => 'Need Delivery Documentation?',
         'description' => 'Our team is ready to provide the necessary documentation and certificates for your deliveries. Contact us to discuss your requirements and help you obtain the required documents quickly and easily.',
         'buttonLabel' => 'Contact Us',
-    ]
+    ],
 ];
