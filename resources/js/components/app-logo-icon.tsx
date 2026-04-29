@@ -11,8 +11,8 @@ export default function AppLogoIcon(props: ImgHTMLAttributes<Element>) {
         // </svg>
         <img
             {...props}
-            src="https://kosev.bg/wp-content/uploads/2019/08/kosev1.png"
-            alt="Logo"
+            src="/storage/images/kosev/kosev1.png"
+            alt={props.alt}
         />
     );
 }
