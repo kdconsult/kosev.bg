@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 return [
     'heroSection' => [
@@ -38,7 +38,7 @@ return [
                 'description' => 'We are committed to environmental protection through the use of sustainable practices and materials in our production.',
                 'icon' => 'sprout',
             ],
-        ]
+        ],
     ],
     'teamSection' => [
         'title' => 'The People Behind Our Success',
@@ -72,41 +72,41 @@ return [
         'badge' => 'Production Site',
         'description' => 'Our modern production facility spans over 5000 sq.m. and is equipped with the latest metalworking technologies. Here we produce a wide range of metal products, including machine parts, structures, and specialized components for various industries.',
         'equipment' => [
-            '5000+ sq.m. production area',
-            'Fiber laser TRUMPF 6kW',
-            'CNC press brakes TRUMPF',
-            'Robotic welding cells',
-            'CAD/CAM design system',
-            '3D measuring equipment',
-            'Own fleet for deliveries',    
-            'ERP management system'
+            // '5000+ sq.m. production area',
+            // 'Fiber laser TRUMPF 6kW',
+            // 'CNC press brakes TRUMPF',
+            // 'Robotic welding cells',
+            // 'CAD/CAM design system',
+            // '3D measuring equipment',
+            // 'Own fleet for deliveries',
+            // 'ERP management system'
         ],
         'image' => [
             '/storage/images/kosev/modern-tech.jpg',
             '/storage/images/kosev/modern-tech-2.jpg',
-        ]
+        ],
     ],
     'statsSection' => [
         [
             'number' => '30+',
-            'label' => 'years of experience'
+            'label' => 'years of experience',
         ],
         [
             'number' => '5000+',
-            'label' => 'sq.m. production area'
-        ],
-        [
-            'number' => '100+',
-            'label' => 'employees'
+            'label' => 'sq.m. production area',
         ],
         [
             'number' => '50+',
-            'label' => 'satisfied clients in Europe'
-        ]
+            'label' => 'employees',
+        ],
+        [
+            'number' => '50+',
+            'label' => 'satisfied clients in Europe',
+        ],
     ],
     'ctaSection' => [
         'title' => 'Ready to work together?',
         'description' => 'Contact us today to discuss how we can meet your metalworking needs and become your reliable partner in Europe.',
-        'button' => 'Contact us'
+        'button' => 'Contact us',
     ],
 ];

@@ -27,7 +27,7 @@ type ProjectsTranslations = {
     seo: {
         home: string;
         projects: string;
-    }
+    };
 };
 
 export default function ProjectsList({
@@ -53,7 +53,12 @@ export default function ProjectsList({
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: translations.seo.home, item: appUrl },
+            {
+                '@type': 'ListItem',
+                position: 1,
+                name: translations.seo.home,
+                item: appUrl,
+            },
             {
                 '@type': 'ListItem',
                 position: 2,
@@ -183,25 +188,25 @@ export default function ProjectsList({
       font-weight: 600;
       color: var(--color-primary);
       transition: color 0.2s ease;
-      margin-top: auto;
     }
     `}
             </style>
             <section className="page-hero">
                 <div className="hero-bg">
-                    {translations.heroSection.image && 
-                    <img
-                        src={translations.heroSection.image}
-                        alt={translations.heroSection.title}
-                    />}
+                    {translations.heroSection.image && (
+                        <img
+                            src={translations.heroSection.image}
+                            alt={translations.heroSection.title}
+                        />
+                    )}
                     <div className="hero-overlay"></div>
                 </div>
                 <div className="hero-content container">
-                    <span className="hero-badge">{translations.heroSection.badge}</span>
+                    <span className="hero-badge">
+                        {translations.heroSection.badge}
+                    </span>
                     <h1>{translations.heroSection.title}</h1>
-                    <p>
-                        {translations.heroSection.description}
-                    </p>
+                    <p>{translations.heroSection.description}</p>
                 </div>
             </section>
 
@@ -243,18 +248,30 @@ export default function ProjectsList({
                                 <div className="project-content">
                                     <h3>{project.title}</h3>
                                     <p>{project.short_description}</p>
-                                    <div className="project-tags">
-                                        {project.tags.map((tag) => (
-                                            <span
-                                                className="tag"
-                                                key={tag.slug}
-                                            >
-                                                {tag.name}
-                                            </span>
-                                        ))}
-                                    </div>
-                                    <span className="view-link flex items-center gap-4">
-                                        {translations.projectsListSection.seeDetails} <MoveRight size={16} />
+                                    {project.tags.length > 0 && (
+                                        <div className="project-tags mt-auto">
+                                            {project.tags.map((tag) => (
+                                                <span
+                                                    className="tag"
+                                                    key={tag.slug}
+                                                >
+                                                    {tag.name}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    )}
+                                    <span
+                                        className={cn(
+                                            'view-link flex items-center gap-4',
+                                            project.tags.length <= 0 &&
+                                                'mt-auto',
+                                        )}
+                                    >
+                                        {
+                                            translations.projectsListSection
+                                                .seeDetails
+                                        }{' '}
+                                        <MoveRight size={16} />
                                     </span>
                                 </div>
                             </Link>
@@ -267,11 +284,12 @@ export default function ProjectsList({
                 <div className="container">
                     <div className="cta-content">
                         <h2>{translations.ctaSection.title}</h2>
-                        <p>
-                            {translations.ctaSection.description}
-                        </p>
+                        <p>{translations.ctaSection.description}</p>
                     </div>
-                    <Link href={contacts()} className="btn btn-accent btn-lg min-w-max">
+                    <Link
+                        href={contacts()}
+                        className="btn btn-accent btn-lg min-w-max"
+                    >
                         {translations.ctaSection.button}
                     </Link>
                 </div>

@@ -14,12 +14,11 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $locale = app()->getLocale();
-        $description = $this->getTranslation('description', $locale, false) ?: $this->getTranslation('description', 'bg');
+        $description = $this->description;
 
         return [
             'slug' => $this->slug,
-            'title' => $this->getTranslation('title', $locale, false) ?: $this->getTranslation('title', 'bg'),
+            'title' => $this->title,
             'short_description' => $description ? str()->limit(strip_tags($description), 150) : null,
             'description' => $description,
             'category' => new CategoryResource($this->whenLoaded('category')),

@@ -1,4 +1,4 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { Pencil, Plus, Search, Trash2 } from 'lucide-react';
 import { useRef, useState } from 'react';
 import ProductsController from '@/actions/App/Http/Controllers/Admin/ProductsController';
@@ -72,6 +72,7 @@ export default function Index({ products, filters }: Props) {
     const [pendingDelete, setPendingDelete] = useState<AdminProduct | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const {locale} = usePage().props as {locale: 'bg' | 'en'};
 
     const navigate = (url: string | null) => {
         if (!url) {
@@ -198,7 +199,7 @@ export default function Index({ products, filters }: Props) {
                                 products.data.map((product) => (
                                     <TableRow key={product.slug}>
                                         <TableCell className="font-medium">
-                                            {product.title.bg || product.title.en || product.slug}
+                                            {product.title[locale] || product.title['bg'] || product.slug}
                                         </TableCell>
                                         <TableCell>
                                             {product.category_slug ? (

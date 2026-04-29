@@ -176,7 +176,6 @@ export default function ProductList({
       font-weight: 600;
       color: var(--color-primary);
       transition: color 0.2s ease;
-      margin-top: auto;
     }
     `}</style>
 
@@ -238,17 +237,21 @@ export default function ProductList({
                                 <div className="product-content">
                                     <h3>{product.title}</h3>
                                     <p>{product.short_description}</p>
-                                    <div className="product-tags">
-                                        {product.tags.slice(0, 3).map((tag) => (
-                                            <span
-                                                className="tag"
-                                                key={tag.slug}
-                                            >
-                                                {tag.name}
-                                            </span>
-                                        ))}
-                                    </div>
-                                    <span className="view-link flex items-center gap-4">
+                                    {product.tags.length > 0 && (
+                                        <div className="product-tags mt-auto">
+                                            {product.tags
+                                                .slice(0, 3)
+                                                .map((tag) => (
+                                                    <span
+                                                        className="tag"
+                                                        key={tag.slug}
+                                                    >
+                                                        {tag.name}
+                                                    </span>
+                                                ))}
+                                        </div>
+                                    )}
+                                    <span className={cn('view-link flex items-center gap-4', product.tags.length <= 0 && 'mt-auto')}>
                                         <>
                                             {
                                                 translations.productsListSection
@@ -270,7 +273,10 @@ export default function ProductList({
                         <h2>{translations.ctaSection.title}</h2>
                         <p>{translations.ctaSection.description}</p>
                     </div>
-                    <Link href={contacts()} className="btn btn-accent btn-lg min-w-max">
+                    <Link
+                        href={contacts()}
+                        className="btn btn-accent btn-lg min-w-max"
+                    >
                         {translations.ctaSection.button}
                     </Link>
                 </div>

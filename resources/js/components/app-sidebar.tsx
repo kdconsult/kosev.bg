@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Award, Cog, LayoutGrid, Package, Tag, Wrench } from 'lucide-react';
+import { Award, Cog, LayoutGrid, Link2Icon, Package, Tag, Tags, Wrench } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -19,6 +19,7 @@ import { index as certificatesIndex } from '@/routes/admin/certificates';
 import { index as productsIndex } from '@/routes/admin/products';
 import { index as projectsIndex } from '@/routes/admin/projects';
 import { index as servicesIndex } from '@/routes/admin/services';
+import { index as tagsIndex } from '@/routes/admin/tags';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -52,19 +53,19 @@ const mainNavItems: NavItem[] = [
         href: categoriesIndex(),
         icon: Tag,
     },
+    {
+        title: 'Tags',
+        href: tagsIndex(),
+        icon: Tags,
+    },
 ];
 
 const footerNavItems: NavItem[] = [
-    // {
-    //     title: 'Repository',
-    //     href: 'https://github.com/laravel/react-starter-kit',
-    //     icon: FolderGit2,
-    // },
-    // {
-    //     title: 'Documentation',
-    //     href: 'https://laravel.com/docs/starter-kits#react',
-    //     icon: BookOpen,
-    // },
+    {
+        title: 'Storefront',
+        href: '/',
+        icon: Link2Icon
+    },
 ];
 
 export function AppSidebar() {
