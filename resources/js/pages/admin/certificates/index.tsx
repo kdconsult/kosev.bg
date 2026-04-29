@@ -66,7 +66,7 @@ export default function CertificatesIndex({
                                     className="w-full"
                                     asChild
                                 >
-                                    <Link href={`${edit(certificate.slug)}?from=${encodeURIComponent(url)}`}>
+                                    <Link href={`${edit.url(certificate.slug)}?from=${encodeURIComponent(url)}`}>
                                         Edit
                                     </Link>
                                 </Button>

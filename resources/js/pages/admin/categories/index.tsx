@@ -18,7 +18,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { dashboard } from '@/routes';
 import { index } from '@/routes/admin/categories';
 
@@ -85,16 +84,10 @@ interface CategoryFormFieldsProps {
     data: CategoryFormData;
     setData: (key: 'name' | 'type', value: CategoryFormData['name'] | CategoryFormData['type']) => void;
     errors: Record<string, string | undefined>;
-    activeLocale: 'bg' | 'en';
-    setActiveLocale: (locale: 'bg' | 'en') => void;
     types: CategoryTypeOption[];
 }
 
 const PER_PAGE_OPTIONS = [5, 10, 15, 25, 50];
-const LOCALES = [
-    { key: 'bg', label: 'БГ' },
-    { key: 'en', label: 'EN' },
-] as const;
 
 const getEmptyFormData = (): CategoryFormData => ({
     name: { bg: '', en: '' },
@@ -120,47 +113,28 @@ const formatRelatedCount = (category: AdminCategory): string => {
     return `${count} ${count === 1 ? noun : `${noun}s`}`;
 };
 
-function CategoryFormFields({
-    data,
-    setData,
-    errors,
-    activeLocale,
-    setActiveLocale,
-    types,
-}: CategoryFormFieldsProps) {
+function CategoryFormFields({ data, setData, errors, types }: CategoryFormFieldsProps) {
     return (
         <div className="space-y-4">
             <div className="space-y-2">
-                <div className="flex items-center justify-between gap-3">
-                    <Label>
-                        Category Name <span className="text-destructive">*</span>
-                    </Label>
-                    <Tabs value={activeLocale} onValueChange={(value) => setActiveLocale(value as 'bg' | 'en')}>
-                        <TabsList>
-                            {LOCALES.map((locale) => (
-                                <TabsTrigger key={locale.key} value={locale.key}>
-                                    {locale.label}
-                                </TabsTrigger>
-                            ))}
-                        </TabsList>
-                    </Tabs>
-                </div>
-
-                {LOCALES.map((locale) => (
-                    <div key={locale.key} className={activeLocale === locale.key ? 'block' : 'hidden'}>
-                        <Input
-                            value={data.name[locale.key]}
-                            onChange={(e) =>
-                                setData('name', {
-                                    ...data.name,
-                                    [locale.key]: e.target.value,
-                                })
-                            }
-                            placeholder={locale.key === 'bg' ? 'Име на категория (БГ)' : 'Category name (EN)'}
-                        />
-                        <InputError message={errors[`name.${locale.key}`]} className="mt-2" />
-                    </div>
-                ))}
+                <Label>
+                    Name (BG) <span className="text-destructive">*</span>
+                </Label>
+                <Input
+                    value={data.name.bg}
+                    onChange={(e) => setData('name', { ...data.name, bg: e.target.value })}
+                    placeholder="Име на категория (БГ)"
+                />
+                <InputError message={errors['name.bg']} />
+            </div>
+            <div className="space-y-2">
+                <Label>Name (EN)</Label>
+                <Input
+                    value={data.name.en}
+                    onChange={(e) => setData('name', { ...data.name, en: e.target.value })}
+                    placeholder="Category name (EN)"
+                />
+                <InputError message={errors['name.en']} />
             </div>
 
             <div className="space-y-2">
@@ -191,8 +165,6 @@ export default function Index({ categories, filters, types }: Props) {
     const [editingCategory, setEditingCategory] = useState<AdminCategory | null>(null);
     const [pendingDelete, setPendingDelete] = useState<AdminCategory | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
-    const [activeCreateLocale, setActiveCreateLocale] = useState<'bg' | 'en'>('bg');
-    const [activeEditLocale, setActiveEditLocale] = useState<'bg' | 'en'>('bg');
 
     const createForm = useForm<CategoryFormData>(getEmptyFormData());
     const editForm = useForm<CategoryFormData>(getEmptyFormData());
@@ -200,7 +172,6 @@ export default function Index({ categories, filters, types }: Props) {
     const openEditModal = (category: AdminCategory) => {
         editForm.setData(getCategoryFormData(category));
         editForm.clearErrors();
-        setActiveEditLocale('bg');
         setEditingCategory(category);
     };
 
@@ -242,14 +213,12 @@ export default function Index({ categories, filters, types }: Props) {
         setShowCreateModal(false);
         createForm.reset();
         createForm.clearErrors();
-        setActiveCreateLocale('bg');
     };
 
     const closeEditModal = () => {
         setEditingCategory(null);
         editForm.reset();
         editForm.clearErrors();
-        setActiveEditLocale('bg');
     };
 
     const handleCreateSubmit = (e: React.FormEvent) => {
@@ -494,8 +463,6 @@ export default function Index({ categories, filters, types }: Props) {
                             data={createForm.data}
                             setData={createForm.setData}
                             errors={createForm.errors}
-                            activeLocale={activeCreateLocale}
-                            setActiveLocale={setActiveCreateLocale}
                             types={types}
                         />
 
@@ -526,8 +493,6 @@ export default function Index({ categories, filters, types }: Props) {
                             data={editForm.data}
                             setData={editForm.setData}
                             errors={editForm.errors}
-                            activeLocale={activeEditLocale}
-                            setActiveLocale={setActiveEditLocale}
                             types={types}
                         />
 
