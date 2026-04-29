@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DeleteMediaController;
 use App\Http\Controllers\Admin\ProductsController as AdminProductController;
 use App\Http\Controllers\Admin\ProjectsController as AdminProjectController;
 use App\Http\Controllers\Admin\ServicesController as AdminServiceController;
+use App\Http\Controllers\Admin\TagsController as AdminTagController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\HomeController;
@@ -34,6 +35,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('products', AdminProductController::class);
         Route::resource('services', AdminServiceController::class);
         Route::resource('categories', AdminCategoryController::class)
+            ->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('tags', AdminTagController::class)
             ->only(['index', 'store', 'update', 'destroy']);
         Route::resource('certificates', AdminCertificateController::class);
         Route::post('delete-media', DeleteMediaController::class)->name('delete-media');
