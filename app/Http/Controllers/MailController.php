@@ -22,7 +22,13 @@ class MailController extends Controller
         unset($mailData['g-recaptcha-response']);
 
         // Send email logic here, e.g. using Laravel's Mail facade
-        Mail::to(config('mail.contact_address'))->cc(config('mail.contact_cc_address'))->send(new ContactMessage($mailData));
+        $mail = Mail::to(config('mail.contact_address'));
+
+        if ($ccAddress = config('mail.contact_cc_address')) {
+            $mail->cc($ccAddress);
+        }
+
+        $mail->send(new ContactMessage($mailData));
         Mail::to($validated['email'])->send(new MessageReceived($mailData));
 
         Inertia::flash('success', __('contact.form.successMessage'));
