@@ -24,8 +24,12 @@ export default function CertificateEdit({
 }) {
     const { locales, primaryLocale } = usePage().props;
     const { data, setData, put, processing, errors } = useForm({
-        name: Object.fromEntries(locales.map((l) => [l, certificate.name[l] ?? ''])),
-        description: Object.fromEntries(locales.map((l) => [l, certificate.description[l] ?? ''])),
+        name: Object.fromEntries(
+            locales.map((l) => [l, certificate.name[l] ?? '']),
+        ),
+        description: Object.fromEntries(
+            locales.map((l) => [l, certificate.description[l] ?? '']),
+        ),
         active: certificate.active,
         pdf: null,
     });
@@ -41,7 +45,11 @@ export default function CertificateEdit({
     };
 
     const onDelete = () => {
-        if (!confirm('Are you sure you want to delete this certificate? This action cannot be undone.')) {
+        if (
+            !confirm(
+                'Are you sure you want to delete this certificate? This action cannot be undone.',
+            )
+        ) {
             return;
         }
 
@@ -52,7 +60,10 @@ export default function CertificateEdit({
         });
     };
 
-    const displayName = certificate.name[primaryLocale] || certificate.name[locales[0]] || certificate.slug;
+    const displayName =
+        certificate.name[primaryLocale] ||
+        certificate.name[locales[0]] ||
+        certificate.slug;
 
     return (
         <>
@@ -78,7 +89,11 @@ export default function CertificateEdit({
                         />
                     </div>
                     <div className="w-full max-w-xs">
-                        <img src={imagePath} alt={displayName} className="rounded-md" />
+                        <img
+                            src={imagePath}
+                            alt={displayName}
+                            className="rounded-md"
+                        />
                     </div>
                 </div>
             </div>

@@ -10,7 +10,7 @@ declare module '@inertiajs/core' {
             sidebarOpen: boolean;
             locale: string;
             primaryLocale: string;
-            locales: string[];            
+            locales: string[];
             nav: {
                 home: string;
                 services: string;

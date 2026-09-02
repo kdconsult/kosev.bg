@@ -16,8 +16,21 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
 import { dashboard } from '@/routes';
 import { index } from '@/routes/admin/categories';
 
@@ -79,7 +92,10 @@ interface CategoryFormData {
 
 interface CategoryFormFieldsProps {
     data: CategoryFormData;
-    setData: (key: 'name' | 'type', value: CategoryFormData['name'] | CategoryFormData['type']) => void;
+    setData: (
+        key: 'name' | 'type',
+        value: CategoryFormData['name'] | CategoryFormData['type'],
+    ) => void;
     errors: Record<string, string | undefined>;
     types: CategoryTypeOption[];
     locales: string[];
@@ -93,13 +109,20 @@ const getEmptyFormData = (locales: string[]): CategoryFormData => ({
     type: '',
 });
 
-const getCategoryFormData = (category: AdminCategory, locales: string[]): CategoryFormData => ({
-    name: Object.fromEntries(locales.map((locale) => [locale, category.name[locale] ?? ''])),
+const getCategoryFormData = (
+    category: AdminCategory,
+    locales: string[],
+): CategoryFormData => ({
+    name: Object.fromEntries(
+        locales.map((locale) => [locale, category.name[locale] ?? '']),
+    ),
     type: category.type,
 });
 
 const getRelatedCount = (category: AdminCategory): number => {
-    return category.type === 'project' ? category.projects_count ?? 0 : category.products_count ?? 0;
+    return category.type === 'project'
+        ? (category.projects_count ?? 0)
+        : (category.products_count ?? 0);
 };
 
 const formatRelatedCount = (category: AdminCategory): string => {
@@ -109,18 +132,32 @@ const formatRelatedCount = (category: AdminCategory): string => {
     return `${count} ${count === 1 ? noun : `${noun}s`}`;
 };
 
-function CategoryFormFields({ data, setData, errors, types, locales, primaryLocale }: CategoryFormFieldsProps) {
+function CategoryFormFields({
+    data,
+    setData,
+    errors,
+    types,
+    locales,
+    primaryLocale,
+}: CategoryFormFieldsProps) {
     return (
         <div className="space-y-4">
             {locales.map((locale) => (
                 <div key={locale} className="space-y-2">
                     <Label>
                         Name ({locale.toUpperCase()}){' '}
-                        {locale === primaryLocale && <span className="text-destructive">*</span>}
+                        {locale === primaryLocale && (
+                            <span className="text-destructive">*</span>
+                        )}
                     </Label>
                     <Input
                         value={data.name[locale] ?? ''}
-                        onChange={(e) => setData('name', { ...data.name, [locale]: e.target.value })}
+                        onChange={(e) =>
+                            setData('name', {
+                                ...data.name,
+                                [locale]: e.target.value,
+                            })
+                        }
                     />
                     <InputError message={errors[`name.${locale}`]} />
                 </div>
@@ -130,7 +167,12 @@ function CategoryFormFields({ data, setData, errors, types, locales, primaryLoca
                 <Label>
                     Type <span className="text-destructive">*</span>
                 </Label>
-                <Select value={data.type || undefined} onValueChange={(value) => setData('type', value as AdminCategory['type'])}>
+                <Select
+                    value={data.type || undefined}
+                    onValueChange={(value) =>
+                        setData('type', value as AdminCategory['type'])
+                    }
+                >
                     <SelectTrigger>
                         <SelectValue placeholder="Select a type" />
                     </SelectTrigger>
@@ -152,8 +194,11 @@ export default function Index({ categories, filters, types }: Props) {
     const { locales, primaryLocale } = usePage().props;
     const [search, setSearch] = useState(filters.search ?? '');
     const [showCreateModal, setShowCreateModal] = useState(false);
-    const [editingCategory, setEditingCategory] = useState<AdminCategory | null>(null);
-    const [pendingDelete, setPendingDelete] = useState<AdminCategory | null>(null);
+    const [editingCategory, setEditingCategory] =
+        useState<AdminCategory | null>(null);
+    const [pendingDelete, setPendingDelete] = useState<AdminCategory | null>(
+        null,
+    );
     const [isDeleting, setIsDeleting] = useState(false);
 
     const createForm = useForm<CategoryFormData>(getEmptyFormData(locales));
@@ -173,7 +218,9 @@ export default function Index({ categories, filters, types }: Props) {
         router.get(url, {}, { preserveScroll: true, preserveState: true });
     };
 
-    const applyFilters = (overrides: Record<string, string | number | undefined>) => {
+    const applyFilters = (
+        overrides: Record<string, string | number | undefined>,
+    ) => {
         router.get(
             index(),
             {
@@ -257,7 +304,10 @@ export default function Index({ categories, filters, types }: Props) {
 
             <div className="flex h-full flex-1 flex-col gap-6 p-6">
                 <div className="flex items-center justify-between">
-                    <Heading title="Categories" description="Manage project and product categories." />
+                    <Heading
+                        title="Categories"
+                        description="Manage project and product categories."
+                    />
                     <Button onClick={() => setShowCreateModal(true)}>
                         <Plus className="mr-2 h-4 w-4" />
                         Add Category
@@ -267,7 +317,7 @@ export default function Index({ categories, filters, types }: Props) {
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
                     <form onSubmit={handleSearch} className="flex flex-1 gap-2">
                         <div className="relative max-w-sm flex-1">
-                            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                            <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                             <Input
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
@@ -284,7 +334,10 @@ export default function Index({ categories, filters, types }: Props) {
                                 variant="ghost"
                                 onClick={() => {
                                     setSearch('');
-                                    applyFilters({ search: undefined, page: 1 });
+                                    applyFilters({
+                                        search: undefined,
+                                        page: 1,
+                                    });
                                 }}
                             >
                                 Clear
@@ -293,15 +346,23 @@ export default function Index({ categories, filters, types }: Props) {
                     </form>
 
                     <div className="flex items-center gap-2">
-                        <span className="text-muted-foreground text-sm whitespace-nowrap">Type</span>
-                        <Select value={filters.type ?? 'all'} onValueChange={handleTypeFilterChange}>
+                        <span className="text-sm whitespace-nowrap text-muted-foreground">
+                            Type
+                        </span>
+                        <Select
+                            value={filters.type ?? 'all'}
+                            onValueChange={handleTypeFilterChange}
+                        >
                             <SelectTrigger className="w-40">
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="all">All Types</SelectItem>
                                 {types.map((type) => (
-                                    <SelectItem key={type.value} value={type.value}>
+                                    <SelectItem
+                                        key={type.value}
+                                        value={type.value}
+                                    >
                                         {type.label}
                                     </SelectItem>
                                 ))}
@@ -310,8 +371,13 @@ export default function Index({ categories, filters, types }: Props) {
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <span className="text-muted-foreground text-sm whitespace-nowrap">Rows per page</span>
-                        <Select value={String(filters.per_page ?? 15)} onValueChange={handlePerPageChange}>
+                        <span className="text-sm whitespace-nowrap text-muted-foreground">
+                            Rows per page
+                        </span>
+                        <Select
+                            value={String(filters.per_page ?? 15)}
+                            onValueChange={handlePerPageChange}
+                        >
                             <SelectTrigger className="w-20">
                                 <SelectValue />
                             </SelectTrigger>
@@ -333,47 +399,79 @@ export default function Index({ categories, filters, types }: Props) {
                                 <TableHead>Name</TableHead>
                                 <TableHead>Type</TableHead>
                                 <TableHead>Related Count</TableHead>
-                                <TableHead className="w-24 text-right">Actions</TableHead>
+                                <TableHead className="w-24 text-right">
+                                    Actions
+                                </TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {categories.data.length === 0 ? (
                                 <TableRow>
-                                    <TableCell colSpan={4} className="text-muted-foreground py-12 text-center">
+                                    <TableCell
+                                        colSpan={4}
+                                        className="py-12 text-center text-muted-foreground"
+                                    >
                                         No categories found.
                                     </TableCell>
                                 </TableRow>
                             ) : (
                                 categories.data.map((category) => {
-                                    const relatedCount = getRelatedCount(category);
+                                    const relatedCount =
+                                        getRelatedCount(category);
 
                                     return (
                                         <TableRow key={category.slug}>
                                             <TableCell className="font-medium">
-                                                {category.name.bg || category.name.en || category.slug}
+                                                {category.name.bg ||
+                                                    category.name.en ||
+                                                    category.slug}
                                             </TableCell>
                                             <TableCell>
-                                                <Badge variant="secondary">{category.type_label}</Badge>
+                                                <Badge variant="secondary">
+                                                    {category.type_label}
+                                                </Badge>
                                             </TableCell>
-                                            <TableCell className="text-muted-foreground text-sm">
+                                            <TableCell className="text-sm text-muted-foreground">
                                                 {formatRelatedCount(category)}
                                             </TableCell>
                                             <TableCell className="text-right">
                                                 <div className="flex justify-end gap-1">
-                                                    <Button variant="ghost" size="icon-sm" onClick={() => openEditModal(category)}>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon-sm"
+                                                        onClick={() =>
+                                                            openEditModal(
+                                                                category,
+                                                            )
+                                                        }
+                                                    >
                                                         <Pencil className="h-4 w-4" />
-                                                        <span className="sr-only">Edit</span>
+                                                        <span className="sr-only">
+                                                            Edit
+                                                        </span>
                                                     </Button>
                                                     <Button
                                                         variant="ghost"
                                                         size="icon-sm"
                                                         className="text-destructive hover:text-destructive"
-                                                        onClick={() => setPendingDelete(category)}
-                                                        disabled={relatedCount > 0}
-                                                        title={relatedCount > 0 ? 'Cannot delete a category that is already in use.' : 'Delete category'}
+                                                        onClick={() =>
+                                                            setPendingDelete(
+                                                                category,
+                                                            )
+                                                        }
+                                                        disabled={
+                                                            relatedCount > 0
+                                                        }
+                                                        title={
+                                                            relatedCount > 0
+                                                                ? 'Cannot delete a category that is already in use.'
+                                                                : 'Delete category'
+                                                        }
                                                     >
                                                         <Trash2 className="h-4 w-4" />
-                                                        <span className="sr-only">Delete</span>
+                                                        <span className="sr-only">
+                                                            Delete
+                                                        </span>
                                                     </Button>
                                                 </div>
                                             </TableCell>
@@ -387,8 +485,9 @@ export default function Index({ categories, filters, types }: Props) {
 
                 {meta.total > 0 && (
                     <div className="flex items-center justify-between">
-                        <p className="text-muted-foreground text-sm">
-                            Showing {meta.from}–{meta.to} of {meta.total} results
+                        <p className="text-sm text-muted-foreground">
+                            Showing {meta.from}–{meta.to} of {meta.total}{' '}
+                            results
                         </p>
 
                         <div className="flex items-center gap-1">
@@ -412,11 +511,15 @@ export default function Index({ categories, filters, types }: Props) {
                             {pageLinks.map((link, i) => (
                                 <Button
                                     key={i}
-                                    variant={link.active ? 'default' : 'outline'}
+                                    variant={
+                                        link.active ? 'default' : 'outline'
+                                    }
                                     size="sm"
                                     onClick={() => navigate(link.url)}
                                     disabled={!link.url || link.active}
-                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                    dangerouslySetInnerHTML={{
+                                        __html: link.label,
+                                    }}
                                 />
                             ))}
 
@@ -441,11 +544,18 @@ export default function Index({ categories, filters, types }: Props) {
                 )}
             </div>
 
-            <Dialog open={showCreateModal} onOpenChange={(open) => !open ? closeCreateModal() : setShowCreateModal(true)}>
+            <Dialog
+                open={showCreateModal}
+                onOpenChange={(open) =>
+                    !open ? closeCreateModal() : setShowCreateModal(true)
+                }
+            >
                 <DialogContent className="sm:max-w-lg">
                     <DialogHeader>
                         <DialogTitle>Add Category</DialogTitle>
-                        <DialogDescription>Create a new category for projects or products.</DialogDescription>
+                        <DialogDescription>
+                            Create a new category for projects or products.
+                        </DialogDescription>
                     </DialogHeader>
 
                     <form onSubmit={handleCreateSubmit} className="space-y-4">
@@ -459,24 +569,42 @@ export default function Index({ categories, filters, types }: Props) {
                         />
 
                         <DialogFooter>
-                            <Button type="button" variant="outline" onClick={closeCreateModal} disabled={createForm.processing}>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={closeCreateModal}
+                                disabled={createForm.processing}
+                            >
                                 Cancel
                             </Button>
-                            <Button type="submit" disabled={createForm.processing}>
-                                {createForm.processing ? 'Saving...' : 'Create Category'}
+                            <Button
+                                type="submit"
+                                disabled={createForm.processing}
+                            >
+                                {createForm.processing
+                                    ? 'Saving...'
+                                    : 'Create Category'}
                             </Button>
                         </DialogFooter>
                     </form>
                 </DialogContent>
             </Dialog>
 
-            <Dialog open={!!editingCategory} onOpenChange={(open) => !open && closeEditModal()}>
+            <Dialog
+                open={!!editingCategory}
+                onOpenChange={(open) => !open && closeEditModal()}
+            >
                 <DialogContent className="sm:max-w-lg">
                     <DialogHeader>
                         <DialogTitle>Edit Category</DialogTitle>
                         <DialogDescription>
                             Update{' '}
-                            <strong>{editingCategory?.name.bg || editingCategory?.name.en || editingCategory?.slug}</strong>.
+                            <strong>
+                                {editingCategory?.name.bg ||
+                                    editingCategory?.name.en ||
+                                    editingCategory?.slug}
+                            </strong>
+                            .
                         </DialogDescription>
                     </DialogHeader>
 
@@ -491,32 +619,59 @@ export default function Index({ categories, filters, types }: Props) {
                         />
 
                         <DialogFooter>
-                            <Button type="button" variant="outline" onClick={closeEditModal} disabled={editForm.processing}>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={closeEditModal}
+                                disabled={editForm.processing}
+                            >
                                 Cancel
                             </Button>
-                            <Button type="submit" disabled={editForm.processing || !editingCategory}>
-                                {editForm.processing ? 'Saving...' : 'Save Changes'}
+                            <Button
+                                type="submit"
+                                disabled={
+                                    editForm.processing || !editingCategory
+                                }
+                            >
+                                {editForm.processing
+                                    ? 'Saving...'
+                                    : 'Save Changes'}
                             </Button>
                         </DialogFooter>
                     </form>
                 </DialogContent>
             </Dialog>
 
-            <Dialog open={!!pendingDelete} onOpenChange={(open) => !open && setPendingDelete(null)}>
+            <Dialog
+                open={!!pendingDelete}
+                onOpenChange={(open) => !open && setPendingDelete(null)}
+            >
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Delete Category</DialogTitle>
                         <DialogDescription>
                             Are you sure you want to delete{' '}
-                            <strong>{pendingDelete?.name.bg || pendingDelete?.name.en || pendingDelete?.slug}</strong>?
-                            This action cannot be undone.
+                            <strong>
+                                {pendingDelete?.name.bg ||
+                                    pendingDelete?.name.en ||
+                                    pendingDelete?.slug}
+                            </strong>
+                            ? This action cannot be undone.
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
-                        <Button variant="outline" onClick={() => setPendingDelete(null)} disabled={isDeleting}>
+                        <Button
+                            variant="outline"
+                            onClick={() => setPendingDelete(null)}
+                            disabled={isDeleting}
+                        >
                             Cancel
                         </Button>
-                        <Button variant="destructive" onClick={handleDelete} disabled={isDeleting}>
+                        <Button
+                            variant="destructive"
+                            onClick={handleDelete}
+                            disabled={isDeleting}
+                        >
                             {isDeleting ? 'Deleting...' : 'Delete'}
                         </Button>
                     </DialogFooter>

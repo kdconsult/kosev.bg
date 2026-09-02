@@ -86,7 +86,9 @@ export function ServiceForm({
                                 <FieldSet>
                                     <FieldLegend>Default data</FieldLegend>
                                     <FieldDescription>
-                                        This is the basic information about the service, such as its name, description, and whether it is active or not.
+                                        This is the basic information about the
+                                        service, such as its name, description,
+                                        and whether it is active or not.
                                     </FieldDescription>
                                     <FieldGroup>
                                         <Field>
@@ -95,35 +97,79 @@ export function ServiceForm({
                                             </FieldLabel>
                                             <Input
                                                 autoComplete="off"
-                                                value={data.name?.[locale] ?? ''}
-                                                onChange={(e) => setData(`name.${locale}`, e.target.value)}
-                                                aria-invalid={errors[`name.${locale}`] ? 'true' : 'false'}
+                                                value={
+                                                    data.name?.[locale] ?? ''
+                                                }
+                                                onChange={(e) =>
+                                                    setData(
+                                                        `name.${locale}`,
+                                                        e.target.value,
+                                                    )
+                                                }
+                                                aria-invalid={
+                                                    errors[`name.${locale}`]
+                                                        ? 'true'
+                                                        : 'false'
+                                                }
                                             />
                                             {errors[`name.${locale}`] && (
-                                                <FieldError>{errors[`name.${locale}`]}</FieldError>
+                                                <FieldError>
+                                                    {errors[`name.${locale}`]}
+                                                </FieldError>
                                             )}
                                         </Field>
                                         <Field>
                                             <FieldLabel htmlFor="description">
-                                                Description ({locale.toUpperCase()})
+                                                Description (
+                                                {locale.toUpperCase()})
                                             </FieldLabel>
                                             <Textarea
                                                 autoComplete="off"
-                                                value={data.description?.[locale] ?? ''}
-                                                onChange={(e) => setData(`description.${locale}`, e.target.value)}
-                                                aria-invalid={errors[`description.${locale}`] ? 'true' : 'false'}
+                                                value={
+                                                    data.description?.[
+                                                        locale
+                                                    ] ?? ''
+                                                }
+                                                onChange={(e) =>
+                                                    setData(
+                                                        `description.${locale}`,
+                                                        e.target.value,
+                                                    )
+                                                }
+                                                aria-invalid={
+                                                    errors[
+                                                        `description.${locale}`
+                                                    ]
+                                                        ? 'true'
+                                                        : 'false'
+                                                }
                                             />
-                                            {errors[`description.${locale}`] && (
-                                                <FieldError>{errors[`description.${locale}`]}</FieldError>
+                                            {errors[
+                                                `description.${locale}`
+                                            ] && (
+                                                <FieldError>
+                                                    {
+                                                        errors[
+                                                            `description.${locale}`
+                                                        ]
+                                                    }
+                                                </FieldError>
                                             )}
                                         </Field>
                                         <Field orientation="horizontal">
                                             <Switch
                                                 id="is_active"
                                                 checked={data.is_active}
-                                                onCheckedChange={(checked) => setData('is_active', checked)}
+                                                onCheckedChange={(checked) =>
+                                                    setData(
+                                                        'is_active',
+                                                        checked,
+                                                    )
+                                                }
                                             />
-                                            <FieldLabel htmlFor="is_active">Active</FieldLabel>
+                                            <FieldLabel htmlFor="is_active">
+                                                Active
+                                            </FieldLabel>
                                         </Field>
                                     </FieldGroup>
                                 </FieldSet>
@@ -140,13 +186,17 @@ export function ServiceForm({
                                 <FieldLabel htmlFor="name">Products</FieldLabel>
                                 <TagInput
                                     value={data.products}
-                                    onChange={(products) => setData('products', products)}
+                                    onChange={(products) =>
+                                        setData('products', products)
+                                    }
                                     suggestions={availableProducts}
                                     placeholder="Add products..."
                                 />
                             </Field>
                             <Field>
-                                <FieldLabel htmlFor="tags">Предимства</FieldLabel>
+                                <FieldLabel htmlFor="tags">
+                                    Предимства
+                                </FieldLabel>
                                 <TagInput
                                     value={data.tags}
                                     onChange={(tags) => setData('tags', tags)}
@@ -160,7 +210,9 @@ export function ServiceForm({
                                 </FieldLabel>
                                 <SpecFields
                                     specs={data.specs}
-                                    onChange={(specs) => setData('specs', specs)}
+                                    onChange={(specs) =>
+                                        setData('specs', specs)
+                                    }
                                     activeLocale={activeLocale}
                                     errors={errors}
                                 />
@@ -168,7 +220,9 @@ export function ServiceForm({
                         </FieldGroup>
                     </FieldSet>
                     <Field>
-                        <FieldLabel htmlFor="cover_image">Cover Image</FieldLabel>
+                        <FieldLabel htmlFor="cover_image">
+                            Cover Image
+                        </FieldLabel>
                         <Input
                             id="cover_image"
                             type="file"
@@ -178,8 +232,12 @@ export function ServiceForm({
                             }}
                             aria-invalid={errors.cover_image ? 'true' : 'false'}
                         />
-                        <FieldDescription>Select a cover image to upload.</FieldDescription>
-                        {errors.cover_image && <FieldError>{errors.cover_image}</FieldError>}
+                        <FieldDescription>
+                            Select a cover image to upload.
+                        </FieldDescription>
+                        {errors.cover_image && (
+                            <FieldError>{errors.cover_image}</FieldError>
+                        )}
                     </Field>
                     <Field>
                         <FieldLabel htmlFor="images">Images</FieldLabel>
@@ -192,8 +250,12 @@ export function ServiceForm({
                             }}
                             aria-invalid={errors.images ? 'true' : 'false'}
                         />
-                        <FieldDescription>Select additional images to upload.</FieldDescription>
-                        {errors.images && <FieldError>{errors.images}</FieldError>}
+                        <FieldDescription>
+                            Select additional images to upload.
+                        </FieldDescription>
+                        {errors.images && (
+                            <FieldError>{errors.images}</FieldError>
+                        )}
                     </Field>
                     <div className="flex items-center justify-between">
                         {onDelete && (

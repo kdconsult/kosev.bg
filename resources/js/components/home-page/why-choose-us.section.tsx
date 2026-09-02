@@ -1,12 +1,18 @@
-import type { Translations } from "@/types/translations";
+import type { Translations } from '@/types/translations';
 
-export default function WhyChooseUsSection({ translations }: { translations: Translations['whyChooseUsSection'] }) {
+export default function WhyChooseUsSection({
+    translations,
+}: {
+    translations: Translations['whyChooseUsSection'];
+}) {
     return (
         <section className="section bg-background">
             <div className="container">
                 <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
                     <div>
-                        <span className="section-subtitle">{translations.badge}</span>
+                        <span className="section-subtitle">
+                            {translations.badge}
+                        </span>
                         <h2 className="mb-6 text-balance">
                             {translations.title}
                         </h2>
@@ -16,7 +22,10 @@ export default function WhyChooseUsSection({ translations }: { translations: Tra
 
                         <div className="grid gap-8 sm:grid-cols-2">
                             {translations.advantages.map((advantage, index) => (
-                                <div className="flex flex-col gap-3" key={index}>
+                                <div
+                                    className="flex flex-col gap-3"
+                                    key={index}
+                                >
                                     <div className="font-serif text-[2.5rem] leading-none font-normal text-brand-gold">
                                         {advantage.stat}
                                     </div>
@@ -39,7 +48,7 @@ export default function WhyChooseUsSection({ translations }: { translations: Tra
                                 src={translations.featuredImage.src}
                                 alt={translations.featuredImage.alt}
                                 loading="lazy"
-                                className="h-auto w-full object-cover aspect-4/3 lg:aspect-square"
+                                className="aspect-4/3 h-auto w-full object-cover lg:aspect-square"
                             />
                             <div className="absolute top-6 left-6 flex flex-col rounded-md bg-card px-8 py-6 shadow-xl">
                                 <span className="font-serif text-[2.5rem] leading-none font-normal text-foreground">

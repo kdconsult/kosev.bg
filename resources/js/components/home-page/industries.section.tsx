@@ -1,7 +1,11 @@
 import { cn } from '@/lib/utils';
 import type { Translations } from '@/types/translations';
 
-export default function IndustriesSection({translations}: {translations: Translations['industriesSection']}) {
+export default function IndustriesSection({
+    translations,
+}: {
+    translations: Translations['industriesSection'];
+}) {
     return (
         <>
             <style>{`
@@ -121,7 +125,9 @@ export default function IndustriesSection({translations}: {translations: Transla
                 <div className="container">
                     <div className="industries-layout">
                         <div className="industries-header">
-                            <span className="section-subtitle">{translations.badge}</span>
+                            <span className="section-subtitle">
+                                {translations.badge}
+                            </span>
                             <h2>{translations.title}</h2>
                             <p>{translations.description}</p>
                         </div>

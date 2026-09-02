@@ -14,8 +14,21 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
 import { dashboard } from '@/routes';
 import { index, create } from '@/routes/admin/products';
 
@@ -69,11 +82,13 @@ const PER_PAGE_OPTIONS = [5, 10, 15, 25, 50];
 
 export default function Index({ products, filters }: Props) {
     const [search, setSearch] = useState(filters.search ?? '');
-    const [pendingDelete, setPendingDelete] = useState<AdminProduct | null>(null);
+    const [pendingDelete, setPendingDelete] = useState<AdminProduct | null>(
+        null,
+    );
     const [isDeleting, setIsDeleting] = useState(false);
     const searchInputRef = useRef<HTMLInputElement>(null);
     const { url } = usePage();
-    const {locale} = usePage().props as {locale: 'bg' | 'en'};
+    const { locale } = usePage().props as { locale: 'bg' | 'en' };
 
     const navigate = (url: string | null) => {
         if (!url) {
@@ -83,10 +98,16 @@ export default function Index({ products, filters }: Props) {
         router.get(url, {}, { preserveScroll: true, preserveState: true });
     };
 
-    const applyFilters = (overrides: Record<string, string | number | undefined>) => {
+    const applyFilters = (
+        overrides: Record<string, string | number | undefined>,
+    ) => {
         router.get(
             index(),
-            { search: search || undefined, per_page: filters.per_page, ...overrides },
+            {
+                search: search || undefined,
+                per_page: filters.per_page,
+                ...overrides,
+            },
             { preserveScroll: true, preserveState: true, replace: true },
         );
     };
@@ -123,17 +144,24 @@ export default function Index({ products, filters }: Props) {
 
             <div className="flex h-full flex-1 flex-col gap-6 p-6">
                 <div className="flex items-center justify-between">
-                    <Heading title="Products" description="Manage your product catalogue." />
-                        <Link href={create()} as='button' className='btn btn-xs btn-outline'>
-                            <Plus className="mr-2 h-4 w-4" />
-                            Add Product
-                        </Link>
+                    <Heading
+                        title="Products"
+                        description="Manage your product catalogue."
+                    />
+                    <Link
+                        href={create()}
+                        as="button"
+                        className="btn btn-xs btn-outline"
+                    >
+                        <Plus className="mr-2 h-4 w-4" />
+                        Add Product
+                    </Link>
                 </div>
 
                 <div className="flex items-center gap-3">
                     <form onSubmit={handleSearch} className="flex flex-1 gap-2">
                         <div className="relative max-w-sm flex-1">
-                            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                            <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                             <Input
                                 ref={searchInputRef}
                                 value={search}
@@ -151,7 +179,10 @@ export default function Index({ products, filters }: Props) {
                                 variant="ghost"
                                 onClick={() => {
                                     setSearch('');
-                                    applyFilters({ search: undefined, page: 1 });
+                                    applyFilters({
+                                        search: undefined,
+                                        page: 1,
+                                    });
                                 }}
                             >
                                 Clear
@@ -160,7 +191,9 @@ export default function Index({ products, filters }: Props) {
                     </form>
 
                     <div className="flex items-center gap-2">
-                        <span className="text-muted-foreground text-sm whitespace-nowrap">Rows per page</span>
+                        <span className="text-sm whitespace-nowrap text-muted-foreground">
+                            Rows per page
+                        </span>
                         <Select
                             value={String(filters.per_page ?? 15)}
                             onValueChange={handlePerPageChange}
@@ -186,13 +219,18 @@ export default function Index({ products, filters }: Props) {
                                 <TableHead>Title</TableHead>
                                 <TableHead>Category</TableHead>
                                 <TableHead>Tags</TableHead>
-                                <TableHead className="w-24 text-right">Actions</TableHead>
+                                <TableHead className="w-24 text-right">
+                                    Actions
+                                </TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {products.data.length === 0 ? (
                                 <TableRow>
-                                    <TableCell colSpan={4} className="text-muted-foreground py-12 text-center">
+                                    <TableCell
+                                        colSpan={4}
+                                        className="py-12 text-center text-muted-foreground"
+                                    >
                                         No products found.
                                     </TableCell>
                                 </TableRow>
@@ -200,45 +238,72 @@ export default function Index({ products, filters }: Props) {
                                 products.data.map((product) => (
                                     <TableRow key={product.slug}>
                                         <TableCell className="font-medium">
-                                            {product.title[locale] || product.title['bg'] || product.slug}
+                                            {product.title[locale] ||
+                                                product.title['bg'] ||
+                                                product.slug}
                                         </TableCell>
                                         <TableCell>
                                             {product.category_slug ? (
-                                                <Badge variant="outline">{product.category_slug}</Badge>
+                                                <Badge variant="outline">
+                                                    {product.category_slug}
+                                                </Badge>
                                             ) : (
-                                                <span className="text-muted-foreground text-sm">—</span>
+                                                <span className="text-sm text-muted-foreground">
+                                                    —
+                                                </span>
                                             )}
                                         </TableCell>
                                         <TableCell>
                                             <div className="flex flex-wrap gap-1">
-                                                {product.tags.slice(0, 3).map((tag) => (
-                                                    <Badge key={tag.slug} variant="secondary">
-                                                        {tag.name}
-                                                    </Badge>
-                                                ))}
+                                                {product.tags
+                                                    .slice(0, 3)
+                                                    .map((tag) => (
+                                                        <Badge
+                                                            key={tag.slug}
+                                                            variant="secondary"
+                                                        >
+                                                            {tag.name}
+                                                        </Badge>
+                                                    ))}
                                                 {product.tags.length > 3 && (
                                                     <Badge variant="secondary">
-                                                        +{product.tags.length - 3}
+                                                        +
+                                                        {product.tags.length -
+                                                            3}
                                                     </Badge>
                                                 )}
                                             </div>
                                         </TableCell>
                                         <TableCell className="text-right">
                                             <div className="flex justify-end gap-1">
-                                                <Button variant="ghost" size="icon-sm" asChild>
-                                                    <Link href={`${ProductsController.edit.url(product)}?from=${encodeURIComponent(url)}`}>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon-sm"
+                                                    asChild
+                                                >
+                                                    <Link
+                                                        href={`${ProductsController.edit.url(product)}?from=${encodeURIComponent(url)}`}
+                                                    >
                                                         <Pencil className="h-4 w-4" />
-                                                        <span className="sr-only">Edit</span>
+                                                        <span className="sr-only">
+                                                            Edit
+                                                        </span>
                                                     </Link>
                                                 </Button>
                                                 <Button
                                                     variant="ghost"
                                                     size="icon-sm"
                                                     className="text-destructive hover:text-destructive"
-                                                    onClick={() => setPendingDelete(product)}
+                                                    onClick={() =>
+                                                        setPendingDelete(
+                                                            product,
+                                                        )
+                                                    }
                                                 >
                                                     <Trash2 className="h-4 w-4" />
-                                                    <span className="sr-only">Delete</span>
+                                                    <span className="sr-only">
+                                                        Delete
+                                                    </span>
                                                 </Button>
                                             </div>
                                         </TableCell>
@@ -251,8 +316,9 @@ export default function Index({ products, filters }: Props) {
 
                 {meta.total > 0 && (
                     <div className="flex items-center justify-between">
-                        <p className="text-muted-foreground text-sm">
-                            Showing {meta.from}–{meta.to} of {meta.total} results
+                        <p className="text-sm text-muted-foreground">
+                            Showing {meta.from}–{meta.to} of {meta.total}{' '}
+                            results
                         </p>
 
                         <div className="flex items-center gap-1">
@@ -276,11 +342,15 @@ export default function Index({ products, filters }: Props) {
                             {pageLinks.map((link, i) => (
                                 <Button
                                     key={i}
-                                    variant={link.active ? 'default' : 'outline'}
+                                    variant={
+                                        link.active ? 'default' : 'outline'
+                                    }
                                     size="sm"
                                     onClick={() => navigate(link.url)}
                                     disabled={!link.url || link.active}
-                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                    dangerouslySetInnerHTML={{
+                                        __html: link.label,
+                                    }}
                                 />
                             ))}
 
@@ -305,23 +375,36 @@ export default function Index({ products, filters }: Props) {
                 )}
             </div>
 
-            <Dialog open={!!pendingDelete} onOpenChange={(open) => !open && setPendingDelete(null)}>
+            <Dialog
+                open={!!pendingDelete}
+                onOpenChange={(open) => !open && setPendingDelete(null)}
+            >
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Delete Product</DialogTitle>
                         <DialogDescription>
                             Are you sure you want to delete{' '}
                             <strong>
-                                {pendingDelete?.title.bg || pendingDelete?.title.en || pendingDelete?.slug}
+                                {pendingDelete?.title.bg ||
+                                    pendingDelete?.title.en ||
+                                    pendingDelete?.slug}
                             </strong>
                             ? This action cannot be undone.
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
-                        <Button variant="outline" onClick={() => setPendingDelete(null)} disabled={isDeleting}>
+                        <Button
+                            variant="outline"
+                            onClick={() => setPendingDelete(null)}
+                            disabled={isDeleting}
+                        >
                             Cancel
                         </Button>
-                        <Button variant="destructive" onClick={handleDelete} disabled={isDeleting}>
+                        <Button
+                            variant="destructive"
+                            onClick={handleDelete}
+                            disabled={isDeleting}
+                        >
                             {isDeleting ? 'Deleting...' : 'Delete'}
                         </Button>
                     </DialogFooter>

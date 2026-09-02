@@ -1,12 +1,6 @@
 import { usePage } from '@inertiajs/react';
-import type {
-    LucideIcon} from 'lucide-react';
-import {
-    ClockIcon,
-    MailIcon,
-    MapPin,
-    PhoneIcon,
-} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import { ClockIcon, MailIcon, MapPin, PhoneIcon } from 'lucide-react';
 import { useSyncExternalStore } from 'react';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import ContactForm from '@/components/contact-form';
@@ -37,7 +31,7 @@ type ContactUsTranslations = {
         badge?: string;
         description?: string;
         faqs: { question: string; answer: string }[];
-    }
+    };
 };
 
 export default function Contacts({
@@ -258,10 +252,14 @@ export default function Contacts({
                                 <GoogleReCaptchaProvider
                                     reCaptchaKey={recaptchaSiteKey}
                                 >
-                                    <ContactForm translations={translations?.form} />
+                                    <ContactForm
+                                        translations={translations?.form}
+                                    />
                                 </GoogleReCaptchaProvider>
                             ) : (
-                                <ContactForm translations={translations?.form} />
+                                <ContactForm
+                                    translations={translations?.form}
+                                />
                             )}
                         </div>
                     </div>
@@ -290,7 +288,9 @@ export default function Contacts({
                         <span className="section-subtitle">
                             {translations.faqSection.badge}
                         </span>
-                        <h2 className="section-title">{translations.faqSection.title}</h2>
+                        <h2 className="section-title">
+                            {translations.faqSection.title}
+                        </h2>
                     </div>
 
                     <div className="faq-grid">

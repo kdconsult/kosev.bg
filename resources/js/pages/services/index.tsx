@@ -16,19 +16,25 @@ type ServicesTranslations = {
         description: string;
         badge: string;
         image: string;
-    },
+    };
     ctaSection: {
         title: string;
         description: string;
         button: string;
-    },
+    };
     buttons: {
         seeDetails: string;
         sendInquiry: string;
-    }
+    };
 };
 
-export default function Services({ services, translations }: { services: Service[]; translations: ServicesTranslations }) {
+export default function Services({
+    services,
+    translations,
+}: {
+    services: Service[];
+    translations: ServicesTranslations;
+}) {
     const { appUrl, seo } = usePage().props as {
         appUrl: string;
         seo: { services: { title: string; description: string } };
@@ -38,7 +44,12 @@ export default function Services({ services, translations }: { services: Service
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: translations.seo.home, item: appUrl },
+            {
+                '@type': 'ListItem',
+                position: 1,
+                name: translations.seo.home,
+                item: appUrl,
+            },
             {
                 '@type': 'ListItem',
                 position: 2,
@@ -69,7 +80,9 @@ export default function Services({ services, translations }: { services: Service
                     <div className="hero-overlay"></div>
                 </div>
                 <div className="hero-content container">
-                    <span className="hero-badge">{translations.heroSection.badge}</span>
+                    <span className="hero-badge">
+                        {translations.heroSection.badge}
+                    </span>
                     <h1>{translations.heroSection.title}</h1>
                     <p>{translations.heroSection.description}</p>
                 </div>
@@ -80,7 +93,7 @@ export default function Services({ services, translations }: { services: Service
                     {services.map((service, i) => (
                         <div
                             id={service.slug}
-                            className="service-section mb-20 grid items-center gap-8 last:mb-0 lg:grid-cols-2 lg:gap-16 py-8"
+                            className="service-section mb-20 grid items-center gap-8 py-8 last:mb-0 lg:grid-cols-2 lg:gap-16"
                             key={service.id}
                         >
                             <span className="service-number" aria-hidden="true">
@@ -113,7 +126,7 @@ export default function Services({ services, translations }: { services: Service
                                         href={contacts()}
                                         className="btn btn-primary"
                                     >
-                                        {translations.buttons.sendInquiry       }
+                                        {translations.buttons.sendInquiry}
                                         <ArrowRight className="h-5 w-5" />
                                     </Link>
                                 </div>
@@ -124,14 +137,12 @@ export default function Services({ services, translations }: { services: Service
             </section>
 
             <section className="bg-secondary py-16">
-                <div className="container flex flex-col md:flex-row md:items-center justify-between gap-8">
+                <div className="container flex flex-col justify-between gap-8 md:flex-row md:items-center">
                     <div>
                         <h2>{translations.ctaSection.title}</h2>
-                        <p>
-                            {translations.ctaSection.description}
-                        </p>
+                        <p>{translations.ctaSection.description}</p>
                     </div>
-                    <div className='shrink-0'>
+                    <div className="shrink-0">
                         <Link
                             href={contacts()}
                             className="btn btn-accent btn-lg"

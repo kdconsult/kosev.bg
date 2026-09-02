@@ -14,9 +14,9 @@ type ProductDetailTranslations = {
     relatedServices: string;
     ctaButton: string;
     seo: {
-        home:string;
+        home: string;
         products: string;
-    }
+    };
 };
 
 export default function ProductDetail({
@@ -54,7 +54,12 @@ export default function ProductDetail({
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: translations.seo.home, item: appUrl },
+            {
+                '@type': 'ListItem',
+                position: 1,
+                name: translations.seo.home,
+                item: appUrl,
+            },
             {
                 '@type': 'ListItem',
                 position: 2,
@@ -196,7 +201,7 @@ export default function ProductDetail({
                                         className="aspect-4/3 h-full w-full object-cover"
                                     />
                                 </div>
-                                <div className="flex gap-3 flex-wrap">
+                                <div className="flex flex-wrap gap-3">
                                     <button
                                         className={cn(
                                             'thumb',

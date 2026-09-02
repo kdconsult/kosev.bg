@@ -12,14 +12,20 @@ type ProjectDetailTranslations = {
     seo: {
         home: string;
         projects: string;
-    };    
+    };
     backToProjects: string;
     categoryLabel: string;
     specs: string;
     ctaButton: string;
 };
 
-export default function ProjectDetail({ project, translations }: { project: Project; translations: ProjectDetailTranslations }) {
+export default function ProjectDetail({
+    project,
+    translations,
+}: {
+    project: Project;
+    translations: ProjectDetailTranslations;
+}) {
     const { appUrl } = usePage().props as { appUrl: string };
     const [activeImageIndex, setActiveImageIndex] = useState(-1);
     const activeImage =
@@ -45,7 +51,12 @@ export default function ProjectDetail({ project, translations }: { project: Proj
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: translations.seo.home, item: appUrl },
+            {
+                '@type': 'ListItem',
+                position: 1,
+                name: translations.seo.home,
+                item: appUrl,
+            },
             {
                 '@type': 'ListItem',
                 position: 2,

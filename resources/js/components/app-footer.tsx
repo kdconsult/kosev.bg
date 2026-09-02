@@ -183,7 +183,9 @@ export function AppFooter() {
                                 href={home()}
                                 className="flex w-fit items-center gap-4 rounded bg-muted px-4"
                             >
-                                <span className="logo-text">{footer.logoText}</span>
+                                <span className="logo-text">
+                                    {footer.logoText}
+                                </span>
                                 <span className="logo-divider"></span>
                                 <span className="logo-tagline">
                                     {footer.logoAlt}
@@ -278,19 +280,29 @@ export function AppFooter() {
                             <h4>{footer.links.title}</h4>
                             <ul>
                                 <li>
-                                    <Link href={home()}>{footer.links.home}</Link>
+                                    <Link href={home()}>
+                                        {footer.links.home}
+                                    </Link>
                                 </li>
                                 <li>
-                                    <Link href={services()}>{footer.links.services}</Link>
+                                    <Link href={services()}>
+                                        {footer.links.services}
+                                    </Link>
                                 </li>
                                 <li>
-                                    <Link href={about()}>{footer.links.about}</Link>
+                                    <Link href={about()}>
+                                        {footer.links.about}
+                                    </Link>
                                 </li>
                                 <li>
-                                    <Link href={index()}>{footer.links.projects}</Link>
+                                    <Link href={index()}>
+                                        {footer.links.projects}
+                                    </Link>
                                 </li>
                                 <li>
-                                    <Link href={contacts()}>{footer.links.contact}</Link>
+                                    <Link href={contacts()}>
+                                        {footer.links.contact}
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
@@ -309,13 +321,19 @@ export function AppFooter() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href={services()}>{footer.services.welding}</Link>
+                                    <Link href={services()}>
+                                        {footer.services.welding}
+                                    </Link>
                                 </li>
                                 <li>
-                                    <Link href={services()}>{footer.services.assembly}</Link>
+                                    <Link href={services()}>
+                                        {footer.services.assembly}
+                                    </Link>
                                 </li>
                                 <li>
-                                    <Link href={services()}>{footer.services.cncMachining}</Link>
+                                    <Link href={services()}>
+                                        {footer.services.cncMachining}
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
@@ -324,17 +342,18 @@ export function AppFooter() {
                             <h4>{footer.contact.title}</h4>
                             <ul>
                                 <li>
-                                    <MapPinIcon size={18} />                                    
+                                    <MapPinIcon size={18} />
                                     <span>
-                                        {footer.contact.address}, <br /> {footer.contact.street}
+                                        {footer.contact.address}, <br />{' '}
+                                        {footer.contact.street}
                                     </span>
                                 </li>
                                 <li>
-                                    <PhoneIcon size={18} />                                    
+                                    <PhoneIcon size={18} />
                                     <span>{footer.contact.phone}</span>
                                 </li>
                                 <li>
-                                    <MailIcon size={18} />                                    
+                                    <MailIcon size={18} />
                                     <span>{footer.contact.email}</span>
                                 </li>
                             </ul>
@@ -347,12 +366,8 @@ export function AppFooter() {
                         </p>
                         <div className="footer-bottom-links">
                             {/* ToDo add pages and links */}
-                            <Link href="#">
-                                {footer.links.privacyPolicy}
-                            </Link>
-                            <Link href="#">
-                                {footer.links.termsOfService}
-                            </Link>
+                            <Link href="#">{footer.links.privacyPolicy}</Link>
+                            <Link href="#">{footer.links.termsOfService}</Link>
                         </div>
                     </div>
                 </div>

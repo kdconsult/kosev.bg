@@ -16,7 +16,11 @@ interface Props {
     availableServces: TagSuggestion[];
 }
 
-export default function Create({ categories, availableTags, availableServces }: Props) {
+export default function Create({
+    categories,
+    availableTags,
+    availableServces,
+}: Props) {
     const { locales } = usePage().props;
 
     const { data, setData, post, processing, errors } = useForm({
@@ -25,7 +29,10 @@ export default function Create({ categories, availableTags, availableServces }: 
         category_slug: '',
         tags: [] as string[],
         services: [] as string[],
-        specs: [] as { label: Record<string, string>; value: Record<string, string> }[],
+        specs: [] as {
+            label: Record<string, string>;
+            value: Record<string, string>;
+        }[],
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -38,7 +45,10 @@ export default function Create({ categories, availableTags, availableServces }: 
             <Head title="Create Product" />
 
             <div className="flex h-full flex-1 flex-col gap-6 p-6">
-                <Heading title="Create Product" description="Add a new product to the catalogue." />
+                <Heading
+                    title="Create Product"
+                    description="Add a new product to the catalogue."
+                />
 
                 <div className="max-w-2xl">
                     <ProductForm

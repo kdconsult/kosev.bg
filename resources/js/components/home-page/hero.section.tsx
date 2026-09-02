@@ -1,12 +1,6 @@
 import { Link } from '@inertiajs/react';
-import type {
-    LucideIcon} from 'lucide-react';
-import {
-    ChevronRight,
-    ClockIcon,
-    GlobeIcon,
-    ShieldCheck,
-} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import { ChevronRight, ClockIcon, GlobeIcon, ShieldCheck } from 'lucide-react';
 import { about } from '@/routes';
 import { index as services } from '@/routes/services';
 import type { Translations } from '@/types/translations';
@@ -320,12 +314,10 @@ export default function HeroSection({
                         <div className="stats-card">
                             {translations.stats.map((stat, index) => (
                                 <div
-                                  key={'stat-' + index}
-                                  className='flex items-center gap-10'
+                                    key={'stat-' + index}
+                                    className="flex items-center gap-10"
                                 >
-                                    <div
-                                        className="stat-item"
-                                    >
+                                    <div className="stat-item">
                                         <span className="stat-number">
                                             {stat.number}
                                         </span>

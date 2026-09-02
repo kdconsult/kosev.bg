@@ -68,11 +68,19 @@ export function ProjectForm({
     const [activeLocale, setActiveLocale] = useState(primaryLocale);
 
     return (
-        <form onSubmit={onSubmit} className="space-y-6" encType="multipart/form-data">
+        <form
+            onSubmit={onSubmit}
+            className="space-y-6"
+            encType="multipart/form-data"
+        >
             {slug && (
                 <div className="grid gap-2">
                     <Label>Slug</Label>
-                    <Input value={slug} readOnly className="cursor-default bg-muted text-muted-foreground" />
+                    <Input
+                        value={slug}
+                        readOnly
+                        className="cursor-default bg-muted text-muted-foreground"
+                    />
                 </div>
             )}
 
@@ -101,7 +109,12 @@ export function ProjectForm({
                 </div>
                 <Input
                     value={data.title[activeLocale] ?? ''}
-                    onChange={(e) => setData('title', { ...data.title, [activeLocale]: e.target.value })}
+                    onChange={(e) =>
+                        setData('title', {
+                            ...data.title,
+                            [activeLocale]: e.target.value,
+                        })
+                    }
                 />
                 <InputError message={errors[`title.${activeLocale}`]} />
             </div>
@@ -109,11 +122,18 @@ export function ProjectForm({
             <div className="grid gap-2">
                 <Label>
                     Description{' '}
-                    {activeLocale === primaryLocale && <span className="text-destructive">*</span>}
+                    {activeLocale === primaryLocale && (
+                        <span className="text-destructive">*</span>
+                    )}
                 </Label>
                 <textarea
                     value={data.description[activeLocale] ?? ''}
-                    onChange={(e) => setData('description', { ...data.description, [activeLocale]: e.target.value })}
+                    onChange={(e) =>
+                        setData('description', {
+                            ...data.description,
+                            [activeLocale]: e.target.value,
+                        })
+                    }
                     rows={5}
                     className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
                 />
@@ -136,7 +156,9 @@ export function ProjectForm({
                 </Label>
                 <Select
                     value={data.category_id?.toString() || ''}
-                    onValueChange={(val) => setData('category_id', Number.parseInt(val, 10))}
+                    onValueChange={(val) =>
+                        setData('category_id', Number.parseInt(val, 10))
+                    }
                 >
                     <SelectTrigger>
                         <SelectValue placeholder="Select a category" />
@@ -173,7 +195,9 @@ export function ProjectForm({
                         }}
                         type="file"
                     />
-                    <FieldDescription>Select a cover image to upload.</FieldDescription>
+                    <FieldDescription>
+                        Select a cover image to upload.
+                    </FieldDescription>
                     <InputError message={errors.coverImage} />
                 </Field>
 
@@ -187,7 +211,9 @@ export function ProjectForm({
                         type="file"
                         multiple
                     />
-                    <FieldDescription>Select images to upload.</FieldDescription>
+                    <FieldDescription>
+                        Select images to upload.
+                    </FieldDescription>
                     <InputError message={errors.images} />
                 </Field>
             </div>

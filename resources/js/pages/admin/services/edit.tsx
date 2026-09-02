@@ -50,10 +50,16 @@ export default function Edit({
     const [imagesState, setImagesState] = useState(images);
 
     const { data, setData, put, processing, errors } = useForm({
-        name: Object.fromEntries(locales.map((l) => [l, service.name[l] ?? ''])),
-        description: Object.fromEntries(locales.map((l) => [l, service.description[l] ?? ''])),
+        name: Object.fromEntries(
+            locales.map((l) => [l, service.name[l] ?? '']),
+        ),
+        description: Object.fromEntries(
+            locales.map((l) => [l, service.description[l] ?? '']),
+        ),
         is_active: service.is_active,
-        products: service.products.map((p) => p.title[primaryLocale] ?? p.title[locales[0]] ?? ''),
+        products: service.products.map(
+            (p) => p.title[primaryLocale] ?? p.title[locales[0]] ?? '',
+        ),
         tags: service.tags.map((t) => t.name),
         specs: service.specs ?? [],
     });
@@ -80,7 +86,11 @@ export default function Edit({
     };
 
     const onDelete = () => {
-        if (!confirm('Are you sure you want to delete this service? This action cannot be undone.')) {
+        if (
+            !confirm(
+                'Are you sure you want to delete this service? This action cannot be undone.',
+            )
+        ) {
             return;
         }
 
@@ -91,14 +101,18 @@ export default function Edit({
         });
     };
 
-    const displayName = service.name[primaryLocale] || service.name[locales[0]] || service.slug;
+    const displayName =
+        service.name[primaryLocale] || service.name[locales[0]] || service.slug;
 
     return (
         <>
             <Head title={`Edit: ${displayName}`} />
 
             <div className="flex h-full flex-1 flex-col gap-6 p-6">
-                <Heading title="Edit Service" description={`Editing: ${displayName}`} />
+                <Heading
+                    title="Edit Service"
+                    description={`Editing: ${displayName}`}
+                />
 
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div className="max-w-2xl">
@@ -116,7 +130,9 @@ export default function Edit({
                         />
                     </div>
                     <div className="grid gap-4">
-                        <h2 className="mb-2 text-lg font-semibold">Cover Image</h2>
+                        <h2 className="mb-2 text-lg font-semibold">
+                            Cover Image
+                        </h2>
                         <img
                             src={coverImageUrl ?? undefined}
                             alt={displayName}
@@ -125,20 +141,31 @@ export default function Edit({
 
                         {imagesState.length > 0 && (
                             <div>
-                                <h3 className="mb-2 text-lg font-semibold">Additional Images</h3>
+                                <h3 className="mb-2 text-lg font-semibold">
+                                    Additional Images
+                                </h3>
                                 <div className="flex flex-wrap gap-2">
                                     {imagesState.map((image, index) => (
-                                        <Card className="relative w-full max-w-42 pt-0" size="sm" key={image.id}>
+                                        <Card
+                                            className="relative w-full max-w-42 pt-0"
+                                            size="sm"
+                                            key={image.id}
+                                        >
                                             <img
                                                 src={image.url}
-                                                alt={image.alt || `Image ${index + 1}`}
+                                                alt={
+                                                    image.alt ||
+                                                    `Image ${index + 1}`
+                                                }
                                                 className="relative z-20 aspect-video w-full object-cover"
                                             />
                                             <CardFooter>
                                                 <Button
                                                     className="w-full"
                                                     variant="destructive"
-                                                    onClick={() => removeImage(index)}
+                                                    onClick={() =>
+                                                        removeImage(index)
+                                                    }
                                                 >
                                                     Remove Image
                                                 </Button>

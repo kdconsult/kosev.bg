@@ -16,10 +16,10 @@ export default function CapabilitiesSection({
         <section className="section bg-background">
             <div className="container">
                 <div className="section-header">
-                    <span className="section-subtitle">{translations.badge}</span>
-                    <h2 className="section-title">
-                        {translations.title}
-                    </h2>
+                    <span className="section-subtitle">
+                        {translations.badge}
+                    </span>
+                    <h2 className="section-title">{translations.title}</h2>
                     <p className="section-description">
                         {translations.description}
                     </p>
@@ -56,9 +56,7 @@ export default function CapabilitiesSection({
                                     href={show(capability.slug)}
                                     className="mt-auto inline-flex items-center gap-2 border-t border-border pt-5 text-sm font-semibold text-foreground"
                                 >
-                                    <span>
-                                        {translations.learnMore}
-                                    </span>
+                                    <span>{translations.learnMore}</span>
                                     <ArrowRight
                                         className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
                                         size={16}

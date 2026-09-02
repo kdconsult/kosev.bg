@@ -53,14 +53,22 @@ export default function Edit({
     const [imagesState, setImages] = useState(images);
 
     const { data, setData, put, processing, errors } = useForm({
-        title: Object.fromEntries(locales.map((l) => [l, product.title[l] ?? ''])),
-        description: Object.fromEntries(locales.map((l) => [l, product.description[l] ?? ''])),
+        title: Object.fromEntries(
+            locales.map((l) => [l, product.title[l] ?? '']),
+        ),
+        description: Object.fromEntries(
+            locales.map((l) => [l, product.description[l] ?? '']),
+        ),
         category_slug: product.category_slug ?? '',
         tags: product.tags.map((t) => t.name),
         services: product.services.map((s) => s.name),
         specs: (product.specs ?? []).map((s) => ({
-            label: Object.fromEntries(locales.map((l) => [l, s.label[l] ?? ''])),
-            value: Object.fromEntries(locales.map((l) => [l, s.value[l] ?? ''])),
+            label: Object.fromEntries(
+                locales.map((l) => [l, s.label[l] ?? '']),
+            ),
+            value: Object.fromEntries(
+                locales.map((l) => [l, s.value[l] ?? '']),
+            ),
         })),
     });
 
@@ -85,14 +93,20 @@ export default function Edit({
         });
     };
 
-    const displayTitle = product.title[primaryLocale] || product.title[locales[0]] || product.slug;
+    const displayTitle =
+        product.title[primaryLocale] ||
+        product.title[locales[0]] ||
+        product.slug;
 
     return (
         <>
             <Head title={`Edit: ${displayTitle}`} />
 
             <div className="flex h-full flex-1 flex-col gap-6 p-6">
-                <Heading title="Edit Product" description={`Editing: ${displayTitle}`} />
+                <Heading
+                    title="Edit Product"
+                    description={`Editing: ${displayTitle}`}
+                />
 
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div className="max-w-2xl">
@@ -111,29 +125,44 @@ export default function Edit({
                         />
                     </div>
                     <div className="grid gap-4">
-                        <h2 className="mb-2 text-lg font-semibold">Cover Image</h2>
+                        <h2 className="mb-2 text-lg font-semibold">
+                            Cover Image
+                        </h2>
                         <img
-                            src={coverImageUrl || 'https://placehold.co/800x600'}
+                            src={
+                                coverImageUrl || 'https://placehold.co/800x600'
+                            }
                             alt={coverImageAlt || 'Cover Image'}
                             className="h-auto max-w-full rounded-xl"
                         />
 
                         {imagesState.length > 0 && (
                             <div>
-                                <h3 className="mb-2 text-lg font-semibold">Additional Images</h3>
+                                <h3 className="mb-2 text-lg font-semibold">
+                                    Additional Images
+                                </h3>
                                 <div className="flex flex-wrap gap-2">
                                     {imagesState.map((image, index) => (
-                                        <Card className="relative w-full max-w-42 pt-0" size="sm" key={image.id}>
+                                        <Card
+                                            className="relative w-full max-w-42 pt-0"
+                                            size="sm"
+                                            key={image.id}
+                                        >
                                             <img
                                                 src={image.url}
-                                                alt={image.alt || `Image ${index + 1}`}
+                                                alt={
+                                                    image.alt ||
+                                                    `Image ${index + 1}`
+                                                }
                                                 className="relative z-20 aspect-video w-full object-cover"
                                             />
                                             <CardFooter>
                                                 <Button
                                                     className="w-full"
                                                     variant="destructive"
-                                                    onClick={() => removeImage(index)}
+                                                    onClick={() =>
+                                                        removeImage(index)
+                                                    }
                                                 >
                                                     Remove Image
                                                 </Button>

@@ -24,7 +24,13 @@ type ServiceDetailTranslations = {
     sendInquiryForService: string;
 };
 
-export default function ServiceDetail({ service, translations }: { service: Service, translations: ServiceDetailTranslations }) {
+export default function ServiceDetail({
+    service,
+    translations,
+}: {
+    service: Service;
+    translations: ServiceDetailTranslations;
+}) {
     const [activeImageIndex, setActiveImageIndex] = useState(-1);
     const activeImage =
         activeImageIndex === -1
@@ -32,7 +38,7 @@ export default function ServiceDetail({ service, translations }: { service: Serv
             : service.images[activeImageIndex]?.originalUrl;
 
     const { appUrl } = usePage().props as {
-        appUrl: string;        
+        appUrl: string;
     };
 
     const breadcrumbData = {
@@ -106,7 +112,9 @@ export default function ServiceDetail({ service, translations }: { service: Serv
                     </div>
                 </div>
                 <div className="hero-content container">
-                    <span className="hero-badge">{translations.heroSection.badge}</span>
+                    <span className="hero-badge">
+                        {translations.heroSection.badge}
+                    </span>
                     <h1>{service.name}</h1>
                 </div>
             </section>
@@ -117,19 +125,28 @@ export default function ServiceDetail({ service, translations }: { service: Serv
                         <div className="gallery">
                             <div className="mb-4 overflow-hidden rounded-xl">
                                 <img
-                                    className="aspect-4/3 h-auto w-full rounded-xl "
-                                    src={activeImage || 'https://placehold.co/800x600'}
+                                    className="aspect-4/3 h-auto w-full rounded-xl"
+                                    src={
+                                        activeImage ||
+                                        'https://placehold.co/800x600'
+                                    }
                                     alt={service.name}
                                 />
                             </div>
                             {service.images?.length > 0 && (
-                                <div className="flex gap-3 flex-wrap ">
+                                <div className="flex flex-wrap gap-3">
                                     <button
-                                        className={cn('thumb', activeImageIndex === -1 && 'active')}
+                                        className={cn(
+                                            'thumb',
+                                            activeImageIndex === -1 && 'active',
+                                        )}
                                         onClick={() => setActiveImageIndex(-1)}
                                     >
                                         <img
-                                            src={service.cover_image?.thumbUrl || 'https://placehold.co/400x300'}
+                                            src={
+                                                service.cover_image?.thumbUrl ||
+                                                'https://placehold.co/400x300'
+                                            }
                                             alt={service.name + ' cover'}
                                             loading="lazy"
                                         />
@@ -137,12 +154,22 @@ export default function ServiceDetail({ service, translations }: { service: Serv
                                     {service.images.map((img, idx) => (
                                         <button
                                             key={idx}
-                                            className={cn('thumb', activeImageIndex === idx && 'active')}
-                                            onClick={() => setActiveImageIndex(idx)}
+                                            className={cn(
+                                                'thumb',
+                                                activeImageIndex === idx &&
+                                                    'active',
+                                            )}
+                                            onClick={() =>
+                                                setActiveImageIndex(idx)
+                                            }
                                         >
                                             <img
                                                 src={img.thumbUrl}
-                                                alt={service.name + ' ' + (idx + 1)}
+                                                alt={
+                                                    service.name +
+                                                    ' ' +
+                                                    (idx + 1)
+                                                }
                                                 loading="lazy"
                                             />
                                         </button>

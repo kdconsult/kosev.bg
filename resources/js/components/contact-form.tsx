@@ -2,9 +2,7 @@ import { useForm } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import type { SubmitEvent } from 'react';
-import {
-    useGoogleReCaptcha,
-} from 'react-google-recaptcha-v3';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import MailController from '@/actions/App/Http/Controllers/MailController';
 import type { ContactForm as ContactFormTranslation } from '@/types/translations';
 import { Button } from './ui/button';
@@ -29,7 +27,11 @@ const initialFormData = {
     'g-recaptcha-response': '',
 };
 
-export default function ContactForm({translations}: { translations: ContactFormTranslation | undefined }) {
+export default function ContactForm({
+    translations,
+}: {
+    translations: ContactFormTranslation | undefined;
+}) {
     const {
         data,
         setData,
@@ -97,10 +99,13 @@ export default function ContactForm({translations}: { translations: ContactFormT
                 <FieldGroup>
                     <FieldSet>
                         <FieldLegend>
-                            <h4>{translations?.title || 'Свържете се с нас'}</h4>
+                            <h4>
+                                {translations?.title || 'Свържете се с нас'}
+                            </h4>
                         </FieldLegend>
                         <FieldDescription>
-                            {translations?.description || 'Ако имате въпроси, нужда от консултация или искате да обсъдим вашия проект, не се колебайте да се свържете с нас.'}
+                            {translations?.description ||
+                                'Ако имате въпроси, нужда от консултация или искате да обсъдим вашия проект, не се колебайте да се свържете с нас.'}
                         </FieldDescription>
                         <FieldGroup>
                             <div className="grid gap-4 lg:grid-cols-2">
@@ -113,7 +118,9 @@ export default function ContactForm({translations}: { translations: ContactFormT
                                         type="text"
                                         required
                                         value={data.name}
-                                        placeholder={translations?.name || 'Име'}
+                                        placeholder={
+                                            translations?.name || 'Име'
+                                        }
                                         className="bg-background p-6"
                                         aria-invalid={!!errors.name}
                                         onChange={(e) =>
@@ -133,7 +140,9 @@ export default function ContactForm({translations}: { translations: ContactFormT
                                         type="text"
                                         required
                                         value={data.company}
-                                        placeholder={translations?.company || 'Компания'}
+                                        placeholder={
+                                            translations?.company || 'Компания'
+                                        }
                                         className="bg-background p-6"
                                         aria-invalid={!!errors.company}
                                         onChange={(e) =>
@@ -158,7 +167,9 @@ export default function ContactForm({translations}: { translations: ContactFormT
                                         type="email"
                                         aria-invalid={!!errors.email}
                                         required
-                                        placeholder={translations?.email || 'Имейл'}
+                                        placeholder={
+                                            translations?.email || 'Имейл'
+                                        }
                                         className="bg-background p-6"
                                         onChange={(e) =>
                                             setData('email', e.target.value)
@@ -176,7 +187,9 @@ export default function ContactForm({translations}: { translations: ContactFormT
                                         name="phone"
                                         type="text"
                                         required
-                                        placeholder={translations?.phone || 'Телефон'}
+                                        placeholder={
+                                            translations?.phone || 'Телефон'
+                                        }
                                         className="bg-background p-6"
                                         value={data.phone}
                                         aria-invalid={!!errors.phone}
@@ -200,7 +213,9 @@ export default function ContactForm({translations}: { translations: ContactFormT
                                 <Textarea
                                     rows={4}
                                     name="message"
-                                    placeholder={translations?.message || 'Съобщение'}
+                                    placeholder={
+                                        translations?.message || 'Съобщение'
+                                    }
                                     color="red"
                                     className="field-sizing-fixed resize-none bg-background p-6 dark:bg-background"
                                     value={data.message}

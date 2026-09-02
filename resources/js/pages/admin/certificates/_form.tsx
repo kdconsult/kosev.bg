@@ -54,7 +54,9 @@ export default function CertificateForm({
                             <TabsContent key={locale} value={locale}>
                                 <FieldSet>
                                     <FieldLegend>Profile</FieldLegend>
-                                    <FieldDescription>This appears on invoices and emails.</FieldDescription>
+                                    <FieldDescription>
+                                        This appears on invoices and emails.
+                                    </FieldDescription>
                                     <FieldGroup>
                                         <Field>
                                             <FieldLabel htmlFor="name">
@@ -63,38 +65,86 @@ export default function CertificateForm({
                                             <Input
                                                 autoComplete="off"
                                                 placeholder="ISO 9001:2015"
-                                                value={data.name?.[locale] ?? ''}
-                                                onChange={(e) => setData(`name.${locale}`, e.target.value)}
-                                                aria-invalid={errors['name.' + locale] ? 'true' : 'false'}
+                                                value={
+                                                    data.name?.[locale] ?? ''
+                                                }
+                                                onChange={(e) =>
+                                                    setData(
+                                                        `name.${locale}`,
+                                                        e.target.value,
+                                                    )
+                                                }
+                                                aria-invalid={
+                                                    errors['name.' + locale]
+                                                        ? 'true'
+                                                        : 'false'
+                                                }
                                             />
-                                            <FieldDescription>This is the name of the certificate.</FieldDescription>
+                                            <FieldDescription>
+                                                This is the name of the
+                                                certificate.
+                                            </FieldDescription>
                                             {errors['name.' + locale] && (
-                                                <FieldError>{errors['name.' + locale]}</FieldError>
+                                                <FieldError>
+                                                    {errors['name.' + locale]}
+                                                </FieldError>
                                             )}
                                         </Field>
                                         <Field>
                                             <FieldLabel htmlFor="description">
-                                                Description ({locale.toUpperCase()})
+                                                Description (
+                                                {locale.toUpperCase()})
                                             </FieldLabel>
                                             <Textarea
                                                 autoComplete="off"
                                                 placeholder="Description of the certificate"
-                                                value={data.description?.[locale] ?? ''}
-                                                onChange={(e) => setData(`description.${locale}`, e.target.value)}
-                                                aria-invalid={errors['description.' + locale] ? 'true' : 'false'}
+                                                value={
+                                                    data.description?.[
+                                                        locale
+                                                    ] ?? ''
+                                                }
+                                                onChange={(e) =>
+                                                    setData(
+                                                        `description.${locale}`,
+                                                        e.target.value,
+                                                    )
+                                                }
+                                                aria-invalid={
+                                                    errors[
+                                                        'description.' + locale
+                                                    ]
+                                                        ? 'true'
+                                                        : 'false'
+                                                }
                                             />
-                                            <FieldDescription>This is the description of the certificate.</FieldDescription>
-                                            {errors['description.' + locale] && (
-                                                <FieldError>{errors['description.' + locale]}</FieldError>
+                                            <FieldDescription>
+                                                This is the description of the
+                                                certificate.
+                                            </FieldDescription>
+                                            {errors[
+                                                'description.' + locale
+                                            ] && (
+                                                <FieldError>
+                                                    {
+                                                        errors[
+                                                            'description.' +
+                                                                locale
+                                                        ]
+                                                    }
+                                                </FieldError>
                                             )}
                                         </Field>
                                         <Field orientation="horizontal">
                                             <Switch
                                                 id="active"
                                                 checked={data.active}
-                                                onCheckedChange={(checked) => setData('active', checked)}
+                                                onCheckedChange={(checked) =>
+                                                    setData('active', checked)
+                                                }
                                             />
-                                            <FieldLabel htmlFor="active">Active</FieldLabel>
+                                            <FieldLabel htmlFor="active">
+                                                Active
+                                            </FieldLabel>
                                         </Field>
                                     </FieldGroup>
                                 </FieldSet>
@@ -112,7 +162,9 @@ export default function CertificateForm({
                             }}
                             aria-invalid={errors.pdf ? 'true' : 'false'}
                         />
-                        <FieldDescription>Select a PDF to upload.</FieldDescription>
+                        <FieldDescription>
+                            Select a PDF to upload.
+                        </FieldDescription>
                         {errors.pdf && <FieldError>{errors.pdf}</FieldError>}
                     </Field>
                     <div className="flex items-center justify-between">

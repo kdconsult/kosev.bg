@@ -15,8 +15,21 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
 import { dashboard } from '@/routes';
 import { index } from '@/routes/admin/tags';
 
@@ -73,10 +86,13 @@ const getEmptyFormData = (locales: string[]): TagFormData => ({
 });
 
 const getTagFormData = (tag: AdminTag, locales: string[]): TagFormData => ({
-    name: Object.fromEntries(locales.map((locale) => [locale, tag.name[locale] ?? ''])),
+    name: Object.fromEntries(
+        locales.map((locale) => [locale, tag.name[locale] ?? '']),
+    ),
 });
 
-const getUsedCount = (tag: AdminTag): number => (tag.projects_count ?? 0) + (tag.products_count ?? 0);
+const getUsedCount = (tag: AdminTag): number =>
+    (tag.projects_count ?? 0) + (tag.products_count ?? 0);
 
 const formatUsedCount = (tag: AdminTag): string => {
     const count = getUsedCount(tag);
@@ -92,18 +108,31 @@ interface TagFormFieldsProps {
     primaryLocale: string;
 }
 
-function TagFormFields({ data, setData, errors, locales, primaryLocale }: TagFormFieldsProps) {
+function TagFormFields({
+    data,
+    setData,
+    errors,
+    locales,
+    primaryLocale,
+}: TagFormFieldsProps) {
     return (
         <div className="space-y-4">
             {locales.map((locale) => (
                 <div key={locale} className="space-y-2">
                     <Label>
                         Name ({locale.toUpperCase()}){' '}
-                        {locale === primaryLocale && <span className="text-destructive">*</span>}
+                        {locale === primaryLocale && (
+                            <span className="text-destructive">*</span>
+                        )}
                     </Label>
                     <Input
                         value={data.name[locale] ?? ''}
-                        onChange={(e) => setData('name', { ...data.name, [locale]: e.target.value })}
+                        onChange={(e) =>
+                            setData('name', {
+                                ...data.name,
+                                [locale]: e.target.value,
+                            })
+                        }
                     />
                     <InputError message={errors[`name.${locale}`]} />
                 </div>
@@ -137,10 +166,16 @@ export default function Index({ tags, filters }: Props) {
         router.get(url, {}, { preserveScroll: true, preserveState: true });
     };
 
-    const applyFilters = (overrides: Record<string, string | number | undefined>) => {
+    const applyFilters = (
+        overrides: Record<string, string | number | undefined>,
+    ) => {
         router.get(
             index(),
-            { search: search || undefined, per_page: filters.per_page ?? 15, ...overrides },
+            {
+                search: search || undefined,
+                per_page: filters.per_page ?? 15,
+                ...overrides,
+            },
             { preserveScroll: true, preserveState: true, replace: true },
         );
     };
@@ -212,7 +247,10 @@ export default function Index({ tags, filters }: Props) {
 
             <div className="flex h-full flex-1 flex-col gap-6 p-6">
                 <div className="flex items-center justify-between">
-                    <Heading title="Tags" description="Manage tags for products and projects." />
+                    <Heading
+                        title="Tags"
+                        description="Manage tags for products and projects."
+                    />
                     <Button onClick={() => setShowCreateModal(true)}>
                         <Plus className="mr-2 h-4 w-4" />
                         Add Tag
@@ -222,7 +260,7 @@ export default function Index({ tags, filters }: Props) {
                 <div className="flex items-center gap-3">
                     <form onSubmit={handleSearch} className="flex flex-1 gap-2">
                         <div className="relative max-w-sm flex-1">
-                            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                            <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                             <Input
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
@@ -239,7 +277,10 @@ export default function Index({ tags, filters }: Props) {
                                 variant="ghost"
                                 onClick={() => {
                                     setSearch('');
-                                    applyFilters({ search: undefined, page: 1 });
+                                    applyFilters({
+                                        search: undefined,
+                                        page: 1,
+                                    });
                                 }}
                             >
                                 Clear
@@ -248,8 +289,13 @@ export default function Index({ tags, filters }: Props) {
                     </form>
 
                     <div className="flex items-center gap-2">
-                        <span className="text-muted-foreground text-sm whitespace-nowrap">Rows per page</span>
-                        <Select value={String(filters.per_page ?? 15)} onValueChange={handlePerPageChange}>
+                        <span className="text-sm whitespace-nowrap text-muted-foreground">
+                            Rows per page
+                        </span>
+                        <Select
+                            value={String(filters.per_page ?? 15)}
+                            onValueChange={handlePerPageChange}
+                        >
                             <SelectTrigger className="w-20">
                                 <SelectValue />
                             </SelectTrigger>
@@ -271,13 +317,18 @@ export default function Index({ tags, filters }: Props) {
                                 <TableHead>Name BG</TableHead>
                                 <TableHead>Name EN</TableHead>
                                 <TableHead>Used In</TableHead>
-                                <TableHead className="w-24 text-right">Actions</TableHead>
+                                <TableHead className="w-24 text-right">
+                                    Actions
+                                </TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {tags.data.length === 0 ? (
                                 <TableRow>
-                                    <TableCell colSpan={3} className="text-muted-foreground py-12 text-center">
+                                    <TableCell
+                                        colSpan={3}
+                                        className="py-12 text-center text-muted-foreground"
+                                    >
                                         No tags found.
                                     </TableCell>
                                 </TableRow>
@@ -288,30 +339,56 @@ export default function Index({ tags, filters }: Props) {
                                     return (
                                         <TableRow key={tag.slug}>
                                             <TableCell className="font-medium">
-                                                {tag.name.bg || <span className="text-muted-foreground italic">No BG name</span>}
+                                                {tag.name.bg || (
+                                                    <span className="text-muted-foreground italic">
+                                                        No BG name
+                                                    </span>
+                                                )}
                                             </TableCell>
                                             <TableCell className="font-medium">
-                                                {tag.name.en || <span className="text-muted-foreground italic">No EN name</span>}
+                                                {tag.name.en || (
+                                                    <span className="text-muted-foreground italic">
+                                                        No EN name
+                                                    </span>
+                                                )}
                                             </TableCell>
-                                            <TableCell className="text-muted-foreground text-sm">
+                                            <TableCell className="text-sm text-muted-foreground">
                                                 {formatUsedCount(tag)}
                                             </TableCell>
                                             <TableCell className="text-right">
                                                 <div className="flex justify-end gap-1">
-                                                    <Button variant="ghost" size="icon-sm" onClick={() => openEditModal(tag)}>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon-sm"
+                                                        onClick={() =>
+                                                            openEditModal(tag)
+                                                        }
+                                                    >
                                                         <Pencil className="h-4 w-4" />
-                                                        <span className="sr-only">Edit</span>
+                                                        <span className="sr-only">
+                                                            Edit
+                                                        </span>
                                                     </Button>
                                                     <Button
                                                         variant="ghost"
                                                         size="icon-sm"
                                                         className="text-destructive hover:text-destructive"
-                                                        onClick={() => setPendingDelete(tag)}
+                                                        onClick={() =>
+                                                            setPendingDelete(
+                                                                tag,
+                                                            )
+                                                        }
                                                         disabled={usedCount > 0}
-                                                        title={usedCount > 0 ? 'Cannot delete a tag that is in use.' : 'Delete tag'}
+                                                        title={
+                                                            usedCount > 0
+                                                                ? 'Cannot delete a tag that is in use.'
+                                                                : 'Delete tag'
+                                                        }
                                                     >
                                                         <Trash2 className="h-4 w-4" />
-                                                        <span className="sr-only">Delete</span>
+                                                        <span className="sr-only">
+                                                            Delete
+                                                        </span>
                                                     </Button>
                                                 </div>
                                             </TableCell>
@@ -325,8 +402,9 @@ export default function Index({ tags, filters }: Props) {
 
                 {meta.total > 0 && (
                     <div className="flex items-center justify-between">
-                        <p className="text-muted-foreground text-sm">
-                            Showing {meta.from}–{meta.to} of {meta.total} results
+                        <p className="text-sm text-muted-foreground">
+                            Showing {meta.from}–{meta.to} of {meta.total}{' '}
+                            results
                         </p>
 
                         <div className="flex items-center gap-1">
@@ -350,11 +428,15 @@ export default function Index({ tags, filters }: Props) {
                             {pageLinks.map((link, i) => (
                                 <Button
                                     key={i}
-                                    variant={link.active ? 'default' : 'outline'}
+                                    variant={
+                                        link.active ? 'default' : 'outline'
+                                    }
                                     size="sm"
                                     onClick={() => navigate(link.url)}
                                     disabled={!link.url || link.active}
-                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                    dangerouslySetInnerHTML={{
+                                        __html: link.label,
+                                    }}
                                 />
                             ))}
 
@@ -379,11 +461,18 @@ export default function Index({ tags, filters }: Props) {
                 )}
             </div>
 
-            <Dialog open={showCreateModal} onOpenChange={(open) => (!open ? closeCreateModal() : setShowCreateModal(true))}>
+            <Dialog
+                open={showCreateModal}
+                onOpenChange={(open) =>
+                    !open ? closeCreateModal() : setShowCreateModal(true)
+                }
+            >
                 <DialogContent className="sm:max-w-lg">
                     <DialogHeader>
                         <DialogTitle>Add Tag</DialogTitle>
-                        <DialogDescription>Create a new tag for products and projects.</DialogDescription>
+                        <DialogDescription>
+                            Create a new tag for products and projects.
+                        </DialogDescription>
                     </DialogHeader>
 
                     <form onSubmit={handleCreateSubmit} className="space-y-4">
@@ -396,23 +485,42 @@ export default function Index({ tags, filters }: Props) {
                         />
 
                         <DialogFooter>
-                            <Button type="button" variant="outline" onClick={closeCreateModal} disabled={createForm.processing}>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={closeCreateModal}
+                                disabled={createForm.processing}
+                            >
                                 Cancel
                             </Button>
-                            <Button type="submit" disabled={createForm.processing}>
-                                {createForm.processing ? 'Saving...' : 'Create Tag'}
+                            <Button
+                                type="submit"
+                                disabled={createForm.processing}
+                            >
+                                {createForm.processing
+                                    ? 'Saving...'
+                                    : 'Create Tag'}
                             </Button>
                         </DialogFooter>
                     </form>
                 </DialogContent>
             </Dialog>
 
-            <Dialog open={!!editingTag} onOpenChange={(open) => !open && closeEditModal()}>
+            <Dialog
+                open={!!editingTag}
+                onOpenChange={(open) => !open && closeEditModal()}
+            >
                 <DialogContent className="sm:max-w-lg">
                     <DialogHeader>
                         <DialogTitle>Edit Tag</DialogTitle>
                         <DialogDescription>
-                            Update <strong>{editingTag?.name.bg || editingTag?.name.en || editingTag?.slug}</strong>.
+                            Update{' '}
+                            <strong>
+                                {editingTag?.name.bg ||
+                                    editingTag?.name.en ||
+                                    editingTag?.slug}
+                            </strong>
+                            .
                         </DialogDescription>
                     </DialogHeader>
 
@@ -426,32 +534,57 @@ export default function Index({ tags, filters }: Props) {
                         />
 
                         <DialogFooter>
-                            <Button type="button" variant="outline" onClick={closeEditModal} disabled={editForm.processing}>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={closeEditModal}
+                                disabled={editForm.processing}
+                            >
                                 Cancel
                             </Button>
-                            <Button type="submit" disabled={editForm.processing || !editingTag}>
-                                {editForm.processing ? 'Saving...' : 'Save Changes'}
+                            <Button
+                                type="submit"
+                                disabled={editForm.processing || !editingTag}
+                            >
+                                {editForm.processing
+                                    ? 'Saving...'
+                                    : 'Save Changes'}
                             </Button>
                         </DialogFooter>
                     </form>
                 </DialogContent>
             </Dialog>
 
-            <Dialog open={!!pendingDelete} onOpenChange={(open) => !open && setPendingDelete(null)}>
+            <Dialog
+                open={!!pendingDelete}
+                onOpenChange={(open) => !open && setPendingDelete(null)}
+            >
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Delete Tag</DialogTitle>
                         <DialogDescription>
                             Are you sure you want to delete{' '}
-                            <strong>{pendingDelete?.name.bg || pendingDelete?.name.en || pendingDelete?.slug}</strong>? This
-                            action cannot be undone.
+                            <strong>
+                                {pendingDelete?.name.bg ||
+                                    pendingDelete?.name.en ||
+                                    pendingDelete?.slug}
+                            </strong>
+                            ? This action cannot be undone.
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
-                        <Button variant="outline" onClick={() => setPendingDelete(null)} disabled={isDeleting}>
+                        <Button
+                            variant="outline"
+                            onClick={() => setPendingDelete(null)}
+                            disabled={isDeleting}
+                        >
                             Cancel
                         </Button>
-                        <Button variant="destructive" onClick={handleDelete} disabled={isDeleting}>
+                        <Button
+                            variant="destructive"
+                            onClick={handleDelete}
+                            disabled={isDeleting}
+                        >
                             {isDeleting ? 'Deleting...' : 'Delete'}
                         </Button>
                     </DialogFooter>

@@ -251,7 +251,13 @@ export default function ProductList({
                                                 ))}
                                         </div>
                                     )}
-                                    <span className={cn('view-link flex items-center gap-4', product.tags.length <= 0 && 'mt-auto')}>
+                                    <span
+                                        className={cn(
+                                            'view-link flex items-center gap-4',
+                                            product.tags.length <= 0 &&
+                                                'mt-auto',
+                                        )}
+                                    >
                                         <>
                                             {
                                                 translations.productsListSection

@@ -337,7 +337,13 @@ export function AppHeader() {
                     </button>
                 </div>
 
-                <div className={cn('mobile-nav', { open: mobileMenuOpen }, 'space-y-4')}>
+                <div
+                    className={cn(
+                        'mobile-nav',
+                        { open: mobileMenuOpen },
+                        'space-y-4',
+                    )}
+                >
                     <nav aria-label="Мобилна навигация">
                         <Link
                             className={whenCurrentUrl(home(), activeItemStyles)}
@@ -348,35 +354,53 @@ export function AppHeader() {
                         </Link>
                         <Link
                             href={services()}
-                            className={isCurrentOrParentUrl(services()) ? activeItemStyles : undefined}
+                            className={
+                                isCurrentOrParentUrl(services())
+                                    ? activeItemStyles
+                                    : undefined
+                            }
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             {nav.services}
                         </Link>
                         <Link
                             href={projectsIndex()}
-                            className={isCurrentOrParentUrl(projectsIndex()) ? activeItemStyles : undefined}
+                            className={
+                                isCurrentOrParentUrl(projectsIndex())
+                                    ? activeItemStyles
+                                    : undefined
+                            }
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             {nav.projects}
                         </Link>
                         <Link
                             href={products()}
-                            className={isCurrentOrParentUrl(products()) ? activeItemStyles : undefined}
+                            className={
+                                isCurrentOrParentUrl(products())
+                                    ? activeItemStyles
+                                    : undefined
+                            }
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             {nav.products}
                         </Link>
                         <Link
                             href={about()}
-                            className={whenCurrentUrl(about(), activeItemStyles)}
+                            className={whenCurrentUrl(
+                                about(),
+                                activeItemStyles,
+                            )}
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             {nav.about}
                         </Link>
                         <Link
                             href={certificates()}
-                            className={whenCurrentUrl(certificates(), activeItemStyles)}
+                            className={whenCurrentUrl(
+                                certificates(),
+                                activeItemStyles,
+                            )}
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             {nav.certificates}
@@ -391,7 +415,7 @@ export function AppHeader() {
                             {nav.contact_cta}
                         </Link>
                     </div>
-                    <div className="flex items-center gap-4 justify-between">
+                    <div className="flex items-center justify-between gap-4">
                         <LanguageSwitcher />
                         {auth.user && (
                             <Link

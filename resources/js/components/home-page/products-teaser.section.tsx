@@ -6,7 +6,7 @@ import type { Translations } from '@/types/translations';
 
 export default function ProductsTeaserSection({
     featuredProducts,
-    translations
+    translations,
 }: {
     featuredProducts: Product[];
     translations: Translations['productsTeaserSection'];
@@ -15,11 +15,11 @@ export default function ProductsTeaserSection({
         <section className="section bg-secondary">
             <div className="container">
                 <div className="mx-auto mb-16 max-w-175 text-center md:mb-20">
-                    <span className="section-subtitle">{translations.badge}</span>
+                    <span className="section-subtitle">
+                        {translations.badge}
+                    </span>
                     <h2>{translations.title}</h2>
-                    <p>
-                        {translations.description}
-                    </p>
+                    <p>{translations.description}</p>
                 </div>
 
                 <div className="mb-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -37,13 +37,15 @@ export default function ProductsTeaserSection({
                                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                 />
                                 <div className="absolute top-4 left-4">
-                                    <span className="inline-block rounded-full bg-black/60 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-white backdrop-blur-sm">
+                                    <span className="inline-block rounded-full bg-black/60 px-3 py-1.5 text-xs font-medium tracking-wider text-white uppercase backdrop-blur-sm">
                                         {product.category.name}
                                     </span>
                                 </div>
                             </div>
                             <div className="flex flex-1 flex-col p-6">
-                                <h3 className="mb-2 text-lg">{product.title}</h3>
+                                <h3 className="mb-2 text-lg">
+                                    {product.title}
+                                </h3>
                                 <p className="mb-4 flex-1 text-[0.9375rem] leading-relaxed text-muted-foreground">
                                     {product.short_description}
                                 </p>

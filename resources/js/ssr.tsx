@@ -28,7 +28,7 @@ function resolveLayout(name: string) {
 createServer((page) =>
     createInertiaApp({
         page,
-        render: (element) => ReactDOMServer.renderToString(element),        
+        render: (element) => ReactDOMServer.renderToString(element),
         title: (title) => (title ? `${title} - ${appName}` : appName),
         layout: resolveLayout,
         resolve: async (name) => {

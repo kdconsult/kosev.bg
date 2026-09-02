@@ -24,12 +24,12 @@ type CertificatesTranslations = {
     };
     certificatesSection: {
         buttonLabel: string;
-    },
+    };
     ctaSection: {
         title: string;
         description: string;
         buttonLabel: string;
-    }
+    };
 };
 
 export default function Certificates({
@@ -244,19 +244,21 @@ export default function Certificates({
                                 {translations.infoSection.badge}
                             </span>
                             <h2>{translations.infoSection.title}</h2>
-                            <p>
-                                {translations.infoSection.description}
-                            </p>
+                            <p>{translations.infoSection.description}</p>
                         </div>
                         <div className="stats-grid">
-                            {translations.infoSection.cards?.map((card, index) => (
-                                <div className="stat-card" key={index}>
-                                    <span className="stat-number">{card.number}</span>
-                                    <span className="stat-label">
-                                        {card.label}
-                                    </span>
-                                </div>
-                            ))}
+                            {translations.infoSection.cards?.map(
+                                (card, index) => (
+                                    <div className="stat-card" key={index}>
+                                        <span className="stat-number">
+                                            {card.number}
+                                        </span>
+                                        <span className="stat-label">
+                                            {card.label}
+                                        </span>
+                                    </div>
+                                ),
+                            )}
                         </div>
                     </div>
                 </div>
@@ -284,7 +286,10 @@ export default function Certificates({
                                         className="btn-download"
                                     >
                                         <DownloadIcon className="h-4 w-4" />
-                                        {translations.certificatesSection.buttonLabel}
+                                        {
+                                            translations.certificatesSection
+                                                .buttonLabel
+                                        }
                                     </a>
                                 </div>
                             </div>
@@ -299,9 +304,7 @@ export default function Certificates({
                         <h2 className="text-2xl">
                             {translations.ctaSection.title}
                         </h2>
-                        <p>
-                            {translations.ctaSection.description}
-                        </p>
+                        <p>{translations.ctaSection.description}</p>
                     </div>
                     <div>
                         <Link

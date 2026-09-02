@@ -16,14 +16,22 @@ interface TagInputProps {
     className?: string;
 }
 
-export function TagInput({ value, onChange, suggestions = [], placeholder = 'Add tags...', className }: TagInputProps) {
+export function TagInput({
+    value,
+    onChange,
+    suggestions = [],
+    placeholder = 'Add tags...',
+    className,
+}: TagInputProps) {
     const [inputValue, setInputValue] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
     const filteredSuggestions = suggestions.filter(
-        (s) => s.name.toLowerCase().includes(inputValue.toLowerCase()) && !value.includes(s.name),
+        (s) =>
+            s.name.toLowerCase().includes(inputValue.toLowerCase()) &&
+            !value.includes(s.name),
     );
 
     const addTag = (name: string) => {
@@ -54,24 +62,30 @@ export function TagInput({ value, onChange, suggestions = [], placeholder = 'Add
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+            if (
+                containerRef.current &&
+                !containerRef.current.contains(e.target as Node)
+            ) {
                 setShowDropdown(false);
             }
         };
         document.addEventListener('mousedown', handleClickOutside);
 
-        return () => document.removeEventListener('mousedown', handleClickOutside);
+        return () =>
+            document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
     const hasDropdownItems =
         filteredSuggestions.length > 0 ||
         (inputValue.trim() !== '' &&
-            !suggestions.some((s) => s.name.toLowerCase() === inputValue.trim().toLowerCase()));
+            !suggestions.some(
+                (s) => s.name.toLowerCase() === inputValue.trim().toLowerCase(),
+            ));
 
     return (
         <div ref={containerRef} className={cn('relative', className)}>
             <div
-                className="border-input bg-background focus-within:ring-ring flex min-h-10 w-full cursor-text flex-wrap items-center gap-1.5 rounded-md border px-3 py-2 text-sm focus-within:ring-2 focus-within:ring-offset-2"
+                className="flex min-h-10 w-full cursor-text flex-wrap items-center gap-1.5 rounded-md border border-input bg-background px-3 py-2 text-sm focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
                 onClick={() => inputRef.current?.focus()}
             >
                 {value.map((tag) => (
@@ -83,7 +97,7 @@ export function TagInput({ value, onChange, suggestions = [], placeholder = 'Add
                                 e.stopPropagation();
                                 removeTag(tag);
                             }}
-                            className="hover:text-destructive ml-0.5 rounded-sm"
+                            className="ml-0.5 rounded-sm hover:text-destructive"
                             aria-label={`Remove ${tag}`}
                         >
                             <X className="h-3 w-3" />
@@ -100,12 +114,12 @@ export function TagInput({ value, onChange, suggestions = [], placeholder = 'Add
                     onKeyDown={handleKeyDown}
                     onFocus={() => setShowDropdown(true)}
                     placeholder={value.length === 0 ? placeholder : ''}
-                    className="placeholder:text-muted-foreground min-w-30 flex-1 bg-transparent outline-none"
+                    className="min-w-30 flex-1 bg-transparent outline-none placeholder:text-muted-foreground"
                 />
             </div>
 
             {showDropdown && hasDropdownItems && (
-                <div className="border-border bg-popover text-popover-foreground absolute z-50 mt-1 w-full overflow-hidden rounded-md border shadow-md">
+                <div className="absolute z-50 mt-1 w-full overflow-hidden rounded-md border border-border bg-popover text-popover-foreground shadow-md">
                     {filteredSuggestions.slice(0, 8).map((s) => (
                         <button
                             key={s.slug}
@@ -114,14 +128,16 @@ export function TagInput({ value, onChange, suggestions = [], placeholder = 'Add
                                 e.preventDefault();
                                 addTag(s.name);
                             }}
-                            className="hover:bg-accent hover:text-accent-foreground w-full px-3 py-2 text-left text-sm"
+                            className="w-full px-3 py-2 text-left text-sm hover:bg-accent hover:text-accent-foreground"
                         >
                             {s.name}
                         </button>
                     ))}
                     {inputValue.trim() !== '' &&
                         !suggestions.some(
-                            (s) => s.name.toLowerCase() === inputValue.trim().toLowerCase(),
+                            (s) =>
+                                s.name.toLowerCase() ===
+                                inputValue.trim().toLowerCase(),
                         ) && (
                             <button
                                 type="button"
@@ -129,7 +145,7 @@ export function TagInput({ value, onChange, suggestions = [], placeholder = 'Add
                                     e.preventDefault();
                                     addTag(inputValue);
                                 }}
-                                className="hover:bg-accent hover:text-accent-foreground text-muted-foreground w-full px-3 py-2 text-left text-sm"
+                                className="w-full px-3 py-2 text-left text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                             >
                                 Create &ldquo;{inputValue}&rdquo;
                             </button>

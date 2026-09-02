@@ -23,7 +23,10 @@ export default function Create({ availableProducts, availableTags }: Props) {
         is_active: false,
         products: [] as string[],
         tags: [] as string[],
-        specs: [] as { label: Record<string, string>; value: Record<string, string> }[],
+        specs: [] as {
+            label: Record<string, string>;
+            value: Record<string, string>;
+        }[],
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -36,7 +39,10 @@ export default function Create({ availableProducts, availableTags }: Props) {
             <Head title="Create Service" />
 
             <div className="flex h-full flex-1 flex-col gap-6 p-6">
-                <Heading title="Create Service" description="Add a new service." />
+                <Heading
+                    title="Create Service"
+                    description="Add a new service."
+                />
 
                 <div className="max-w-2xl">
                     <ServiceForm

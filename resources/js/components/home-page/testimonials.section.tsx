@@ -1,6 +1,10 @@
-import type { Translations } from "@/types/translations";
+import type { Translations } from '@/types/translations';
 
-export default function TestimonialsSection({translations}: {translations: Translations['testimonialsSection']}) {
+export default function TestimonialsSection({
+    translations,
+}: {
+    translations: Translations['testimonialsSection'];
+}) {
     return (
         <>
             <style>{`.testimonials {
@@ -88,13 +92,13 @@ export default function TestimonialsSection({translations}: {translations: Trans
             <section className="section testimonials">
                 <div className="container">
                     <div className="section-header">
-                        <span className="section-subtitle">{translations.badge}</span>
-                        <h2 className="section-title">
-                            {translations.title}
-                        </h2>
+                        <span className="section-subtitle">
+                            {translations.badge}
+                        </span>
+                        <h2 className="section-title">{translations.title}</h2>
                         <p className="section-description">
                             {translations.description}
-                        </p>    
+                        </p>
                     </div>
 
                     <div className="testimonials-grid">

@@ -2,7 +2,11 @@ import { MailIcon, PhoneIcon } from 'lucide-react';
 import type { Translations } from '@/types/translations';
 import ContactForm from '../contact-form';
 
-export default function CtaFormSection({translations}: { translations?: Translations['ctaFormSection'] }) {
+export default function CtaFormSection({
+    translations,
+}: {
+    translations?: Translations['ctaFormSection'];
+}) {
     return (
         <>
             <style>
@@ -88,9 +92,13 @@ export default function CtaFormSection({translations}: { translations?: Translat
                             <span className="section-subtitle">
                                 {translations?.badge || 'Свържете се с нас'}
                             </span>
-                            <h2>{translations?.title || 'Готови да обсъдим вашия проект?'}</h2>
+                            <h2>
+                                {translations?.title ||
+                                    'Готови да обсъдим вашия проект?'}
+                            </h2>
                             <p>
-                                {translations?.description || 'Изпратете ни запитване и нашият екип ще се свърже с вас в рамките на 24 часа.'}
+                                {translations?.description ||
+                                    'Изпратете ни запитване и нашият екип ще се свърже с вас в рамките на 24 часа.'}
                             </p>
 
                             <div className="cta-info">
@@ -100,10 +108,12 @@ export default function CtaFormSection({translations}: { translations?: Translat
                                     </div>
                                     <div className="info-text">
                                         <span className="info-label">
-                                            {translations?.phone.label || 'Телефон'}
+                                            {translations?.phone.label ||
+                                                'Телефон'}
                                         </span>
                                         <span className="info-value">
-                                            {translations?.phone.value || '+359 895 573 233'}
+                                            {translations?.phone.value ||
+                                                '+359 895 573 233'}
                                         </span>
                                     </div>
                                 </div>
@@ -113,10 +123,12 @@ export default function CtaFormSection({translations}: { translations?: Translat
                                     </div>
                                     <div className="info-text">
                                         <span className="info-label">
-                                            {translations?.email.label || 'Имейл'}
+                                            {translations?.email.label ||
+                                                'Имейл'}
                                         </span>
                                         <span className="info-value">
-                                            {translations?.email.value || 'marketing@kosev.bg'}
+                                            {translations?.email.value ||
+                                                'marketing@kosev.bg'}
                                         </span>
                                     </div>
                                 </div>

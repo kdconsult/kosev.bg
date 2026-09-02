@@ -17,7 +17,12 @@ interface SpecFieldsProps {
     errors?: Record<string, string | undefined>;
 }
 
-export function SpecFields({ specs, onChange, activeLocale, errors = {} }: SpecFieldsProps) {
+export function SpecFields({
+    specs,
+    onChange,
+    activeLocale,
+    errors = {},
+}: SpecFieldsProps) {
     const { locales } = usePage().props;
 
     const addSpec = () => {
@@ -34,13 +39,20 @@ export function SpecFields({ specs, onChange, activeLocale, errors = {} }: SpecF
         onChange(specs.filter((_, i) => i !== index));
     };
 
-    const updateSpec = (index: number, field: 'label' | 'value', val: string) => {
+    const updateSpec = (
+        index: number,
+        field: 'label' | 'value',
+        val: string,
+    ) => {
         const updated = specs.map((spec, i) => {
             if (i !== index) {
                 return spec;
             }
 
-            return { ...spec, [field]: { ...spec[field], [activeLocale]: val } };
+            return {
+                ...spec,
+                [field]: { ...spec[field], [activeLocale]: val },
+            };
         });
 
         onChange(updated);
@@ -57,24 +69,55 @@ export function SpecFields({ specs, onChange, activeLocale, errors = {} }: SpecF
                     </div>
 
                     {specs.map((spec, index) => (
-                        <div key={index} className="grid grid-cols-[1fr_1fr_auto] items-start gap-2">
+                        <div
+                            key={index}
+                            className="grid grid-cols-[1fr_1fr_auto] items-start gap-2"
+                        >
                             <div>
                                 <Input
                                     value={spec.label[activeLocale] ?? ''}
-                                    onChange={(e) => updateSpec(index, 'label', e.target.value)}
+                                    onChange={(e) =>
+                                        updateSpec(
+                                            index,
+                                            'label',
+                                            e.target.value,
+                                        )
+                                    }
                                     placeholder="Label"
                                 />
-                                <InputError message={errors[`specs.${index}.label.${activeLocale}`]} />
-                                <InputError message={errors[`specs.${index}.label.bg`]} />
+                                <InputError
+                                    message={
+                                        errors[
+                                            `specs.${index}.label.${activeLocale}`
+                                        ]
+                                    }
+                                />
+                                <InputError
+                                    message={errors[`specs.${index}.label.bg`]}
+                                />
                             </div>
                             <div>
                                 <Input
                                     value={spec.value[activeLocale] ?? ''}
-                                    onChange={(e) => updateSpec(index, 'value', e.target.value)}
+                                    onChange={(e) =>
+                                        updateSpec(
+                                            index,
+                                            'value',
+                                            e.target.value,
+                                        )
+                                    }
                                     placeholder="Value"
                                 />
-                                <InputError message={errors[`specs.${index}.value.${activeLocale}`]} />
-                                <InputError message={errors[`specs.${index}.value.bg`]} />
+                                <InputError
+                                    message={
+                                        errors[
+                                            `specs.${index}.value.${activeLocale}`
+                                        ]
+                                    }
+                                />
+                                <InputError
+                                    message={errors[`specs.${index}.value.bg`]}
+                                />
                             </div>
                             <Button
                                 type="button"
@@ -90,7 +133,13 @@ export function SpecFields({ specs, onChange, activeLocale, errors = {} }: SpecF
                 </div>
             )}
 
-            <Button type="button" variant="outline" size="sm" onClick={addSpec} className="w-fit">
+            <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={addSpec}
+                className="w-fit"
+            >
                 <Plus className="mr-2 h-4 w-4" />
                 Add Spec
             </Button>

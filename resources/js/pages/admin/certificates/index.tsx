@@ -53,7 +53,14 @@ export default function CertificatesIndex({
                             />
                             <CardHeader className="flex-1">
                                 <CardAction>
-                                    {!certificate.active && <Badge variant="secondary" className='bg-red-300 dark:bg-red-700 text-red-700 dark:text-red-300'>Inactive</Badge>}
+                                    {!certificate.active && (
+                                        <Badge
+                                            variant="secondary"
+                                            className="bg-red-300 text-red-700 dark:bg-red-700 dark:text-red-300"
+                                        >
+                                            Inactive
+                                        </Badge>
+                                    )}
                                 </CardAction>
                                 <CardTitle>{certificate.name}</CardTitle>
                                 <CardDescription>
@@ -66,7 +73,9 @@ export default function CertificatesIndex({
                                     className="w-full"
                                     asChild
                                 >
-                                    <Link href={`${edit.url(certificate.slug)}?from=${encodeURIComponent(url)}`}>
+                                    <Link
+                                        href={`${edit.url(certificate.slug)}?from=${encodeURIComponent(url)}`}
+                                    >
                                         Edit
                                     </Link>
                                 </Button>

@@ -98,7 +98,9 @@ export default function AboutUs({
         sprout: SproutIcon,
     };
 
-    const values = Object.values(translations.valuesSection.values) as ValueItem[];
+    const values = Object.values(
+        translations.valuesSection.values,
+    ) as ValueItem[];
     const team = Object.values(translations.teamSection.team) as TeamMember[];
 
     return (
@@ -363,7 +365,9 @@ export default function AboutUs({
                     <div className="hero-overlay"></div>
                 </div>
                 <div className="hero-content container">
-                    <span className="hero-badge">{translations.heroSection.badge}</span>
+                    <span className="hero-badge">
+                        {translations.heroSection.badge}
+                    </span>
                     <h1>{translations.heroSection.title}</h1>
                     <p> {translations.heroSection.description} </p>
                 </div>
@@ -377,9 +381,7 @@ export default function AboutUs({
                                 {translations.storySection.badge}
                             </span>
                             <h2>{translations.storySection.title}</h2>
-                            <p>
-                                {translations.storySection.description}
-                            </p>
+                            <p>{translations.storySection.description}</p>
                         </div>
                         <div className="story-image">
                             {translations.storySection.image && (
@@ -406,9 +408,9 @@ export default function AboutUs({
                     </div>
 
                     <div className="values-grid">
-                        { values.map((value, idx) => (
+                        {values.map((value, idx) => (
                             <div className="value-card" key={idx}>
-                                <div className="flex items-center justify-center gap-4 mb-8">
+                                <div className="mb-8 flex items-center justify-center gap-4">
                                     {(() => {
                                         const Icon = iconMap[value.icon];
 
@@ -428,21 +430,27 @@ export default function AboutUs({
             <section className="section team">
                 <div className="container">
                     <div className="section-header">
-                        <span className="section-subtitle">{translations.teamSection.badge}</span>
-                        <h2 className="section-title">{translations.teamSection.title}</h2>
+                        <span className="section-subtitle">
+                            {translations.teamSection.badge}
+                        </span>
+                        <h2 className="section-title">
+                            {translations.teamSection.title}
+                        </h2>
                         <p className="section-description">
                             {translations.teamSection.description}
                         </p>
                     </div>
 
                     <div className="team-grid">
-                        { team.map((member, idx) => (
+                        {team.map((member, idx) => (
                             <div className="team-card" key={idx}>
                                 <div className="team-avatar">
                                     {member.name.charAt(0)}
                                 </div>
                                 <h4>{member.name}</h4>
-                                <span className="team-role">{member.position}</span>
+                                <span className="team-role">
+                                    {member.position}
+                                </span>
                                 <p>{member.description}</p>
                             </div>
                         ))}
@@ -458,29 +466,34 @@ export default function AboutUs({
                                 {translations.productionSiteSection.badge}
                             </span>
                             <h2>{translations.productionSiteSection.title}</h2>
-                            <p>{translations.productionSiteSection.description}</p>
+                            <p>
+                                {translations.productionSiteSection.description}
+                            </p>
 
                             <ul className="facility-features">
-                                {translations.productionSiteSection.equipment.map((feature, idx) => (
-                                    <li key={idx}>
-                                        <CheckIcon className="h-5 w-5" />
-                                        {feature}
-                                    </li>
-                                ))}
+                                {translations.productionSiteSection.equipment.map(
+                                    (feature, idx) => (
+                                        <li key={idx}>
+                                            <CheckIcon className="h-5 w-5" />
+                                            {feature}
+                                        </li>
+                                    ),
+                                )}
                             </ul>
                         </div>
 
                         <div className="facility-images">
-                            {translations.productionSiteSection.image?.length && (
-                                translations.productionSiteSection.image.map((img, idx) => (
-                                    <img
-                                        key={idx}
-                                        src={img}
-                                        alt={`Производствена база ${idx + 1}`}
-                                        loading="lazy"
-                                    />
-                                ))
-                            )}
+                            {translations.productionSiteSection.image?.length &&
+                                translations.productionSiteSection.image.map(
+                                    (img, idx) => (
+                                        <img
+                                            key={idx}
+                                            src={img}
+                                            alt={`Производствена база ${idx + 1}`}
+                                            loading="lazy"
+                                        />
+                                    ),
+                                )}
                         </div>
                     </div>
                 </div>
@@ -489,9 +502,11 @@ export default function AboutUs({
             <section className="section stats-section">
                 <div className="container">
                     <div className="stats-grid">
-                        { translations.statsSection.map((stat, idx) => (
+                        {translations.statsSection.map((stat, idx) => (
                             <div className="stat-item" key={idx}>
-                                <span className="stat-value">{stat.number}</span>
+                                <span className="stat-value">
+                                    {stat.number}
+                                </span>
                                 <span className="stat-label">{stat.label}</span>
                             </div>
                         ))}
@@ -503,11 +518,12 @@ export default function AboutUs({
                 <div className="container">
                     <div className="cta-content">
                         <h2>{translations.ctaSection.title}</h2>
-                        <p>
-                            {translations.ctaSection.description}
-                        </p>
+                        <p>{translations.ctaSection.description}</p>
                     </div>
-                    <Link href={contacts()} className="btn btn-accent btn-lg min-w-max">
+                    <Link
+                        href={contacts()}
+                        className="btn btn-accent btn-lg min-w-max"
+                    >
                         {translations.ctaSection.button}
                     </Link>
                 </div>

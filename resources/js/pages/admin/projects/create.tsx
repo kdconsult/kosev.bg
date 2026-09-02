@@ -24,7 +24,10 @@ export default function Create({ categories, availableTags }: Props) {
         description: Object.fromEntries(locales.map((l) => [l, ''])),
         category_id: '',
         tags: [] as string[],
-        specs: [] as { label: Record<string, string>; value: Record<string, string> }[],
+        specs: [] as {
+            label: Record<string, string>;
+            value: Record<string, string>;
+        }[],
     });
 
     const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
@@ -37,7 +40,10 @@ export default function Create({ categories, availableTags }: Props) {
             <Head title="Create Project" />
 
             <div className="flex h-full flex-1 flex-col gap-6 p-6">
-                <Heading title="Create Project" description="Add a new project to the catalogue." />
+                <Heading
+                    title="Create Project"
+                    description="Add a new project to the catalogue."
+                />
 
                 <div className="max-w-2xl">
                     <ProjectForm
