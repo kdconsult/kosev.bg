@@ -3,7 +3,11 @@ import { MoveRight, ShieldCheckIcon } from 'lucide-react';
 import { index as certificates } from '@/routes/certificates/index';
 import type { Translations } from '@/types/translations';
 
-export default function QualitySection({ translations }: { translations: Translations['qualitySection'] }) {
+export default function QualitySection({
+    translations,
+}: {
+    translations: Translations['qualitySection'];
+}) {
     return (
         <>
             <style>
@@ -135,16 +139,31 @@ export default function QualitySection({ translations }: { translations: Transla
             <section className="section quality">
                 <div className="container">
                     <div className="quality-grid">
-                        <div className="grid grid-cols-1 gap-2 md:gap-4 md:order-2">
-                          {translations.images.map((img, idx) => (
-                            <img
-                                key={idx}
-                                className="rounded-lg"
-                                src={img.src}
-                                alt={img.alt}
-                                loading="lazy"
-                            />    
-                          ))}
+                        <div className="grid grid-cols-1 gap-2 md:order-2 md:gap-4">
+                            {translations.images.map((img, idx) =>
+                                img.link ? (
+                                    <Link
+                                        href={img.link}
+                                        key={idx}
+                                        className="overflow-hidden rounded-lg"
+                                    >
+                                        <img
+                                            className="rounded-lg"
+                                            src={img.src}
+                                            alt={img.alt}
+                                            loading="lazy"
+                                        />
+                                    </Link>
+                                ) : (
+                                    <img
+                                        key={idx}
+                                        className="rounded-lg"
+                                        src={img.src}
+                                        alt={img.alt}
+                                        loading="lazy"
+                                    />
+                                ),
+                            )}
                         </div>
 
                         <div className="quality-content">
@@ -157,38 +176,51 @@ export default function QualitySection({ translations }: { translations: Transla
                             </p>
 
                             <div className="certifications">
-                                {translations.certifications.map((cert, idx) => (
-                                    <div className="cert-item" key={idx}>
-                                        <div className="cert-icon">
-                                          <ShieldCheckIcon size={18} />
-                                            
+                                {translations.certifications.map(
+                                    (cert, idx) => (
+                                        <div className="cert-item" key={idx}>
+                                            <div className="cert-icon">
+                                                <ShieldCheckIcon size={18} />
+                                            </div>
+                                            <div className="cert-info">
+                                                <span className="cert-name">
+                                                    {cert.name}
+                                                </span>
+                                                <span className="cert-desc">
+                                                    {cert.description}
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div className="cert-info">
-                                            <span className="cert-name">
-                                                {cert.name}
-                                            </span>
-                                            <span className="cert-desc">
-                                                {cert.description}
-                                            </span>
-                                        </div>
-                                    </div>
-                                ))}
+                                    ),
+                                )}
                             </div>
 
                             <div className="tech-features">
-                                <h4>{translations.techFeaturesSection.title}</h4>
+                                <h4>
+                                    {translations.techFeaturesSection.title}
+                                </h4>
                                 <div className="features-list">
-                                    {translations.techFeaturesSection.features.map((feature, idx) => (
-                                        <span className="feature-tag" key={idx}>
-                                            {feature}
-                                        </span>
-                                    ))}
+                                    {translations.techFeaturesSection.features.map(
+                                        (feature, idx) => (
+                                            <span
+                                                className="feature-tag"
+                                                key={idx}
+                                            >
+                                                {feature}
+                                            </span>
+                                        ),
+                                    )}
                                 </div>
                             </div>
 
-                            <Link href={certificates()} className="certs-link flex items-center gap-4">
-                                <span>{translations.techFeaturesSection.ctaButton}</span>
-                                 <MoveRight size={16} />
+                            <Link
+                                href={certificates()}
+                                className="certs-link flex items-center gap-4"
+                            >
+                                <span>
+                                    {translations.techFeaturesSection.ctaButton}
+                                </span>
+                                <MoveRight size={16} />
                             </Link>
                         </div>
                     </div>

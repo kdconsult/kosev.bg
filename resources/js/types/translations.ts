@@ -75,7 +75,7 @@ export type Translations = {
             description: string;
             image: string;
         }[];
-    };          
+    };
     qualitySection: {
         badge: string;
         title: string;
@@ -83,6 +83,7 @@ export type Translations = {
         images: {
             src: string;
             alt: string;
+            link: string | null;
         }[];
         certifications: {
             name: string;
@@ -94,7 +95,7 @@ export type Translations = {
             features: string[];
             ctaButton: string;
         };
-    };          
+    };
     testimonialsSection: {
         badge: string;
         title: string;

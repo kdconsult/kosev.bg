@@ -140,12 +140,14 @@ return [
                                 гарантира изделия с изключително качество.',
         'images' => [
             [
-                'src' => '/storage/images/kosev/modern-tech-2.jpg',
+                'src' => '/storage/media/86/Slide1.PNG',
                 'alt' => 'CNC машина за прецизна обработка',
+                'link' => '/projects/industriia-40',
             ],
             [
                 'src' => '/storage/images/kosev/modern-tech.jpg',
                 'alt' => 'Роботизирана заваръчна клетка',
+                'link' => null,
             ],
         ],
         'certifications' => [
