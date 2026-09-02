@@ -141,7 +141,7 @@ export default function QualitySection({
                     <div className="quality-grid">
                         <div className="grid grid-cols-1 gap-2 md:order-2 md:gap-4">
                             {translations.images.map((img, idx) =>
-                                img.link ? (
+                                img.link !== null && img.link !== undefined ? (
                                     <Link
                                         href={img.link}
                                         key={idx}
